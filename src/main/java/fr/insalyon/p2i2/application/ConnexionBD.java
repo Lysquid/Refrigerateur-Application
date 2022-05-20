@@ -1,4 +1,4 @@
-package fr.insalyon.p2i2.td1;
+package fr.insalyon.p2i2.application;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class TD1 {
+public class ConnexionBD {
 
     // À adapter à votre BD
     private final String serveurBD = "fimi-bd-srv1.insa-lyon.fr";
@@ -38,7 +38,7 @@ public class TD1 {
 
         try {
 
-            TD1 td1 = new TD1();
+            ConnexionBD td1 = new ConnexionBD();
 
             // Partie 2
             System.out.println("Début de la Partie 2");
@@ -369,7 +369,7 @@ public class TD1 {
             this.selectMesuresStatement.setTimestamp(3, new Timestamp(dateFin.getTime())); // DATETIME
             ResultSet result = this.selectMesuresStatement.executeQuery();
 
-            SimpleDateFormat formatDatePourCSV = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            // SimpleDateFormat formatDatePourCSV = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             DecimalFormat formatNombreDecimal = new DecimalFormat("0.00");
             formatNombreDecimal.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ROOT));
 

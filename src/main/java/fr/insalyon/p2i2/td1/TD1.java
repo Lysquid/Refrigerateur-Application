@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class Application {
+public class TD1 {
 
     // À adapter à votre BD
     private final String serveurBD = "fimi-bd-srv1.insa-lyon.fr";
@@ -38,7 +38,7 @@ public class Application {
 
         try {
 
-            Application td1 = new Application();
+            TD1 td1 = new TD1();
 
             // Partie 2
             System.out.println("Début de la Partie 2");
@@ -369,7 +369,7 @@ public class Application {
             this.selectMesuresStatement.setTimestamp(3, new Timestamp(dateFin.getTime())); // DATETIME
             ResultSet result = this.selectMesuresStatement.executeQuery();
 
-            SimpleDateFormat formatDatePourCSV = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            // SimpleDateFormat formatDatePourCSV = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             DecimalFormat formatNombreDecimal = new DecimalFormat("0.00");
             formatNombreDecimal.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ROOT));
 
