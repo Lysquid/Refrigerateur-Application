@@ -13,24 +13,30 @@ public class Application extends JFrame{
         
         //Initialisation de la fenêtre principale
 	
-		this.setTitle("Application frigo");
-		this.setSize(1280,720);
-		this.setLocation(250,0);
-		this.setResizable(false);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(true);
+		setTitle("Application frigo");
+        setLocation(100,200);
+        setSize(1280,720);
 
-        JLabel CourantY = new JLabel();
-        CourantY.setLayout(null);
-        CourantY.setBounds(100,100,100,100);
-        CourantY.setForeground(new Color(255,227,208));
-        CourantY.setFont(new Font("Juice ITC",Font.BOLD,35));
+
+        JLabel temp = new JLabel (" Température : ");
+        temp.setBounds(0,0,150,40);
+
+        JLabel hum = new JLabel (" Humidité : ");
+        hum.setBounds(0,50,150,40);
+
+        JLabel ouv = new JLabel (" Ouverture : ");
+        ouv.setBounds(0,100,150,40);
         
 
-        JPanel panneauGlobal = new JPanel();
-		panneauGlobal.setBackground(new Color(255,0,0));
-		panneauGlobal.setLayout(null);
-        panneauGlobal.add(CourantY);
+        JPanel monConteneur = new JPanel();
+        monConteneur.setLayout(null);
+        monConteneur.add (temp);
+        monConteneur.add (hum);
+        monConteneur.add(ouv);
+        monConteneur.setBounds(10,10,300,200);
+        add(monConteneur);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
 
     }
 
