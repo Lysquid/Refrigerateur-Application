@@ -4,15 +4,19 @@ import javax.swing.JLabel;
 
 public class Information extends Box {
     
-    double info  = 0; 
-    JLabel rendu;
+    double valeur  = 0;
+    String capteur;
+    JLabel info = new JLabel();
         
-    public Information(String capteur){
+    public Information(String capt){
+        this.capteur = capt;
+        info = new JLabel(capteur + " : " + valeur);
+    }
 
-        double info = 0; //Changer 0 et mettre la valeur du capteur actuek à récupérer avec la base de donnée
-            
-        rendu = new JLabel (capteur + " : " + info);
-
+    public void maj(String connection){
+        double newValeur = 0;//On récupère l'infomation voulue dans la base de donnée à partir de l'argument
+        valeur = newValeur;
+        info = new JLabel(capteur + " : "+ valeur);
     }
         
 }
