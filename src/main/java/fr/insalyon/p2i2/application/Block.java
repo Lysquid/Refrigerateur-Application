@@ -13,13 +13,12 @@ public class Block extends JPanel {
 
     private final Color backgroundColor = Color.BLUE;
 
-    public Block(String title, Grid grid)
+    public Block(String title, Component grid)
 
     {
 
         setBackground(Color.CYAN);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        // setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
 
         Font font = new Font(getFont().getFontName(), Font.PLAIN, 30);
 

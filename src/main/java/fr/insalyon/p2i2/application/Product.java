@@ -6,9 +6,10 @@ import java.awt.*;
 
 public class Product extends Compo {
 
+    private final int size = 130;
+
     public Product() {
-        setSize(100, 100);
-        setMaximumSize(new Dimension(100, 100));
+        setPreferredSize(new Dimension(400, 100));
     }
 
 }

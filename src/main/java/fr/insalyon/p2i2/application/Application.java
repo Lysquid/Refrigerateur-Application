@@ -30,9 +30,9 @@ public class Application extends JPanel implements ActionListener {
 
         Column column2 = new Column();
         column2.add(Box.createRigidArea(new Dimension(0, 50)));
-        //Ajout du block monitoring
-        Grid gridMonitor = new Grid(3,3);
-        Information temp = new Information("Temperature"); 
+        // Ajout du block monitoring
+        Grid gridMonitor = new Grid(3, 3);
+        Information temp = new Information("Temperature");
         temp.maj(10);
         gridMonitor.add(temp);
 
@@ -54,8 +54,15 @@ public class Application extends JPanel implements ActionListener {
         Grid gridStock = new Grid();
         for (int i = 0; i < 15; i++) {
             gridStock.add(new Product());
+
+            gridStock.add(Box.createRigidArea(new Dimension(0, 20)));
         }
-        Block blockStock = new Block("Stock", gridStock);
+
+        JScrollPane scrollPane = new JScrollPane(gridStock);
+
+        // scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setHorizontalScrollBar(null);
+        Block blockStock = new Block("Stock", scrollPane);
         column3.add(blockStock);
         add(column3);
 

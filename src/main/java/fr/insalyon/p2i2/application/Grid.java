@@ -1,5 +1,6 @@
 package fr.insalyon.p2i2.application;
 
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import java.awt.Color;
@@ -17,7 +18,8 @@ public class Grid extends JPanel {
 
     public Grid() {
         setBackground(Color.YELLOW);
-        setLayout(new FlowLayout());
+        setLayout(new FlowLayout(FlowLayout.LEFT, gap, gap));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
 }
