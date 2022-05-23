@@ -5,10 +5,13 @@ import java.awt.GridLayout;
 
 import javax.swing.Box;
 import javax.swing.JPanel;
+
 import java.awt.Insets;
 import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
-public class Application extends JPanel {
+public class Application extends JPanel implements ActionListener {
 
     private final int padding = 20;
 
@@ -40,7 +43,7 @@ public class Application extends JPanel {
         gridMonitor.add(new Information("Je sais pas quoi mettre"));
         Block blockMonitor = new Block("Monitoring", gridMonitor);
         column2.add(blockMonitor);
-        //Ajout du block alerte
+        // Ajout du block alerte
         Grid gridAlerts = new Grid(4, 0);
         gridAlerts.add(new Alert());
         Block blockAlerts = new Block("Alertes", gridAlerts);
@@ -56,11 +59,19 @@ public class Application extends JPanel {
         column3.add(blockStock);
         add(column3);
 
+        Timer timer = new Timer(1000, this);
+
     }
 
     @Override
     public Insets getInsets() {
         return new Insets(padding, padding, padding, padding);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent arg0) {
+        // TODO Auto-generated method stub
+
     }
 
 }
