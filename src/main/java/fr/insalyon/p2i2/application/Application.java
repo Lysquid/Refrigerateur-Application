@@ -19,11 +19,15 @@ public class Application extends JPanel {
         Column column1 = new Column();
         add(column1);
 
-        column1.add(new Block());
-        column1.add(Box.createRigidArea(new Dimension(0, 50)));
-        column1.add(new Block());
+        Grid gridGraphs = new Grid(3, 0);
+        gridGraphs.add(new Graph());
+        gridGraphs.add(new Graph());
+        gridGraphs.add(new Graph());
+        Block blockGraphs = new Block(gridGraphs);
+        column1.add(blockGraphs);
 
         Column column2 = new Column();
+        column2.add(Box.createRigidArea(new Dimension(0, 50)));
         add(column2);
 
         Column column3 = new Column();

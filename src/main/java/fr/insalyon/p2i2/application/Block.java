@@ -11,7 +11,7 @@ public class Block extends JPanel {
 
     private final Color backgroundColor = Color.BLUE;
 
-    public Block()
+    public Block(Grid grid)
 
     {
 
@@ -26,7 +26,7 @@ public class Block extends JPanel {
         add(label);
 
         // add(new JButton("Bouton"));
-        add(new Grid(2, 2));
+        add(grid);
 
     }
 
