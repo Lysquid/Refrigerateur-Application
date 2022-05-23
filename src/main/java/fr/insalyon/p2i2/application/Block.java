@@ -10,7 +10,9 @@ public class Block extends JPanel {
 
     private final Color backgroundColor = Color.BLUE;
 
-    public Block(Color color) {
+    public Block(Color color)
+    
+     {
 
         setBackground(color);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

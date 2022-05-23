@@ -7,9 +7,11 @@ import java.awt.GridLayout;
 
 public class Grid extends JPanel {
 
+    private final int gap = 10;
+
     public Grid(int rows, int cols) {
 
-        setLayout(new GridLayout(rows, cols));
+        setLayout(new GridLayout(rows, cols, gap, gap));
         setBackground(Color.YELLOW);
     }
 
