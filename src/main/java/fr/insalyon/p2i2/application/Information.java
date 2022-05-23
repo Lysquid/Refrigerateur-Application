@@ -10,10 +10,11 @@ public class Information extends Compo {
     public Information(String capt) {
         this.capteur = capt;
         info = new JLabel();
+        this.add(info);
     }
 
     public void maj(double newValeur) {
-        info = new JLabel(capteur + " : " + newValeur);
+        info.setText(capteur + " : " + newValeur);
     }
 
 }

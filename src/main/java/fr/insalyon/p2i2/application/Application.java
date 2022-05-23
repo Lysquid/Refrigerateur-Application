@@ -30,9 +30,12 @@ public class Application extends JPanel implements ActionListener {
 
         Column column2 = new Column();
         column2.add(Box.createRigidArea(new Dimension(0, 50)));
-        // Ajout du block monitoring
-        Grid gridMonitor = new Grid(3, 3);
-        gridMonitor.add(new Information("Temperature"));
+        //Ajout du block monitoring
+        Grid gridMonitor = new Grid(3,3);
+        Information temp = new Information("Temperature"); 
+        temp.maj(10);
+        gridMonitor.add(temp);
+
         gridMonitor.add(new Information("Humidité"));
         gridMonitor.add(new Information("Gaz 1"));
         gridMonitor.add(new Information("Gaz 2"));

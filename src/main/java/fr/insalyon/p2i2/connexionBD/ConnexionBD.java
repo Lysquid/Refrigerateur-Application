@@ -35,7 +35,7 @@ public class ConnexionBD {
     public void main(String[] args) {
 
         System.out.println("Début du TD1");
-
+        
         try {
 
             ConnexionBD td1 = new ConnexionBD();
@@ -91,14 +91,17 @@ public class ConnexionBD {
             );
 
             System.out.println("Fin de la Partie 4");
+            double temperature = getTemperature();
+            System.out.println("Fin du TD1");
+            System.out.println(temperature);
+
 
         } catch (Exception ex) {
             //ex.printStackTrace(System.err);
             System.out.println();
             System.out.println("/!\\ Exception lors de l'exécution: " + ex.getMessage());
         }
-
-        System.out.println("Fin du TD1");
+        
     }
 
     public void sommeDepuisClavier() throws Exception {
@@ -416,6 +419,20 @@ public class ConnexionBD {
             ex.printStackTrace(System.err);
             throw new Exception("Erreur dans la méthode ecrireMesuresDansFichier()");
         }
+    }
+    public double getTemperature() throws Exception {
+        try {
+            // À compléter
+            //this.insertMesureStatement = this.connection.prepareStatement("INSERT INTO Mesure (numInventaire,valeur,dateMesure) VALUES (?,?,?)");
+            this.selectMesuresStatement = this.connection.prepareStatement("SELECT valeur FROM Mesure m, Capteur c, TypeMesure t WHERE t.idTypeMesure = c.idTypeMesure AND c.idCapteur = m.idCapteur AND t.nomTypeMesure = 'température' AND c.idCapteur = 1 ORDER BY m.dateMesure DESC LIMIT 0,1 ;");
+            ResultSet temperature = this.selectMesuresStatement.executeQuery();
+            return temperature.getDouble(1);
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.err);
+            throw new Exception("Erreur dans la méthode getTemperature()");
+        }
+        
+        //return temperature;
     }
 
 }
