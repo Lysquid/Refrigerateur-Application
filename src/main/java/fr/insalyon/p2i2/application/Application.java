@@ -17,16 +17,25 @@ public class Application extends JPanel {
         setLayout(new GridLayout(0, 3, padding, padding));
 
         Column column1 = new Column();
+        Grid gridGraphs = new Grid(3, 0);
+        gridGraphs.add(new Graph());
+        gridGraphs.add(new Graph());
+        gridGraphs.add(new Graph());
+        Block blockGraphs = new Block("Graphiques", gridGraphs);
+        column1.add(blockGraphs);
         add(column1);
 
-        column1.add(new Block());
-        column1.add(Box.createRigidArea(new Dimension(0, 50)));
-        column1.add(new Block());
-
         Column column2 = new Column();
+        column2.add(Box.createRigidArea(new Dimension(0, 50)));
         add(column2);
 
         Column column3 = new Column();
+        Grid gridStock = new Grid(6, 3);
+        for (int i = 0; i < 8; i++) {
+            gridStock.add(new Product());
+        }
+        Block blockStock = new Block("Stock", gridStock);
+        column3.add(blockStock);
         add(column3);
 
     }

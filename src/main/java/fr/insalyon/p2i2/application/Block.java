@@ -11,7 +11,7 @@ public class Block extends JPanel {
 
     private final Color backgroundColor = Color.BLUE;
 
-    public Block()
+    public Block(String title, Grid grid)
 
     {
 
@@ -21,12 +21,12 @@ public class Block extends JPanel {
 
         Font font = new Font(getFont().getFontName(), Font.PLAIN, 30);
 
-        JLabel label = new JLabel("Titre", SwingConstants.CENTER);
+        JLabel label = new JLabel(title, SwingConstants.CENTER);
         label.setFont(font);
         add(label);
 
         // add(new JButton("Bouton"));
-        add(new Grid(2, 2));
+        add(grid);
 
     }
 
