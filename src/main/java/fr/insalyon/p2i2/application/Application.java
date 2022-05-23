@@ -27,7 +27,17 @@ public class Application extends JPanel {
 
         Column column2 = new Column();
         column2.add(Box.createRigidArea(new Dimension(0, 50)));
-        // TODO : Ajouter le block monitoring
+        //Ajout du block monitoring
+        Grid gridMonitor = new Grid(3,3);
+        gridMonitor.add(new Information("Temperature"));
+        gridMonitor.add(new Information("Humidité"));
+        gridMonitor.add(new Information("Gaz 1"));
+        gridMonitor.add(new Information("Gaz 2"));
+        gridMonitor.add(new Information("Gaz 3"));
+        gridMonitor.add(new Information("Je sais pas quoi mettre"));
+        Block blockMonitor = new Block("Monitoring", gridMonitor);
+        column2.add(blockMonitor);
+        //Ajout du block alerte
         Grid gridAlerts = new Grid(4, 0);
         gridAlerts.add(new Alert());
         Block blockAlerts = new Block("Alerts", gridAlerts);
