@@ -1,4 +1,4 @@
-package fr.insalyon.p2i2.application;
+package fr.insalyon.p2i2.connexionBD;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -32,7 +32,7 @@ public class ConnexionBD {
     private PreparedStatement insertMesureStatement = null;
     private PreparedStatement selectMesuresStatement = null;
 
-    public static void main(String[] args) {
+    public void main(String[] args) {
 
         System.out.println("Début du TD1");
 

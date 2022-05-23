@@ -1,42 +1,23 @@
 package fr.insalyon.p2i2.application;
 
-import javax.swing.*; //fenêtre
-import java.awt.*; //couleur
-import java.awt.event.*; //événements ActionListener
-import javax.swing.event.*; //événements ChangeListener
-import java.io.*; //images
+import java.awt.GridLayout;
 
+import javax.swing.JPanel;
 
-public class Application extends JFrame{
+public class Application extends JPanel {
 
-    public Application(){
-        
-        //Initialisation de la fenêtre principale
-	
-		setTitle("Application frigo");
-        setLocation(100,200);
-        setSize(1280,720);
+    public Application() {
 
+        setLayout(new GridLayout(0, 3, 50, 50));
 
-        JLabel temp = new JLabel (" Température : ");
-        temp.setBounds(0,0,150,40);
+        Column colonne = new Column();
+        add(colonne);
 
-        JLabel hum = new JLabel (" Humidité : ");
-        hum.setBounds(0,50,150,40);
+        Column colonne2 = new Column();
+        add(colonne2);
 
-        JLabel ouv = new JLabel (" Ouverture : ");
-        ouv.setBounds(0,100,150,40);
-        
-
-        JPanel monConteneur = new JPanel();
-        monConteneur.setLayout(null);
-        monConteneur.add (temp);
-        monConteneur.add (hum);
-        monConteneur.add(ouv);
-        monConteneur.setBounds(10,10,300,200);
-        add(monConteneur);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
+        Column colonne3 = new Column();
+        add(colonne3);
 
     }
 
