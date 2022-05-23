@@ -30,8 +30,8 @@ public class Application extends JPanel implements ActionListener {
 
         Column column2 = new Column();
         column2.add(Box.createRigidArea(new Dimension(0, 50)));
-        //Ajout du block monitoring
-        Grid gridMonitor = new Grid(3,3);
+        // Ajout du block monitoring
+        Grid gridMonitor = new Grid(3, 3);
         gridMonitor.add(new Information("Temperature"));
         gridMonitor.add(new Information("Humidité"));
         gridMonitor.add(new Information("Gaz 1"));
@@ -40,7 +40,7 @@ public class Application extends JPanel implements ActionListener {
         gridMonitor.add(new Information("Je sais pas quoi mettre"));
         Block blockMonitor = new Block("Monitoring", gridMonitor);
         column2.add(blockMonitor);
-        //Ajout du block alerte
+        // Ajout du block alerte
         Grid gridAlerts = new Grid(4, 0);
         gridAlerts.add(new Alert());
         Block blockAlerts = new Block("Alertes", gridAlerts);
@@ -56,7 +56,7 @@ public class Application extends JPanel implements ActionListener {
         column3.add(blockStock);
         add(column3);
 
-        Timer timer = new Timer(10, this);
+        Timer timer = new Timer(1000, this);
 
     }
 
