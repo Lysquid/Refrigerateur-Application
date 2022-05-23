@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 import java.awt.Insets;
 import java.awt.*;
 
-
 public class Application extends JPanel {
 
     private final int padding = 30;
@@ -20,9 +19,9 @@ public class Application extends JPanel {
         Column column1 = new Column();
         add(column1);
 
-        column1.add(new Block(Color.BLUE));
+        column1.add(new Block());
         column1.add(Box.createRigidArea(new Dimension(0, 50)));
-        column1.add(new Block(Color.RED));
+        column1.add(new Block());
 
         Column column2 = new Column();
         add(column2);

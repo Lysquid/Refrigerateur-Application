@@ -2,6 +2,7 @@ package fr.insalyon.p2i2.application;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import java.awt.*;
@@ -10,15 +11,18 @@ public class Block extends JPanel {
 
     private final Color backgroundColor = Color.BLUE;
 
-    public Block(Color color)
-    
-     {
+    public Block()
 
-        setBackground(color);
+    {
+
+        setBackground(Color.CYAN);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         // setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
 
-        JLabel label = new JLabel("Titre");
+        Font font = new Font(getFont().getFontName(), Font.PLAIN, 30);
+
+        JLabel label = new JLabel("Titre", SwingConstants.CENTER);
+        label.setFont(font);
         add(label);
 
         // add(new JButton("Bouton"));
