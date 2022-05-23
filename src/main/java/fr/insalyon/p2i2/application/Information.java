@@ -2,7 +2,7 @@ package fr.insalyon.p2i2.application;
 
 import javax.swing.JLabel;
 
-public class Information extends JLabel {
+public class Information extends Box {
     
     double info  = 0; 
     JLabel rendu;
