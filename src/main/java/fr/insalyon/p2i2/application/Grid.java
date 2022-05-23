@@ -7,7 +7,7 @@ import java.awt.GridLayout;
 
 public class Grid extends JPanel {
 
-    private final int gap = 10;
+    private final int gap = 5;
 
     public Grid(int rows, int cols) {
 

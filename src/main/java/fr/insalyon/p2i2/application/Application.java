@@ -10,14 +10,14 @@ import java.awt.*;
 
 public class Application extends JPanel {
 
-    private final int padding = 30;
+    private final int padding = 20;
 
     public Application() {
 
         setLayout(new GridLayout(0, 3, padding, padding));
 
         Column column1 = new Column();
-        Grid gridGraphs = new Grid(3, 0);
+        Grid gridGraphs = new Grid(3, 3);
         gridGraphs.add(new Graph());
         gridGraphs.add(new Graph());
         gridGraphs.add(new Graph());
@@ -40,12 +40,12 @@ public class Application extends JPanel {
         //Ajout du block alerte
         Grid gridAlerts = new Grid(4, 0);
         gridAlerts.add(new Alert());
-        Block blockAlerts = new Block("Alerts", gridAlerts);
+        Block blockAlerts = new Block("Alertes", gridAlerts);
         column2.add(blockAlerts);
         add(column2);
 
         Column column3 = new Column();
-        Grid gridStock = new Grid(6, 3);
+        Grid gridStock = new Grid(6, 2);
         for (int i = 0; i < 8; i++) {
             gridStock.add(new Product());
         }
