@@ -4,6 +4,6 @@ import java.awt.Color;
 
 import javax.swing.JPanel;
 
-public class Graph extends Box {
+public class Graph extends Compo {
 
 }

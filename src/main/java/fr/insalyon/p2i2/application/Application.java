@@ -37,7 +37,7 @@ public class Application extends JPanel implements ActionListener {
         gridMonitor.add(new Information("Gaz 1"));
         gridMonitor.add(new Information("Gaz 2"));
         gridMonitor.add(new Information("Gaz 3"));
-        gridMonitor.add(new Information("Je sais pas quoi mettre"));
+        gridMonitor.add(new Information("Ouvert"));
         Block blockMonitor = new Block("Monitoring", gridMonitor);
         column2.add(blockMonitor);
         // Ajout du block alerte
@@ -48,8 +48,8 @@ public class Application extends JPanel implements ActionListener {
         add(column2);
 
         Column column3 = new Column();
-        Grid gridStock = new Grid(6, 2);
-        for (int i = 0; i < 8; i++) {
+        Grid gridStock = new Grid();
+        for (int i = 0; i < 15; i++) {
             gridStock.add(new Product());
         }
         Block blockStock = new Block("Stock", gridStock);

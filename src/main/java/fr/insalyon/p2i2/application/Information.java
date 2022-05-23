@@ -2,7 +2,7 @@ package fr.insalyon.p2i2.application;
 
 import javax.swing.JLabel;
 
-public class Information extends Box {
+public class Information extends Compo {
 
     String capteur;
     JLabel info = new JLabel();

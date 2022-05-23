@@ -6,6 +6,8 @@ import javax.swing.SwingConstants;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
 public class Block extends JPanel {
 
@@ -23,7 +25,10 @@ public class Block extends JPanel {
 
         JLabel label = new JLabel(title, SwingConstants.CENTER);
         label.setFont(font);
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(label);
+
+        add(Box.createRigidArea(new Dimension(0, 20)));
 
         // add(new JButton("Bouton"));
         add(grid);
