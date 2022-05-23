@@ -13,8 +13,7 @@ public class Information extends Box {
         info = new JLabel(capteur + " : " + valeur);
     }
 
-    public void maj(String connection){
-        double newValeur = 0;//On récupère l'infomation voulue dans la base de donnée à partir de l'argument
+    public void maj(double newValeur){
         valeur = newValeur;
         info = new JLabel(capteur + " : "+ valeur);
     }
