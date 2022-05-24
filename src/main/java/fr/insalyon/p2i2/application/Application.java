@@ -50,18 +50,30 @@ public class Application extends JPanel implements ActionListener {
         add(column2);
 
         Column column3 = new Column();
-        Grid gridStock = new Grid();
-        for (int i = 0; i < 15; i++) { 
+        Grid gridStock = new Grid(1);
+
+        // GridBagConstraints gbc = new GridBagConstraints();
+        // gbc.weightx = 1;
+        // gbc.fill = GridBagConstraints.HORIZONTAL;
+        // gbc.gridwidth = GridBagConstraints.REMAINDER;
+        // gbc.anchor = GridBagConstraints.NORTH;
+        // gbc.weighty = 1;
+        // int insets = 1;
+        // gbc.insets = new Insets(insets, insets, insets, insets);
+        for (int i = 0; i < 15; i++) {
             gridStock.add(new Product());
 
-            gridStock.add(Box.createRigidArea(new Dimension(0, 20)));
+            // gridStock.add(Box.createRigidArea(new Dimension(0, 20)));
         }
 
-        JScrollPane scrollPane = new JScrollPane(gridStock);
+        // JScrollPane scrollPane = new JScrollPane(gridStock);
 
         // scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setHorizontalScrollBar(null);
-        Block blockStock = new Block("Stock", scrollPane);
+        // scrollPane.setHorizontalScrollBar(null);
+        // Block blockStock = new Block("Stock", scrollPane);
+
+        Block blockStock = new Block("Stock", gridStock);
+
         column3.add(blockStock);
         add(column3);
 

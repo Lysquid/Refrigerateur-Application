@@ -8,6 +8,9 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import net.miginfocom.swing.MigLayout;
+import net.miginfocom.layout.*;
+
 public class Block extends JPanel {
 
     private final Color backgroundColor = Color.BLUE;
@@ -17,9 +20,14 @@ public class Block extends JPanel {
     {
 
         setBackground(Color.CYAN);
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        // setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        Font font = new Font(getFont().getFontName(), Font.PLAIN, 30);
+        setLayout(new MigLayout(
+                new LC().wrapAfter(1),
+                new AC().fill().grow(),
+                new AC()));
+
+        Font font = new Font(null, Font.PLAIN, 30);
 
         JLabel label = new JLabel(title, SwingConstants.CENTER);
         label.setFont(font);

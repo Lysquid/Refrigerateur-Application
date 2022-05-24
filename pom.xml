@@ -29,6 +29,12 @@
             <artifactId>openfoodfacts-java-wrapper</artifactId>
             <version>0.9.3</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.miglayout/miglayout -->
+        <dependency>
+            <groupId>com.miglayout</groupId>
+            <artifactId>miglayout</artifactId>
+            <version>3.7.4</version>
+        </dependency>
 
     </dependencies>
 
