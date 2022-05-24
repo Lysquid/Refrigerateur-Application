@@ -1,5 +1,7 @@
 package fr.insalyon.p2i2.application;
 
+import java.awt.*;
+
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 
@@ -10,7 +12,7 @@ public class Information extends Compo {
     String unite;
 
     public Information(String capteur, String unite) {
-
+        setMySize(200, 80);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         labelCapteur = new JLabel(capteur);
@@ -25,6 +27,13 @@ public class Information extends Compo {
 
     public void maj(double valeur) {
         labelValeur.setText(String.valueOf(valeur) + " " + unite);
+    }
+
+    @Override
+    public Insets getInsets() {
+        // TODO Auto-generated method stub
+        int inset = 10;
+        return new Insets(inset, inset, inset, inset);
     }
 
 }

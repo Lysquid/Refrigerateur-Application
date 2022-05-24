@@ -1,10 +1,6 @@
 package fr.insalyon.p2i2.application;
 
 import java.awt.GridLayout;
-
-import javax.swing.Box;
-import javax.swing.JPanel;
-
 import java.awt.Insets;
 import java.awt.*;
 import java.awt.event.*;
@@ -19,7 +15,7 @@ public class Application extends JPanel implements ActionListener {
         setLayout(new GridLayout(0, 3, padding, padding));
 
         Column column1 = new Column();
-        Grid gridGraphs = new Grid(3, 3);
+        Grid gridGraphs = new Grid(true);
         gridGraphs.add(new Graph());
         gridGraphs.add(new Graph());
         gridGraphs.add(new Graph());
@@ -29,40 +25,53 @@ public class Application extends JPanel implements ActionListener {
 
         Column column2 = new Column();
         column2.add(Box.createRigidArea(new Dimension(0, 50)));
-        // Ajout du block monitoring
-        Grid gridMonitor = new Grid(3, 3);
-        Information temp = new Information("Temperature");
-        temp.maj(10);
-        gridMonitor.add(temp);
 
-        gridMonitor.add(new Information("Humidité"));
-        gridMonitor.add(new Information("Gaz 1"));
-        gridMonitor.add(new Information("Gaz 2"));
-        gridMonitor.add(new Information("Gaz 3"));
-        gridMonitor.add(new Information("Ouvert"));
+        // Ajout du block monitoring
+        Grid gridMonitor = new Grid(false);
+
+        Grid colonne1 = new Grid(true);
+        colonne1.add(new Information("Temperature", "°C"));
+        colonne1.add(new Information("Humidité", "%"));
+        colonne1.add(new Information("Ouvert", ""));
+        gridMonitor.add(colonne1);
+
+        Grid colonne2 = new Grid(true);
+        colonne2.add(new Information("Gaz 1", "ppm"));
+        colonne2.add(new Information("Gaz 2", "ppm"));
+        colonne2.add(new Information("Gaz 3", "ppm"));
+        gridMonitor.add(colonne2);
+
         Block blockMonitor = new Block("Monitoring", gridMonitor);
         column2.add(blockMonitor);
+
         // Ajout du block alerte
-        Grid gridAlerts = new Grid(4, 0);
-        gridAlerts.add(new Alert());
-        Block blockAlerts = new Block("Alertes", gridAlerts);
+        Grid gridAlerts = new Grid(true);
+        for (int i = 0; i < 5; i++) {
+            gridAlerts.add(new Alert());
+        }
+        JScrollPane scrollPaneAlerts = new JScrollPane(gridAlerts);
+        scrollPaneAlerts.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+        Block blockAlerts = new Block("Alertes", scrollPaneAlerts);
+
         column2.add(blockAlerts);
+        JButton jButton = new JButton("Effacer");
+        column2.add(jButton);
+        jButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(column2);
 
         Column column3 = new Column();
-        Grid gridStock = new Grid();
-        for (int i = 0; i < 5; i++) {
+        Grid gridStock = new Grid(true);
+        for (int i = 0; i < 15; i++) {
             gridStock.add(new Product());
-
-            gridStock.add(Box.createRigidArea(new Dimension(0, 20)));
         }
 
-        JScrollPane scrollPane = new JScrollPane(gridStock);
+        JScrollPane scrollPaneStock = new JScrollPane(gridStock);
 
-        // scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setHorizontalScrollBar(null);
-        Block blockStock = new Block("Stock", scrollPane);
+        scrollPaneStock.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        Block blockStock = new Block("Stock", scrollPaneStock);
         column3.add(blockStock);
+        column3.add(new JButton("Mode ajout"));
         add(column3);
 
         Timer timer = new Timer(1000, this);

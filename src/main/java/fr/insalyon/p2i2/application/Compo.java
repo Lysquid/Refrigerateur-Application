@@ -5,12 +5,17 @@ import java.awt.*;
 
 public class Compo extends JPanel {
 
-    protected Font font;
+    protected Font font = new Font(null, Font.PLAIN, 18);
 
     public Compo() {
         setBackground(Color.GRAY);
-        font = new Font(null, Font.PLAIN, 18);
 
+    }
+
+    public void setMySize(int w, int h) {
+        Dimension size = new Dimension(w, h);
+        setPreferredSize(size);
+        setMaximumSize(size);
     }
 
 }
