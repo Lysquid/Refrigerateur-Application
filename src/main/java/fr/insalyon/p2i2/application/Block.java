@@ -25,19 +25,19 @@ public class Block extends JPanel {
         setLayout(new MigLayout(
                 new LC().wrapAfter(1),
                 new AC().fill().grow(),
-                new AC()));
+                new AC().fill()));
 
         Font font = new Font(null, Font.PLAIN, 30);
 
         JLabel label = new JLabel(title, SwingConstants.CENTER);
         label.setFont(font);
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(label);
+        add(label, new CC().shrinkY(100f));
 
-        add(Box.createRigidArea(new Dimension(0, 20)));
+        // add(Box.createRigidArea(new Dimension(0, 20)));
 
         // add(new JButton("Bouton"));
-        add(grid);
+        add(grid, new CC().grow());
 
     }
 

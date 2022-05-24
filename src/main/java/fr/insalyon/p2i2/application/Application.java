@@ -19,7 +19,7 @@ public class Application extends JPanel implements ActionListener {
         setLayout(new GridLayout(0, 3, padding, padding));
 
         Column column1 = new Column();
-        Grid gridGraphs = new Grid(3, 3);
+        Grid gridGraphs = new Grid(1, true);
         gridGraphs.add(new Graph());
         gridGraphs.add(new Graph());
         gridGraphs.add(new Graph());
@@ -30,27 +30,27 @@ public class Application extends JPanel implements ActionListener {
         Column column2 = new Column();
         column2.add(Box.createRigidArea(new Dimension(0, 50)));
         // Ajout du block monitoring
-        Grid gridMonitor = new Grid(3, 3);
-        Information temp = new Information("Temperature");
+        Grid gridMonitor = new Grid(2, false);
+        Information temp = new Information("Temperature", "°C");
         temp.maj(10);
         gridMonitor.add(temp);
 
-        gridMonitor.add(new Information("Humidité"));
-        gridMonitor.add(new Information("Gaz 1"));
-        gridMonitor.add(new Information("Gaz 2"));
-        gridMonitor.add(new Information("Gaz 3"));
-        gridMonitor.add(new Information("Ouvert"));
+        gridMonitor.add(new Information("Humidité", "%"));
+        gridMonitor.add(new Information("Gaz 1", "ppm"));
+        gridMonitor.add(new Information("Gaz 2", "ppm"));
+        gridMonitor.add(new Information("Gaz 3", "ppm"));
+        gridMonitor.add(new Information("Ouvert", ""));
         Block blockMonitor = new Block("Monitoring", gridMonitor);
         column2.add(blockMonitor);
         // Ajout du block alerte
-        Grid gridAlerts = new Grid(4, 0);
+        Grid gridAlerts = new Grid(1, false);
         gridAlerts.add(new Alert());
         Block blockAlerts = new Block("Alertes", gridAlerts);
         column2.add(blockAlerts);
         add(column2);
 
         Column column3 = new Column();
-        Grid gridStock = new Grid(1);
+        Grid gridStock = new Grid(1, false);
 
         // GridBagConstraints gbc = new GridBagConstraints();
         // gbc.weightx = 1;

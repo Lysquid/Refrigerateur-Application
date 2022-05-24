@@ -13,21 +13,21 @@ public class Grid extends JPanel {
 
     private final int gap = 5;
 
-    public Grid(int rows, int cols) {
-        this(1);
-        setLayout(new GridLayout(rows, cols, gap, gap));
-    }
-
-    public Grid(int wrapAfter) {
+    public Grid(int wrapAfter, boolean fillY) {
         setBackground(Color.YELLOW);
-        // setLayout(new FlowLayout(FlowLayout.LEFT, gap, gap));
-        // setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        // setPreferredSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
-        // setLayout(new GridBagLayout());
+
+        LC layoutConstraints = new LC().wrapAfter(wrapAfter).insets("20");
+        AC colConstraints = new AC().fill().grow().sizeGroup("main");
+        AC rowConstraints = new AC();
+
+        if (fillY) {
+            rowConstraints.fill().grow().sizeGroup("main");
+        }
+
         setLayout(new MigLayout(
-                new LC().wrapAfter(wrapAfter).insets("20"),
-                new AC().fill().grow(),
-                new AC()));
+                layoutConstraints,
+                colConstraints,
+                rowConstraints));
     }
 
 }

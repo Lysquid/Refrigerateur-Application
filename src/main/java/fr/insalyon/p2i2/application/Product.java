@@ -3,7 +3,7 @@ package fr.insalyon.p2i2.application;
 import javax.swing.*;
 import java.awt.*;
 import net.miginfocom.swing.MigLayout;
-import net.miginfocom.layout.*;;
+import net.miginfocom.layout.*;
 
 public class Product extends Compo {
 
@@ -17,8 +17,6 @@ public class Product extends Compo {
                 new LC().wrapAfter(1),
                 new AC(),
                 new AC()));
-
-        Font font = new Font(null, Font.PLAIN, 18);
 
         JLabel label1 = new JLabel("Nom du produit");
         label1.setFont(font);
