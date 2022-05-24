@@ -8,7 +8,7 @@ public class Product extends Compo {
     private final int size = 130;
 
     public Product() {
-        setPreferredSize(new Dimension(400, 100));
+        setPreferredSize(new Dimension(4000, 100));
     }
 
 }

@@ -51,7 +51,7 @@ public class Application extends JPanel implements ActionListener {
 
         Column column3 = new Column();
         Grid gridStock = new Grid();
-        for (int i = 0; i < 15; i++) { 
+        for (int i = 0; i < 5; i++) {
             gridStock.add(new Product());
 
             gridStock.add(Box.createRigidArea(new Dimension(0, 20)));

@@ -12,8 +12,9 @@ public class Grid extends JPanel {
     private final int gap = 5;
 
     public Grid(int rows, int cols) {
-        this();
-        setLayout(new GridLayout(rows, cols, gap, gap));
+        // this();
+        setBackground(Color.YELLOW);
+        setLayout(new FlowLayout(FlowLayout.CENTER, gap, gap));
     }
 
     public Grid() {
