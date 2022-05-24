@@ -1,5 +1,6 @@
 package fr.insalyon.p2i2.application;
 
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 
 public class Information extends Compo {
@@ -9,6 +10,8 @@ public class Information extends Compo {
     String unite;
 
     public Information(String capteur, String unite) {
+
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         labelCapteur = new JLabel(capteur);
         labelCapteur.setFont(font);
