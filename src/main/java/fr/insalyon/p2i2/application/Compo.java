@@ -5,7 +5,10 @@ import java.awt.*;
 
 public class Compo extends JPanel {
 
-    protected Font font = new Font(null, Font.PLAIN, 18);
+    protected static final Font mainFont = new Font(Application.fontName, Font.PLAIN, 18);
+    protected static final Font boldFont = new Font(Application.fontName, Font.BOLD, 18);
+    protected static final Font biggerFont = new Font(Application.fontName, Font.PLAIN, 24);
+    protected static final int inset = 10;
 
     public Compo() {
         setBackground(Color.GRAY);

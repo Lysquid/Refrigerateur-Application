@@ -10,21 +10,19 @@ public class Product extends Compo {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         JLabel nomProduit = new JLabel("Nom produit");
-        nomProduit.setFont(font);
+        nomProduit.setFont(boldFont);
         add(nomProduit);
         JLabel marque = new JLabel("Marque");
-        marque.setFont(font);
+        marque.setFont(mainFont);
         add(marque);
         JLabel quantite = new JLabel("quantite : 1");
-        quantite.setFont(font);
+        quantite.setFont(mainFont);
         add(quantite);
 
     }
 
     @Override
     public Insets getInsets() {
-        // TODO Auto-generated method stub
-        int inset = 10;
         return new Insets(inset, inset, inset, inset);
     }
 
