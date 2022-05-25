@@ -100,4 +100,28 @@ public class ConnexionBD {
             return false;
         }
     }
+
+    public ArrayList<Seuil> getSeuils(){
+        ArrayList<Seuil> listeSeuils = new ArrayList<>();
+        try {
+            String query = 
+            "SELECT nomCategorieProduit, nomTypeMesure, seuilMin, seuilMax"
+            + "FROM Seuil, TypeMesure, CategorieProduit"
+            + "WHERE Seuil.idTypeMesure = TypeMesure.idTypeMesure"
+            + "AND Seuil.idCategorieProduit = CategorieProduit.idCategorieProduit;";
+            PreparedStatement selectSeuilsStatement = this.connection.prepareStatement(query);
+            ResultSet Seuils = selectSeuilsStatement.executeQuery();
+            while(Seuils.next()){
+                Seuil seuil = new Seuil(Seuils.getString("nomCategorieProduit"),
+                Seuils.getString("nomTypeMesure"), Seuils.getFloat("seuilMin"),
+                Seuils.getFloat("seuilMax"));
+                listeSeuils.add(seuil);
+                System.out.println(seuil.toString());
+            }
+            return listeSeuils;
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.err);
+            return listeSeuils;
+        }
+    }
 }
