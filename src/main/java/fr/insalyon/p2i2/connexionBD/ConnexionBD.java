@@ -104,16 +104,18 @@ public class ConnexionBD {
         ArrayList<Seuil> listeSeuils = new ArrayList<>();
         try {
             String query = 
-            "SELECT nomCategorieProduit, nomTypeMesure, seuilMin, seuilMax"
-            + " FROM Seuil, TypeMesure, CategorieProduit"
+            "SELECT nomCategorieProduit, nomTypeMesure, seuilMin, seuilMax, valeur, unite"
+            + " FROM Seuil, TypeMesure, CategorieProduit, Mesure, Capteur"
             + " WHERE Seuil.idTypeMesure = TypeMesure.idTypeMesure"
+            + " AND Capteur.idTypeMesure = TypeMesure.idTypeMesure"
+            + " AND Mesure.idCapteur = Capteur.idCapteur"
             + " AND Seuil.idCategorieProduit = CategorieProduit.idCategorieProduit;";
             PreparedStatement selectSeuilsStatement = this.connection.prepareStatement(query);
             ResultSet Seuils = selectSeuilsStatement.executeQuery();
             while(Seuils.next()){
                 Seuil seuil = new Seuil(Seuils.getString("nomCategorieProduit"),
                 Seuils.getString("nomTypeMesure"), Seuils.getFloat("seuilMin"),
-                Seuils.getFloat("seuilMax"));
+                Seuils.getFloat("seuilMax"),Seuils.getFloat("valeur"),Seuils.getString("unite"));
                 listeSeuils.add(seuil);
                 System.out.println(seuil.toString());
             }
