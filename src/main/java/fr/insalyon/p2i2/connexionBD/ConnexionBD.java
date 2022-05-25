@@ -77,7 +77,8 @@ public class ConnexionBD {
             + "WHERE Produit.codeBarre = CodeBarre.codebarre "
             + "AND CodeBarre.dateCodeBarre IN (SELECT MAX(dateCodeBarre) FROM CodeBarre, Produit WHERE Produit.codeBarre = CodeBarre.codeBarre GROUP BY nomProduit) "
             + "AND quantite != 0 "
-            + "GROUP BY dateCodeBarre DESC;";
+            + "GROUP BY nomProduit "
+            + "ORDER BY dateCodeBarre DESC";
             PreparedStatement selectProduitsStatement = this.connection.prepareStatement(query);
             ResultSet Produits = selectProduitsStatement.executeQuery();
             while(Produits.next()){
@@ -109,12 +110,17 @@ public class ConnexionBD {
         ArrayList<Seuil> listeSeuils = new ArrayList<>();
         try {
             String query = 
-            "SELECT nomCategorieProduit, nomTypeMesure, seuilMin, seuilMax, valeur, unite"
-            + " FROM Seuil, TypeMesure, CategorieProduit, Mesure, Capteur"
-            + " WHERE Seuil.idTypeMesure = TypeMesure.idTypeMesure"
-            + " AND Capteur.idTypeMesure = TypeMesure.idTypeMesure"
-            + " AND Mesure.idCapteur = Capteur.idCapteur"
-            + " AND Seuil.idCategorieProduit = CategorieProduit.idCategorieProduit;";
+            "SELECT DISTINCT nomProduit, nomCategorieProduit, nomTypeMesure, valeur, unite, seuilMin, seuilMax " +
+            "FROM Seuil, TypeMesure, Mesure, Capteur, Produit, CategorieProduit, AssociationCategorie " +
+            "WHERE Seuil.idTypeMesure = TypeMesure.idTypeMesure " +
+            "AND Capteur.idTypeMesure = TypeMesure.idTypeMesure " +
+            "AND Mesure.idCapteur = Capteur.idCapteur " +
+            "AND Seuil.idCategorieProduit = CategorieProduit.idCategorieProduit " +
+            "AND CategorieProduit.idCategorieProduit = AssociationCategorie.idCategorieProduit " +
+            "AND AssociationCategorie.codeBarre = Produit.codeBarre " +
+            "AND Mesure.dateMesure IN (SELECT MAX(dateMesure) FROM Mesure, Capteur WHERE Capteur.idCapteur = Mesure.idCapteur GROUP BY nomCapteur) " +
+            "AND (Capteur.idCapteur = 1 OR Capteur.idCapteur = 2) " +
+            "AND (seuilMax < valeur OR seuilMin > valeur);";
             PreparedStatement selectSeuilsStatement = this.connection.prepareStatement(query);
             ResultSet Seuils = selectSeuilsStatement.executeQuery();
             while(Seuils.next()){
@@ -122,7 +128,7 @@ public class ConnexionBD {
                 Seuils.getString("nomTypeMesure"), Seuils.getFloat("seuilMin"),
                 Seuils.getFloat("seuilMax"),Seuils.getFloat("valeur"),Seuils.getString("unite"));
                 listeSeuils.add(seuil);
-                System.out.println(seuil.toString());
+                System.out.println(seuil);
             }
             return listeSeuils;
         } catch (SQLException ex) {
