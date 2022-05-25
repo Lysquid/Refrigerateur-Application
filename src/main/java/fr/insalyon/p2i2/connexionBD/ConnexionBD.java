@@ -72,7 +72,12 @@ public class ConnexionBD {
     public ArrayList<Produit> getProduits() {
         ArrayList<Produit> listeProduits = new ArrayList<Produit>();
         try {
-            String query = "SELECT nomProduit, quantite, codeBarre FROM Produit WHERE quantite != 0";
+            String query = "SELECT nomProduit, quantite, Produit.codeBarre "
+            + "FROM Produit, CodeBarre "
+            + "WHERE Produit.codeBarre = CodeBarre.codebarre "
+            + "AND CodeBarre.dateCodeBarre IN (SELECT MAX(dateCodeBarre) FROM CodeBarre, Produit WHERE Produit.codeBarre = CodeBarre.codeBarre GROUP BY nomProduit) "
+            + "AND quantite != 0 "
+            + "GROUP BY dateCodeBarre DESC;";
             PreparedStatement selectProduitsStatement = this.connection.prepareStatement(query);
             ResultSet Produits = selectProduitsStatement.executeQuery();
             while(Produits.next()){
