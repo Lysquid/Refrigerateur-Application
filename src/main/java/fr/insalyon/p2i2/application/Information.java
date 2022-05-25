@@ -29,6 +29,10 @@ public class Information extends Compo {
         labelValeur.setText(String.valueOf(valeur) + " " + unite);
     }
 
+    public void maj(String valeur) {
+        labelValeur.setText(valeur + " " + unite);
+    }
+
     @Override
     public Insets getInsets() {
         return new Insets(inset, inset, inset, inset);
