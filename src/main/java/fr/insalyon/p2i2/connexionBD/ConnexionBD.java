@@ -27,9 +27,9 @@ public class ConnexionBD {
     // À adapter à votre BD
     private final String serveurBD = "fimi-bd-srv1.insa-lyon.fr";
     private final String portBD = "3306";
-    private final String nomBD = "G224_E_BD1";
-    private final String loginBD = "G224_E";
-    private final String motdepasseBD = "G224_E";
+    private final String nomBD = "G221_A_BD1";
+    private final String loginBD = "G221_A";
+    private final String motdepasseBD = "G221_A";
 
     private Connection connection = null;
     private PreparedStatement insertMesureStatement = null;
