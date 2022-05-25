@@ -441,9 +441,11 @@ public class ConnexionBD {
 
     public ArrayList<Produit> getProduits() throws Exception {
         try {
-            this.selectProduitsStatement = this.connection.prepareStatement("SELECT nomProduit, quantite, codeBarre FROM Produit WHERE quantite != 0;");
+            String query = "SELECT nomProduit, quantite, codeBarre FROM Produit WHERE quantite != 0";
+            this.selectProduitsStatement = this.connection.prepareStatement(query);
             ResultSet Produits = this.selectProduitsStatement.executeQuery();
             ArrayList<Produit> listeProduits = new ArrayList<Produit>();
+            Produits.next();
             System.out.println("Nom du produit : " + Produits.getString("nomProduit"));
             // while(Produits.next()){
             //     Produit aliment = new Produit(Produits.getString("nomProduit"), Produits.getInt("quantite"), Produits.getLong("codeBarre"));
