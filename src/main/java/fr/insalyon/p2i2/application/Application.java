@@ -6,9 +6,14 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import fr.insalyon.p2i2.connexionBD.ConnexionBD;
+
 public class Application extends JPanel implements ActionListener {
 
     private final int padding = 20;
+
+    private Information temperature;
+    private ConnexionBD connexion;
 
     public Application() {
 
@@ -30,7 +35,8 @@ public class Application extends JPanel implements ActionListener {
         Grid gridMonitor = new Grid(false);
 
         Grid colonne1 = new Grid(true);
-        colonne1.add(new Information("Temperature", "°C"));
+        temperature = new Information("Temperature", "°C");
+        colonne1.add(temperature);
         colonne1.add(new Information("Humidité", "%"));
         colonne1.add(new Information("Ouvert", ""));
         gridMonitor.add(colonne1);
@@ -75,6 +81,9 @@ public class Application extends JPanel implements ActionListener {
         add(column3);
 
         Timer timer = new Timer(1000, this);
+        timer.start();
+
+        connexion = new ConnexionBD();
 
     }
 
@@ -85,7 +94,7 @@ public class Application extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
-        // TODO Auto-generated method stub
+        temperature.maj(connexion.getTemperature());
 
     }
 
