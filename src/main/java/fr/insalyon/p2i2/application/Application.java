@@ -20,7 +20,7 @@ public class Application extends JPanel implements ActionListener {
         setLayout(new GridLayout(0, 3, padding, padding));
 
         Column column1 = new Column();
-        Grid gridGraphs = new Grid(true);
+        BoxPanel gridGraphs = new BoxPanel(true);
         gridGraphs.add(new Graph());
         gridGraphs.add(new Graph());
         gridGraphs.add(new Graph());
@@ -32,16 +32,16 @@ public class Application extends JPanel implements ActionListener {
         column2.add(Box.createRigidArea(new Dimension(0, 50)));
 
         // Ajout du block monitoring
-        Grid gridMonitor = new Grid(false);
+        BoxPanel gridMonitor = new BoxPanel(false);
 
-        Grid colonne1 = new Grid(true);
+        BoxPanel colonne1 = new BoxPanel(true);
         temperature = new Information("Temperature", "°C");
         colonne1.add(temperature);
         colonne1.add(new Information("Humidité", "%"));
         colonne1.add(new Information("Ouvert", ""));
         gridMonitor.add(colonne1);
 
-        Grid colonne2 = new Grid(true);
+        BoxPanel colonne2 = new BoxPanel(true);
         colonne2.add(new Information("Gaz 1", "ppm"));
         colonne2.add(new Information("Gaz 2", "ppm"));
         colonne2.add(new Information("Gaz 3", "ppm"));
@@ -51,7 +51,7 @@ public class Application extends JPanel implements ActionListener {
         column2.add(blockMonitor);
 
         // Ajout du block alerte
-        Grid gridAlerts = new Grid(true);
+        BoxPanel gridAlerts = new BoxPanel(true);
         for (int i = 0; i < 5; i++) {
             gridAlerts.add(new Alert());
         }
@@ -67,7 +67,7 @@ public class Application extends JPanel implements ActionListener {
         add(column2);
 
         Column column3 = new Column();
-        Grid gridStock = new Grid(true);
+        BoxPanel gridStock = new BoxPanel(true);
         for (int i = 0; i < 15; i++) {
             gridStock.add(new Product());
         }

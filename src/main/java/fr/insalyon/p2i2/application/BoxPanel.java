@@ -7,17 +7,22 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class Grid extends JPanel {
+public class BoxPanel extends JPanel {
 
-    private final int gap = 15;
+    private static final int defaultGap = 15;
+
     private boolean vertical;
+    private int gap;
 
-    public Grid(boolean vertical) {
-
-        setBackground(Color.YELLOW);
-
+    public BoxPanel(boolean vertical, int gap) {
+        this.gap = gap;
         this.vertical = vertical;
         setLayout(new BoxLayout(this, vertical ? BoxLayout.Y_AXIS : BoxLayout.X_AXIS));
+    }
+
+    public BoxPanel(boolean vertical) {
+        this(vertical, defaultGap);
+        setBackground(Color.YELLOW);
     }
 
     @Override
