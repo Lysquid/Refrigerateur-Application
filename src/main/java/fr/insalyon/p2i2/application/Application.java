@@ -1,12 +1,18 @@
 package fr.insalyon.p2i2.application;
 
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.*;
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.Timer;
 
 import fr.insalyon.p2i2.connexionBD.ConnexionBD;
 import fr.insalyon.p2i2.connexionBD.Produit;
@@ -87,6 +93,7 @@ public class Application extends JPanel implements ActionListener {
         timer.start();
 
         connexion = new ConnexionBD();
+
         try {
             ArrayList<Produit> listeAliments = connexion.getProduits();
         } catch (Exception e) {
@@ -102,11 +109,8 @@ public class Application extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
-        try {
-            temperature.maj(connexion.getTemperature());
-        } catch (Exception e) {
-            e.printStackTrace(System.err);
-        }
+
+        temperature.maj(connexion.getTemperature());
 
     }
 
