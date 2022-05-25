@@ -15,6 +15,6 @@ public class Seuil {
 
     public String toString(){
         return("Seuil de " + typeDeMesure + " sur la categorie " + categorieProduit 
-        + "de seuil min " + seuilMin + " et de seuil max " + seuilMax);
+        + " de seuil min " + seuilMin + " et de seuil max " + seuilMax);
     }
 }

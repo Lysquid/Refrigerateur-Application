@@ -93,7 +93,7 @@ public class ConnexionBD {
             PreparedStatement selectOuvertureStatement = this.connection.prepareStatement(query);
             ResultSet Ouverture = selectOuvertureStatement.executeQuery();
             Ouverture.next();
-            return Ouverture.getBoolean("porteOuverture");
+            return Ouverture.getBoolean("porteOuverte");
         } catch (SQLException ex) {
             ex.printStackTrace(System.err);
             return false;
