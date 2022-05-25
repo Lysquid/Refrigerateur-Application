@@ -24,6 +24,12 @@ public class Application extends JPanel implements ActionListener {
     public static String fontName = null;
 
     private Information temperature;
+    private Information humidite;
+    private Information ouvert;
+    private Information gaz1;
+    private Information gaz2;
+    private Information gaz3;
+
     private ConnexionBD connexion;
     private Timer timerInfo;
     Timer timerRapide;
@@ -51,14 +57,19 @@ public class Application extends JPanel implements ActionListener {
         BoxPanel colonne1 = new BoxPanel(true);
         temperature = new Information("Temperature", "°C");
         colonne1.add(temperature);
-        colonne1.add(new Information("Humidité", "%"));
-        colonne1.add(new Information("Ouvert", ""));
+        humidite = new Information("Humidité", "%");
+        colonne1.add(humidite);
+        ouvert = new Information("Ouvert", "");
+        colonne1.add(ouvert);
         gridMonitor.add(colonne1);
 
         BoxPanel colonne2 = new BoxPanel(true);
-        colonne2.add(new Information("Gaz 1", "ppm"));
-        colonne2.add(new Information("Gaz 2", "ppm"));
-        colonne2.add(new Information("Gaz 3", "ppm"));
+        gaz1 = new Information("NH3", "ppm");
+        colonne2.add(gaz1);
+        gaz2 = new Information("H2", "ppm");
+        colonne2.add(gaz2);
+        gaz3 = new Information("CH4", "ppm");
+        colonne2.add(gaz3);
         gridMonitor.add(colonne2);
 
         Block blockMonitor = new Block("Monitoring", gridMonitor);
@@ -91,9 +102,9 @@ public class Application extends JPanel implements ActionListener {
         column3.add(new JButton("Mode ajout"));
         add(column3);
 
-        timerInfo = new Timer(5000, this);
+        timerInfo = new Timer(1000, this);
         timerInfo.start();
-        timerRapide = new Timer(1000, this);
+        timerRapide = new Timer(500, this);
         timerRapide.start();
 
         connexion = new ConnexionBD();
@@ -113,6 +124,11 @@ public class Application extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == timerInfo) {
             temperature.maj(connexion.getDonnee(1));
+            humidite.maj(connexion.getDonnee(2));
+            ouvert.maj(connexion.getOuverture() ? "oui" : "non");
+            gaz1.maj(connexion.getDonnee(3));
+            gaz2.maj(connexion.getDonnee(8));
+            gaz3.maj(connexion.getDonnee(9));
 
         } else if (e.getSource() == timerRapide) {
             ArrayList<Produit> produits = connexion.getProduits();
