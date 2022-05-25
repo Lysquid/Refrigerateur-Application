@@ -445,7 +445,7 @@ public class ConnexionBD {
             ResultSet Produits = this.selectProduitsStatement.executeQuery();
             ArrayList<Produit> listeProduits = new ArrayList<Produit>();
             while(Produits.next()){
-                Produit aliment = new Produit(Produits.getString(1), Produits.getInt(2), Produits.getLong(3));
+                Produit aliment = new Produit(Produits.getString("nomProduit"), Produits.getInt("quantite"), Produits.getLong("codeBarre"));
                 listeProduits.add(aliment);
                 System.out.println("Nom du produit : " + Produits.getString(1));
                 System.out.println("Quantité du produit : " + Produits.getInt(2));
