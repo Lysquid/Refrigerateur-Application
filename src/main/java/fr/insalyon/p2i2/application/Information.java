@@ -26,7 +26,11 @@ public class Information extends Compo {
     }
 
     public void maj(double valeur) {
-        labelValeur.setText(String.valueOf(valeur) + " " + unite);
+        labelValeur.setText(String.valueOf(Math.round(valeur * 10) / 10.0) + " " + unite);
+    }
+
+    public void maj(int valeur) {
+        labelValeur.setText(valeur + " " + unite);
     }
 
     public void maj(String valeur) {

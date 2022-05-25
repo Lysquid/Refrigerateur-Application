@@ -1,26 +1,26 @@
 package fr.insalyon.p2i2.application;
 
 import javax.swing.*;
+
+import fr.insalyon.p2i2.connexionBD.Seuil;
+
 import java.awt.*;
 
 public class Alert extends Compo {
 
-    public Alert() {
+    public Alert(Seuil seuil) {
         setMySize(400, 120);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        JLabel nomAlerte = new JLabel("Seuil de température dépassé");
+        JLabel nomAlerte = new JLabel("Seuil de " + seuil.typeDeMesure + " dépassé");
         nomAlerte.setFont(boldFont);
         add(nomAlerte);
-        JLabel valeurActuel = new JLabel("temperature : 25°C");
+        JLabel valeurActuel = new JLabel("valeur actuel : ");
         valeurActuel.setFont(mainFont);
         add(valeurActuel);
-        JLabel valeurSeuil = new JLabel("température max : 24°C");
+        JLabel valeurSeuil = new JLabel("seuil : " + seuil.seuilMax);
         valeurSeuil.setFont(mainFont);
         add(valeurSeuil);
-        JLabel heure = new JLabel("à 10h15");
-        heure.setFont(mainFont);
-        add(heure);
     }
 
     @Override
