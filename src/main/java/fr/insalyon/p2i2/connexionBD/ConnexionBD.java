@@ -57,9 +57,9 @@ public class ConnexionBD {
             // À compléter
             // this.insertMesureStatement = this.connection.prepareStatement("INSERT INTO
             // Mesure (numInventaire,valeur,dateMesure) VALUES (?,?,?)");
-            PreparedStatement selectMesuresStatement = this.connection.prepareStatement(
-                    "SELECT valeur FROM Mesure m, Capteur c, TypeMesure t WHERE t.idTypeMesure = c.idTypeMesure AND c.idCapteur = m.idCapteur AND t.nomTypeMesure = 'température' AND c.idCapteur = 1 ORDER BY m.dateMesure DESC LIMIT 0,1 ;");
-            ResultSet temperature = selectMesuresStatement.executeQuery();
+            PreparedStatement selectMesureStatement = this.connection.prepareStatement(
+                    "SELECT valeur FROM Mesure, Capteur, TypeMesure WHERE TypeMesure.idTypeMesure = Capteur.idTypeMesure AND Capteur.idCapteur = Mesure.idCapteur AND TypeMesure.nomTypeMesure = 'température' AND Capteur.idCapteur = 1 ORDER BY Mesure.dateMesure DESC LIMIT 0,1 ;");
+            ResultSet temperature = selectMesureStatement.executeQuery();
             return temperature.getDouble(1);
         } catch (SQLException ex) {
             ex.printStackTrace(System.err);
