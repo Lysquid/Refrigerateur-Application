@@ -27,7 +27,6 @@ public class Application extends JPanel implements ActionListener {
     private ConnexionBD connexion;
 
     public Application() {
-
         setLayout(new GridLayout(0, 3, padding, padding));
 
         Column column1 = new Column();
@@ -111,8 +110,8 @@ public class Application extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
-
-        temperature.maj(connexion.getTemperature());
+        
+        System.out.println(connexion.getDonnee(1));
 
     }
 
