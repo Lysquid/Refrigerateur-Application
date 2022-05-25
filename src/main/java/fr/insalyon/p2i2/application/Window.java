@@ -19,12 +19,13 @@ public class Window extends JFrame {
         add(new Application());
         setVisible(true);
 
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-                | UnsupportedLookAndFeelException e) {
-            e.printStackTrace();
-        }
+        // try {
+        // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        // } catch (ClassNotFoundException | InstantiationException |
+        // IllegalAccessException
+        // | UnsupportedLookAndFeelException e) {
+        // e.printStackTrace();
+        // }
     }
 
 }

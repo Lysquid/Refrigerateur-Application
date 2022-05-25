@@ -25,6 +25,10 @@ public class Application extends JPanel implements ActionListener {
 
     private Information temperature;
     private ConnexionBD connexion;
+    private Timer timerInfo;
+    Timer timerRapide;
+
+    BoxPanel gridStock;
 
     public Application() {
         setLayout(new GridLayout(0, 3, padding, padding));
@@ -77,10 +81,7 @@ public class Application extends JPanel implements ActionListener {
         add(column2);
 
         Column column3 = new Column();
-        BoxPanel gridStock = new BoxPanel(true);
-        for (int i = 0; i < 15; i++) {
-            gridStock.add(new Product());
-        }
+        gridStock = new BoxPanel(true);
 
         JScrollPane scrollPaneStock = new JScrollPane(gridStock);
 
@@ -90,14 +91,17 @@ public class Application extends JPanel implements ActionListener {
         column3.add(new JButton("Mode ajout"));
         add(column3);
 
-        Timer timer = new Timer(1000, this);
-        timer.start();
+        timerInfo = new Timer(5000, this);
+        timerInfo.start();
+        timerRapide = new Timer(1000, this);
+        timerRapide.start();
 
         connexion = new ConnexionBD();
+        ArrayList<Produit> produits = connexion.getProduits();
 
-        ArrayList<Produit> listeAliments = connexion.getProduits();
-        System.out.println(connexion.getOuverture());
-
+        for (Produit produit : produits) {
+            gridStock.add(new Product(produit));
+        }
     }
 
     @Override
@@ -106,9 +110,17 @@ public class Application extends JPanel implements ActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent arg0) {
-        
-        System.out.println(connexion.getDonnee(1));
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == timerInfo) {
+            temperature.maj(connexion.getDonnee(1));
+
+        } else if (e.getSource() == timerRapide) {
+            ArrayList<Produit> produits = connexion.getProduits();
+            gridStock.removeAll();
+            for (Produit produit : produits) {
+                gridStock.add(new Product(produit));
+            }
+        }
 
     }
 
