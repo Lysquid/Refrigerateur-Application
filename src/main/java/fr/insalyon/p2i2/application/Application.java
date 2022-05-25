@@ -112,6 +112,17 @@ public class Application extends JPanel implements ActionListener {
         timerRapide = new Timer(500, this);
         timerRapide.start();
 
+<<<<<<< HEAD
+        connexion = new ConnexionBD();
+        ArrayList<Produit> produits = connexion.getProduits();
+
+        for (Produit produit : produits) {
+            gridStock.add(new Product(produit));
+        }
+
+        //ArrayList<Seuil> Seuils = connexion.getSeuils();
+=======
+>>>>>>> d89453b86bae7d14546e11c543ce200d689d7007
     }
 
     @Override
