@@ -79,9 +79,7 @@ public class ConnexionBD {
                 Produit aliment = new Produit(Produits.getString("nomProduit"),
                 Produits.getInt("quantite"), Produits.getLong("codeBarre"));
                 listeProduits.add(aliment);
-                System.out.println("Nom du produit : " + Produits.getString("nomProduit"));
-                System.out.println("Quantité du produit : " + Produits.getInt("quantite"));
-                System.out.println("Code-Barre du Produit : " + Produits.getLong("codeBarre"));
+                aliment.toString();
             }
             return listeProduits;
         } catch (SQLException ex) {
@@ -89,5 +87,4 @@ public class ConnexionBD {
             return listeProduits;
         }
     }
-
 }

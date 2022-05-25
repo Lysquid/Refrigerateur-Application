@@ -12,4 +12,8 @@ public class Produit {
         this.codebarre = codeBarre;
     }
 
+    public String toString(){
+        return(nom + " de quantité " + quantite + " et de code-barre " + codebarre);
+    }
+
 }
