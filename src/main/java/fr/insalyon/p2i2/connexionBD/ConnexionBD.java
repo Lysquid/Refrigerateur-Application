@@ -56,10 +56,13 @@ public class ConnexionBD {
 
     public double getTemperature() {
         try {
-            String query = "SELECT valeur FROM Mesure, Capteur, TypeMesure WHERE TypeMesure.idTypeMesure = Capteur.idTypeMesure AND Capteur.idCapteur = Mesure.idCapteur AND TypeMesure.nomTypeMesure = 'température' AND Capteur.idCapteur = 1 ORDER BY Mesure.dateMesure DESC LIMIT 0,1";
+            String query = "SELECT valeur FROM Mesure, Capteur, TypeMesure WHERE TypeMesure.idTypeMesure = Capteur.idTypeMesure AND Capteur.idCapteur = Mesure.idCapteurAND TypeMesure.nomTypeMesure = ? AND Capteur.idCapteur = ? ORDER BY Mesure.dateMesure DESC LIMIT 0,1";
             PreparedStatement selectMesureStatement = this.connection.prepareStatement(query);
+            selectMesureStatement.setString(1, "température");
+            selectMesureStatement.setInt(2, 1);
             ResultSet temperature = selectMesureStatement.executeQuery();
-            return temperature.getDouble(1);
+            temperature.next();
+            return temperature.getDouble("valeur");
         } catch (SQLException ex) {
             ex.printStackTrace(System.err);
             return 0;

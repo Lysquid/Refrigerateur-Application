@@ -21,6 +21,8 @@ public class Application extends JPanel implements ActionListener {
 
     private final int padding = 20;
 
+    public static String fontName = null;
+
     private Information temperature;
     private ConnexionBD connexion;
 
