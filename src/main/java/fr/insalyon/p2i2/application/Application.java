@@ -33,11 +33,17 @@ public class Application extends JPanel implements ActionListener {
 
     private ConnexionBD connexion;
     private Timer timerInfo;
-    Timer timerRapide;
+    private Timer timerRapide;
 
-    BoxPanel gridStock;
+    private BoxPanel gridStock;
+    private BoxPanel gridAlerts;
+
+    private ArrayList<Produit> nouveauxProduits;
 
     public Application() {
+
+        connexion = new ConnexionBD();
+
         setLayout(new GridLayout(0, 3, padding, padding));
 
         Column column1 = new Column();
@@ -77,10 +83,8 @@ public class Application extends JPanel implements ActionListener {
         column2.add(blockMonitor);
 
         // Ajout du block alerte
-        BoxPanel gridAlerts = new BoxPanel(true);
-        for (int i = 0; i < 5; i++) {
-            gridAlerts.add(new Alert());
-        }
+        gridAlerts = new BoxPanel(true);
+
         JScrollPane scrollPaneAlerts = new JScrollPane(gridAlerts);
         scrollPaneAlerts.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -108,14 +112,6 @@ public class Application extends JPanel implements ActionListener {
         timerRapide = new Timer(500, this);
         timerRapide.start();
 
-        connexion = new ConnexionBD();
-        ArrayList<Produit> produits = connexion.getProduits();
-
-        for (Produit produit : produits) {
-            gridStock.add(new Product(produit));
-        }
-
-        ArrayList<Seuil> Seuils = connexion.getSeuils();
     }
 
     @Override
@@ -129,16 +125,25 @@ public class Application extends JPanel implements ActionListener {
             temperature.maj(connexion.getDonnee(1));
             humidite.maj(connexion.getDonnee(2));
             ouvert.maj(connexion.getOuverture() ? "oui" : "non");
-            gaz1.maj(connexion.getDonnee(3));
-            gaz2.maj(connexion.getDonnee(8));
-            gaz3.maj(connexion.getDonnee(9));
+            gaz1.maj((int) connexion.getDonnee(3));
+            gaz2.maj((int) connexion.getDonnee(8));
+            gaz3.maj((int) connexion.getDonnee(9));
 
         } else if (e.getSource() == timerRapide) {
-            ArrayList<Produit> produits = connexion.getProduits();
+
             gridStock.removeAll();
-            for (Produit produit : produits) {
-                gridStock.add(new Product(produit));
+            ArrayList<Produit> nouveauxProduits = connexion.getProduits();
+            // TODO : Ajouter seulement les nouveaux produits
+            for (Produit produit : nouveauxProduits) {
+                gridStock.add(new ProduitCompo(produit));
             }
+
+            // TODO : Fixez moi cette requete
+            // ArrayList<Seuil> seuils = connexion.getSeuils();
+            // for (Seuil seuil : seuils) {
+            // gridAlerts.add(new Alert(seuil));
+            // }
+
         }
 
     }

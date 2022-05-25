@@ -7,8 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.validation.constraints.Null;
-
 public class ConnexionBD {
 
     // À adapter à votre BD
@@ -54,11 +52,11 @@ public class ConnexionBD {
 
     }
 
-    public double getDonnee(int idCapteur ) {
+    public double getDonnee(int idCapteur) {
         try {
 
             String query = "SELECT valeur FROM Mesure, Capteur WHERE Capteur.idCapteur = Mesure.idCapteur AND Capteur.idCapteur = ? ORDER BY Mesure.dateMesure DESC LIMIT 0,1";
-            PreparedStatement selectMesureStatement = this.connection.prepareStatement(query);            
+            PreparedStatement selectMesureStatement = this.connection.prepareStatement(query);
             selectMesureStatement.setInt(1, idCapteur);
             ResultSet temperature = selectMesureStatement.executeQuery();
             temperature.next();
@@ -81,9 +79,9 @@ public class ConnexionBD {
             + "ORDER BY dateCodeBarre DESC";
             PreparedStatement selectProduitsStatement = this.connection.prepareStatement(query);
             ResultSet Produits = selectProduitsStatement.executeQuery();
-            while(Produits.next()){
+            while (Produits.next()) {
                 Produit aliment = new Produit(Produits.getString("nomProduit"),
-                Produits.getInt("quantite"), Produits.getLong("codeBarre"));
+                        Produits.getInt("quantite"), Produits.getLong("codeBarre"));
                 listeProduits.add(aliment);
             }
             return listeProduits;
@@ -93,7 +91,7 @@ public class ConnexionBD {
         }
     }
 
-    public boolean getOuverture(){
+    public boolean getOuverture() {
         try {
             String query = "SELECT porteOuverte FROM OuverturePorte ORDER BY dateOuverture DESC LIMIT 0,1;";
             PreparedStatement selectOuvertureStatement = this.connection.prepareStatement(query);
@@ -106,7 +104,7 @@ public class ConnexionBD {
         }
     }
 
-    public ArrayList<Seuil> getSeuils(){
+    public ArrayList<Seuil> getSeuils() {
         ArrayList<Seuil> listeSeuils = new ArrayList<>();
         try {
             String query = 
@@ -123,12 +121,12 @@ public class ConnexionBD {
             "AND (seuilMax < valeur OR seuilMin > valeur);";
             PreparedStatement selectSeuilsStatement = this.connection.prepareStatement(query);
             ResultSet Seuils = selectSeuilsStatement.executeQuery();
-            while(Seuils.next()){
+            while (Seuils.next()) {
                 Seuil seuil = new Seuil(Seuils.getString("nomCategorieProduit"),
-                Seuils.getString("nomTypeMesure"), Seuils.getFloat("seuilMin"),
-                Seuils.getFloat("seuilMax"),Seuils.getFloat("valeur"),Seuils.getString("unite"));
+                        Seuils.getString("nomTypeMesure"), Seuils.getFloat("seuilMin"),
+                        Seuils.getFloat("seuilMax"), Seuils.getFloat("valeur"), Seuils.getString("unite"));
                 listeSeuils.add(seuil);
-                System.out.println(seuil);
+                // System.out.println(seuil.toString());
             }
             return listeSeuils;
         } catch (SQLException ex) {
