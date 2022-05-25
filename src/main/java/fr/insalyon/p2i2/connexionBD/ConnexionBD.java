@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.validation.constraints.Null;
+
 public class ConnexionBD {
 
     // À adapter à votre BD
@@ -52,13 +54,12 @@ public class ConnexionBD {
 
     }
 
-    public double getTemperature() {
+    public double getDonnee(int idCapteur ) {
         try {
 
-            String query = "SELECT valeur FROM Mesure, Capteur, TypeMesure WHERE TypeMesure.idTypeMesure = Capteur.idTypeMesure AND Capteur.idCapteur = Mesure.idCapteurAND TypeMesure.nomTypeMesure = ? AND Capteur.idCapteur = ? ORDER BY Mesure.dateMesure DESC LIMIT 0,1";
-            PreparedStatement selectMesureStatement = this.connection.prepareStatement(query);
-            selectMesureStatement.setString(1, "température");
-            selectMesureStatement.setInt(2, 1);
+            String query = "SELECT valeur FROM Mesure, Capteur WHERE Capteur.idCapteur = Mesure.idCapteur AND Capteur.idCapteur = ? ORDER BY Mesure.dateMesure DESC LIMIT 0,1";
+            PreparedStatement selectMesureStatement = this.connection.prepareStatement(query);            
+            selectMesureStatement.setInt(1, idCapteur);
             ResultSet temperature = selectMesureStatement.executeQuery();
             temperature.next();
             return temperature.getDouble("valeur");
@@ -84,6 +85,19 @@ public class ConnexionBD {
         } catch (SQLException ex) {
             ex.printStackTrace(System.err);
             return listeProduits;
+        }
+    }
+
+    public boolean getOuverture(){
+        try {
+            String query = "SELECT porteOuverte FROM OuverturePorte ORDER BY dateOuverture DESC LIMIT 0,1;";
+            PreparedStatement selectOuvertureStatement = this.connection.prepareStatement(query);
+            ResultSet Ouverture = selectOuvertureStatement.executeQuery();
+            Ouverture.next();
+            return Ouverture.getBoolean("porteOuverture");
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.err);
+            return false;
         }
     }
 }

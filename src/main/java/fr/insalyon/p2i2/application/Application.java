@@ -31,7 +31,6 @@ public class Application extends JPanel implements ActionListener {
     BoxPanel gridStock;
 
     public Application() {
-
         setLayout(new GridLayout(0, 3, padding, padding));
 
         Column column1 = new Column();
@@ -113,7 +112,7 @@ public class Application extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == timerInfo) {
-            temperature.maj(connexion.getTemperature());
+            temperature.maj(connexion.getDonnee(1));
 
         } else if (e.getSource() == timerRapide) {
             ArrayList<Produit> produits = connexion.getProduits();
