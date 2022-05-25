@@ -2,9 +2,9 @@ package fr.insalyon.p2i2.connexionBD;
 
 public class Produit {
 
-    public String nom;
-    public long codebarre;
-    public int quantite;
+    private String nom;
+    private long codebarre;
+    private int quantite;
 
     public Produit(String nom, int quantite, long codeBarre){
         this.nom = nom;
