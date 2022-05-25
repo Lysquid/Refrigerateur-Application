@@ -105,9 +105,9 @@ public class ConnexionBD {
         try {
             String query = 
             "SELECT nomCategorieProduit, nomTypeMesure, seuilMin, seuilMax"
-            + "FROM Seuil, TypeMesure, CategorieProduit"
-            + "WHERE Seuil.idTypeMesure = TypeMesure.idTypeMesure"
-            + "AND Seuil.idCategorieProduit = CategorieProduit.idCategorieProduit;";
+            + " FROM Seuil, TypeMesure, CategorieProduit"
+            + " WHERE Seuil.idTypeMesure = TypeMesure.idTypeMesure"
+            + " AND Seuil.idCategorieProduit = CategorieProduit.idCategorieProduit;";
             PreparedStatement selectSeuilsStatement = this.connection.prepareStatement(query);
             ResultSet Seuils = selectSeuilsStatement.executeQuery();
             while(Seuils.next()){
