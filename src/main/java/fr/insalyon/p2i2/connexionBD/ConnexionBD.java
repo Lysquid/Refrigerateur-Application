@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.validation.constraints.Null;
+
 public class ConnexionBD {
 
     // À adapter à votre BD
@@ -54,9 +56,6 @@ public class ConnexionBD {
 
     public double getTemperature() {
         try {
-            // À compléter
-            // this.insertMesureStatement = this.connection.prepareStatement("INSERT INTO
-            // Mesure (numInventaire,valeur,dateMesure) VALUES (?,?,?)");
             String query = "SELECT valeur FROM Mesure, Capteur, TypeMesure WHERE TypeMesure.idTypeMesure = Capteur.idTypeMesure AND Capteur.idCapteur = Mesure.idCapteur AND TypeMesure.nomTypeMesure = 'température' AND Capteur.idCapteur = 1 ORDER BY Mesure.dateMesure DESC LIMIT 0,1";
             PreparedStatement selectMesureStatement = this.connection.prepareStatement(query);
             ResultSet temperature = selectMesureStatement.executeQuery();
@@ -65,8 +64,6 @@ public class ConnexionBD {
             ex.printStackTrace(System.err);
             return 0;
         }
-
-        // return temperature;
     }
 
     public ArrayList<Produit> getProduits() {
@@ -85,6 +82,19 @@ public class ConnexionBD {
         } catch (SQLException ex) {
             ex.printStackTrace(System.err);
             return listeProduits;
+        }
+    }
+
+    public boolean getOuverture(){
+        try {
+            String query = "SELECT porteOuverte FROM OuverturePorte ORDER BY dateOuverture DESC LIMIT 0,1;";
+            PreparedStatement selectOuvertureStatement = this.connection.prepareStatement(query);
+            ResultSet Ouverture = selectOuvertureStatement.executeQuery();
+            Ouverture.next();
+            return Ouverture.getBoolean("porteOuverture");
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.err);
+            return false;
         }
     }
 }
