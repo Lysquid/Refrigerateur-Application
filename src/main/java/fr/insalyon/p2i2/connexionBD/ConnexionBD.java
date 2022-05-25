@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.validation.constraints.Null;
+
 public class ConnexionBD {
 
     // À adapter à votre BD
@@ -83,6 +85,19 @@ public class ConnexionBD {
         } catch (SQLException ex) {
             ex.printStackTrace(System.err);
             return listeProduits;
+        }
+    }
+
+    public boolean getOuverture(){
+        try {
+            String query = "SELECT porteOuverte FROM OuverturePorte ORDER BY dateOuverture DESC LIMIT 0,1;";
+            PreparedStatement selectOuvertureStatement = this.connection.prepareStatement(query);
+            ResultSet Ouverture = selectOuvertureStatement.executeQuery();
+            Ouverture.next();
+            return Ouverture.getBoolean("porteOuverture");
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.err);
+            return false;
         }
     }
 }

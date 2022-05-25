@@ -95,11 +95,8 @@ public class Application extends JPanel implements ActionListener {
 
         connexion = new ConnexionBD();
 
-        try {
-            ArrayList<Produit> listeAliments = connexion.getProduits();
-        } catch (Exception e) {
-            e.printStackTrace(System.err);
-        }
+        ArrayList<Produit> listeAliments = connexion.getProduits();
+        System.out.println(connexion.getOuverture());
 
     }
 
