@@ -447,9 +447,9 @@ public class ConnexionBD {
             while(Produits.next()){
                 Produit aliment = new Produit(Produits.getString(1), Produits.getInt(2), Produits.getLong(3));
                 listeProduits.add(aliment);
-                System.out.println("Nom du produit : " + aliment.nom);
-                System.out.println("Quantité du produit : " + aliment.quantite);
-                System.out.println("Code-Barre du Produit : " + aliment.codebarre);
+                System.out.println("Nom du produit : " + Produits.getString(1));
+                System.out.println("Quantité du produit : " + Produits.getInt(2));
+                System.out.println("Code-Barre du Produit : " + Produits.getLong(3));
             }
             return listeProduits;
         } catch (SQLException ex) {
