@@ -16,9 +16,9 @@ public class Information extends Compo {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         labelCapteur = new JLabel(capteur);
-        labelCapteur.setFont(font);
+        labelCapteur.setFont(boldFont);
         labelValeur = new JLabel();
-        labelValeur.setFont(font);
+        labelValeur.setFont(biggerFont);
         this.unite = unite;
         maj(0);
         this.add(labelCapteur);
@@ -31,8 +31,6 @@ public class Information extends Compo {
 
     @Override
     public Insets getInsets() {
-        // TODO Auto-generated method stub
-        int inset = 10;
         return new Insets(inset, inset, inset, inset);
     }
 

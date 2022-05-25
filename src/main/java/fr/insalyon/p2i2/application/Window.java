@@ -1,7 +1,8 @@
 package fr.insalyon.p2i2.application;
 
 import java.awt.Dimension;
-
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.JFrame;
 
 public class Window extends JFrame {
@@ -17,6 +18,13 @@ public class Window extends JFrame {
 
         add(new Application());
         setVisible(true);
+
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                | UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
     }
 
 }
