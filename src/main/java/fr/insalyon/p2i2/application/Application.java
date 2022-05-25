@@ -4,9 +4,12 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
 
 import fr.insalyon.p2i2.connexionBD.ConnexionBD;
+import fr.insalyon.p2i2.connexionBD.Produit;
 
 public class Application extends JPanel implements ActionListener {
 
@@ -84,6 +87,11 @@ public class Application extends JPanel implements ActionListener {
         timer.start();
 
         connexion = new ConnexionBD();
+        try {
+            ArrayList<Produit> listeAliments = connexion.getProduits();
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+        }
 
     }
 
@@ -94,7 +102,11 @@ public class Application extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
-        temperature.maj(connexion.getTemperature());
+        try {
+            temperature.maj(connexion.getTemperature());
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+        }
 
     }
 
