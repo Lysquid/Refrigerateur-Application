@@ -444,13 +444,14 @@ public class ConnexionBD {
             this.selectProduitsStatement = this.connection.prepareStatement("SELECT nomProduit, quantite, codeBarre FROM Produit WHERE quantite != 0;");
             ResultSet Produits = this.selectProduitsStatement.executeQuery();
             ArrayList<Produit> listeProduits = new ArrayList<Produit>();
-            while(Produits.next()){
-                Produit aliment = new Produit(Produits.getString("nomProduit"), Produits.getInt("quantite"), Produits.getLong("codeBarre"));
-                listeProduits.add(aliment);
-                System.out.println("Nom du produit : " + Produits.getString("nomProduit"));
-                System.out.println("Quantité du produit : " + Produits.getInt("quantite"));
-                System.out.println("Code-Barre du Produit : " + Produits.getLong("codeBarre"));
-            }
+            System.out.println("Nom du produit : " + Produits.getString("nomProduit"));
+            // while(Produits.next()){
+            //     Produit aliment = new Produit(Produits.getString("nomProduit"), Produits.getInt("quantite"), Produits.getLong("codeBarre"));
+            //     listeProduits.add(aliment);
+            //     System.out.println("Nom du produit : " + Produits.getString("nomProduit"));
+            //     System.out.println("Quantité du produit : " + Produits.getInt("quantite"));
+            //     System.out.println("Code-Barre du Produit : " + Produits.getLong("codeBarre"));
+            //}
             return listeProduits;
         } catch (SQLException ex) {
             ex.printStackTrace(System.err);
