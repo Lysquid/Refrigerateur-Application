@@ -21,15 +21,16 @@ public class ProduitCompo extends Compo {
         setMySize(400, 100);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        ProductResponse productResponse = foodWrapper.fetchProductByCode(String.valueOf(produit.codebarre));
-        Product product = productResponse.getProduct();
+        // ProductResponse productResponse =
+        // foodWrapper.fetchProductByCode(String.valueOf(produit.codebarre));
+        // Product product = productResponse.getProduct();
 
         JLabel nomProduit = new JLabel(produit.nom);
         nomProduit.setFont(boldFont);
         add(nomProduit);
-        JLabel marque = new JLabel(product.getBrands());
-        marque.setFont(mainFont);
-        add(marque);
+        // JLabel marque = new JLabel(product.getBrands());
+        // marque.setFont(mainFont);
+        // add(marque);
         JLabel quantite = new JLabel("quantité : " + String.valueOf(produit.quantite));
         quantite.setFont(mainFont);
         add(quantite);
