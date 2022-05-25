@@ -115,7 +115,7 @@ public class Application extends JPanel implements ActionListener {
             gridStock.add(new Product(produit));
         }
 
-        ArrayList<Seuil> Seuils = connexion.getSeuils();
+        //ArrayList<Seuil> Seuils = connexion.getSeuils();
     }
 
     @Override
