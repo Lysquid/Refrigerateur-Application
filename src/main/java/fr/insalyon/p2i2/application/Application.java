@@ -16,6 +16,7 @@ import javax.swing.Timer;
 
 import fr.insalyon.p2i2.connexionBD.ConnexionBD;
 import fr.insalyon.p2i2.connexionBD.Produit;
+import fr.insalyon.p2i2.connexionBD.Seuil;
 
 public class Application extends JPanel implements ActionListener {
 
@@ -102,6 +103,8 @@ public class Application extends JPanel implements ActionListener {
         for (Produit produit : produits) {
             gridStock.add(new Product(produit));
         }
+
+        ArrayList<Seuil> Seuils = connexion.getSeuils();
     }
 
     @Override
