@@ -112,17 +112,6 @@ public class Application extends JPanel implements ActionListener {
         timerRapide = new Timer(500, this);
         timerRapide.start();
 
-<<<<<<< HEAD
-        connexion = new ConnexionBD();
-        ArrayList<Produit> produits = connexion.getProduits();
-
-        for (Produit produit : produits) {
-            gridStock.add(new Product(produit));
-        }
-
-        //ArrayList<Seuil> Seuils = connexion.getSeuils();
-=======
->>>>>>> d89453b86bae7d14546e11c543ce200d689d7007
     }
 
     @Override
@@ -144,14 +133,16 @@ public class Application extends JPanel implements ActionListener {
 
             gridStock.removeAll();
             ArrayList<Produit> nouveauxProduits = connexion.getProduits();
+            // TODO : Ajouter seulement les nouveaux produits
             for (Produit produit : nouveauxProduits) {
                 gridStock.add(new ProduitCompo(produit));
             }
 
-            ArrayList<Seuil> seuils = connexion.getSeuils();
-            for (Seuil seuil : seuils) {
-                gridAlerts.add(new Alert(seuil));
-            }
+            // TODO : Fixez moi cette requete
+            // ArrayList<Seuil> seuils = connexion.getSeuils();
+            // for (Seuil seuil : seuils) {
+            // gridAlerts.add(new Alert(seuil));
+            // }
 
         }
 

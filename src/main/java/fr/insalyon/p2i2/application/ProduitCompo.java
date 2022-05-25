@@ -24,8 +24,13 @@ public class ProduitCompo extends Compo {
         // ProductResponse productResponse =
         // foodWrapper.fetchProductByCode(String.valueOf(produit.codebarre));
         // Product product = productResponse.getProduct();
-
-        JLabel nomProduit = new JLabel(produit.nom);
+        String nom;
+        if (produit.nom.length() > 1) {
+            nom = produit.nom.substring(0, 1).toUpperCase() + produit.nom.substring(1);
+        } else {
+            nom = produit.nom;
+        }
+        JLabel nomProduit = new JLabel(nom);
         nomProduit.setFont(boldFont);
         add(nomProduit);
         // JLabel marque = new JLabel(product.getBrands());
