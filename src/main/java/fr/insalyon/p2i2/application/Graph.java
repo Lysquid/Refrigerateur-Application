@@ -6,8 +6,10 @@ import javax.swing.*;
 
 public class Graph extends Compo {
 
-    public Graph() {
+    public Graph(String title) {
         setPreferredSize(new Dimension(400, 200));
+
+        
     }
 
 }
