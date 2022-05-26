@@ -19,8 +19,14 @@ public class Graph extends Compo {
 
 
     public Graph(String title, Color colour) {
+        super();
         setPreferredSize(new Dimension(400, 200));
+        
 
+        abscisse = new LinkedList<Double>();
+        abscisse.add(1.0);
+        abscisse.add(25.0);
+        abscisse.add(65.0);
         ordonnee = new LinkedList<Double>();
         ordonnee.add(1.25);
         ordonnee.add(2.98);
@@ -94,3 +100,4 @@ public class Graph extends Compo {
     */
 
 }
+
