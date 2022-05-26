@@ -122,11 +122,11 @@ public class ConnexionBD {
             PreparedStatement selectSeuilsStatement = this.connection.prepareStatement(query);
             ResultSet Seuils = selectSeuilsStatement.executeQuery();
             while (Seuils.next()) {
-                Seuil seuil = new Seuil(Seuils.getString("nomCategorieProduit"),
+                Seuil seuil = new Seuil(Seuils.getString("nomProduit"), Seuils.getString("nomCategorieProduit"),
                         Seuils.getString("nomTypeMesure"), Seuils.getFloat("seuilMin"),
                         Seuils.getFloat("seuilMax"), Seuils.getFloat("valeur"), Seuils.getString("unite"));
                 listeSeuils.add(seuil);
-                // System.out.println(seuil.toString());
+                System.out.println(seuil.toString());
             }
             return listeSeuils;
         } catch (SQLException ex) {

@@ -138,11 +138,12 @@ public class Application extends JPanel implements ActionListener {
                 gridStock.add(new ProduitCompo(produit));
             }
 
-            // TODO : Fixez moi cette requete
-            // ArrayList<Seuil> seuils = connexion.getSeuils();
-            // for (Seuil seuil : seuils) {
-            // gridAlerts.add(new Alert(seuil));
-            // }
+            // TODO : Fixez moi cette requete -> fix par Nicolas
+            gridAlerts.removeAll();
+            ArrayList<Seuil> seuils = connexion.getSeuils();
+            for (Seuil seuil : seuils) {
+                gridAlerts.add(new Alert(seuil));
+            }
 
         }
 

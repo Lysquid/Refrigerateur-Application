@@ -2,14 +2,16 @@ package fr.insalyon.p2i2.connexionBD;
 
 public class Seuil {
     public String categorieProduit;
+    public String produit;
     public String typeDeMesure;
     public float seuilMin;
     public float seuilMax;
     public float valeur;
     public String unite;
 
-    public Seuil(String CategorieProduit, String TypeDeMesure, float SeuilMin, float SeuilMax, float Valeur,
+    public Seuil(String Produit, String CategorieProduit, String TypeDeMesure, float SeuilMin, float SeuilMax, float Valeur,
             String Unite) {
+        produit = Produit;
         categorieProduit = CategorieProduit;
         typeDeMesure = TypeDeMesure;
         seuilMin = SeuilMin;
