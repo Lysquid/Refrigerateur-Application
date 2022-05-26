@@ -126,7 +126,7 @@ public class ConnexionBD {
                         Seuils.getString("nomTypeMesure"), Seuils.getFloat("seuilMin"),
                         Seuils.getFloat("seuilMax"), Seuils.getFloat("valeur"), Seuils.getString("unite"));
                 listeSeuils.add(seuil);
-                System.out.println(seuil.toString());
+                // System.out.println(seuil.toString());
             }
             return listeSeuils;
         } catch (SQLException ex) {
