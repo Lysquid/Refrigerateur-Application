@@ -1,17 +1,18 @@
 package fr.insalyon.p2i2.connexionBD;
 
+import java.util.ArrayList;
+
 public class Seuil {
     public String categorieProduit;
-    public String produit;
+    public ArrayList<String> produits = new ArrayList<String>();
     public String typeDeMesure;
     public float seuilMin;
     public float seuilMax;
     public float valeur;
     public String unite;
 
-    public Seuil(String Produit, String CategorieProduit, String TypeDeMesure, float SeuilMin, float SeuilMax, float Valeur,
-            String Unite) {
-        produit = Produit;
+    public Seuil(ArrayList<String> Produits, String CategorieProduit, String TypeDeMesure, float SeuilMin, float SeuilMax, float Valeur, String Unite) {
+        produits = Produits;
         categorieProduit = CategorieProduit;
         typeDeMesure = TypeDeMesure;
         seuilMin = SeuilMin;

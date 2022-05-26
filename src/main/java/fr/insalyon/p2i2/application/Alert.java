@@ -9,10 +9,21 @@ import java.awt.*;
 public class Alert extends Compo {
 
     public Alert(Seuil seuil) {
-        setMySize(400, 120);
+        setMySize(400, 160);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         
-        JLabel nomProduit = new JLabel("Produit : " + seuil.produit);
+        String listeProduit = new String(seuil.produits.get(0));
+        if (seuil.produits.size() > 1) {
+            for (int i = 1; i < seuil.produits.size() - 1; i++) {
+                listeProduit += ", " + seuil.produits.get(i);
+            }
+            listeProduit += " et " + seuil.produits.get(seuil.produits.size()-1);
+        }
+
+        JLabel nomCategorie = new JLabel("Catégorie : " + seuil.categorieProduit);
+        nomCategorie.setFont(boldFont);
+        add(nomCategorie);
+        JLabel nomProduit = new JLabel("Produit(s) : " + listeProduit);
         nomProduit.setFont(boldFont);
         add(nomProduit);
         JLabel nomAlerte = new JLabel("Seuil de " + seuil.typeDeMesure + " dépassé ");

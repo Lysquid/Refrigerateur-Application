@@ -120,17 +120,24 @@ AND quantite != 0
 GROUP BY nomProduit
 ORDER BY dateCodeBarre DESC;
 
--- Selection des produits dont la température ou l'humidité actuelle a dépassée le seuil min ou max autorisé par sa catégorie
+-- Selection des catégories de produit dont la température ou l'humidité actuelle a dépassée le seuil min ou max autorisé par sa catégorie
 -- Cette requête sert à afficher des alertes dans l'application
 
-SELECT DISTINCT nomProduit, nomCategorieProduit, nomTypeMesure, valeur, unite, seuilMin, seuilMax
-FROM Seuil, TypeMesure, Mesure, Capteur, Produit, CategorieProduit, AssociationCategorie
+SELECT DISTINCT nomCategorieProduit, nomTypeMesure, valeur, unite, seuilMin, seuilMax
+FROM Seuil, TypeMesure, Mesure, Capteur, CategorieProduit, AssociationCategorie
 WHERE Seuil.idTypeMesure = TypeMesure.idTypeMesure
 AND Capteur.idTypeMesure = TypeMesure.idTypeMesure
 AND Mesure.idCapteur = Capteur.idCapteur
 AND Seuil.idCategorieProduit = CategorieProduit.idCategorieProduit
 AND CategorieProduit.idCategorieProduit = AssociationCategorie.idCategorieProduit
-AND AssociationCategorie.codeBarre = Produit.codeBarre
 AND Mesure.dateMesure IN (SELECT MAX(dateMesure) FROM Mesure, Capteur WHERE Capteur.idCapteur = Mesure.idCapteur GROUP BY nomCapteur)
 AND (Capteur.idCapteur = 1 OR Capteur.idCapteur = 2)
 AND (seuilMax < valeur OR seuilMin > valeur);
+
+-- Selection des produits appartenant a une certaine categorie de produit
+
+SELECT nomProduit
+FROM Produit, AssociationCategorie, CategorieProduit
+WHERE Produit.codeBarre = AssociationCategorie.codeBarre
+AND AssociationCategorie.idCategorieProduit = CategorieProduit.idCategorieProduit
+AND nomCategorieProduit = "Fromages";
