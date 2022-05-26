@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 public class Window extends JFrame {
 
     public Window() {
+        lookAndFeel();
         setTitle("Albert le frigidaire");
         setSize(1600, 870);
         setResizable(false);
@@ -15,6 +16,9 @@ public class Window extends JFrame {
         add(new Application());
         setVisible(true);
 
+    }
+
+    private void lookAndFeel() {
         try {
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
