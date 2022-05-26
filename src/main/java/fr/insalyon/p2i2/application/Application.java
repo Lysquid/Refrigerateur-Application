@@ -48,9 +48,9 @@ public class Application extends JPanel implements ActionListener {
 
         Column column1 = new Column();
         BoxPanel gridGraphs = new BoxPanel(true);
-        gridGraphs.add(new Graph());
-        gridGraphs.add(new Graph());
-        gridGraphs.add(new Graph());
+        gridGraphs.add(new Graph("1"));
+        gridGraphs.add(new Graph("2"));
+        gridGraphs.add(new Graph("3"));
         Block blockGraphs = new Block("Graphiques", gridGraphs);
         column1.add(blockGraphs);
         add(column1);
