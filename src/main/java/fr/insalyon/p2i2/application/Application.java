@@ -7,6 +7,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.awt.*;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -48,9 +49,9 @@ public class Application extends JPanel implements ActionListener {
 
         Column column1 = new Column();
         BoxPanel gridGraphs = new BoxPanel(true);
-        gridGraphs.add(new Graph("1"));
-        gridGraphs.add(new Graph("2"));
-        gridGraphs.add(new Graph("3"));
+        gridGraphs.add(new Graph("Température", Color.blue));
+        gridGraphs.add(new Graph("Humidité", Color.red));
+        gridGraphs.add(new Graph("Gaz", Color.green));
         Block blockGraphs = new Block("Graphiques", gridGraphs);
         column1.add(blockGraphs);
         add(column1);
