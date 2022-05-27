@@ -6,6 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
+
+import fr.insalyon.p2i2.application.Graph;
 
 public class ConnexionBD {
 
@@ -58,12 +61,30 @@ public class ConnexionBD {
             String query = "SELECT valeur FROM Mesure, Capteur WHERE Capteur.idCapteur = Mesure.idCapteur AND Capteur.idCapteur = ? ORDER BY Mesure.dateMesure DESC LIMIT 0,1";
             PreparedStatement selectMesureStatement = this.connection.prepareStatement(query);
             selectMesureStatement.setInt(1, idCapteur);
-            ResultSet temperature = selectMesureStatement.executeQuery();
-            temperature.next();
-            return temperature.getDouble("valeur");
+            ResultSet donnee = selectMesureStatement.executeQuery();
+            donnee.next();
+            return donnee.getDouble("valeur");
         } catch (SQLException ex) {
             ex.printStackTrace(System.err);
             return 0;
+        }
+    }
+
+    public LinkedList<Double> getDonnee(int idCapteur, boolean size) {
+        try {
+            LinkedList<Double> r = new LinkedList<Double>();
+            String query = "SELECT valeur FROM Mesure, Capteur WHERE Capteur.idCapteur = Mesure.idCapteur AND Capteur.idCapteur = ? ORDER BY Mesure.dateMesure DESC LIMIT 0,?";
+            PreparedStatement selectMesureStatement = this.connection.prepareStatement(query);
+            selectMesureStatement.setInt(1, idCapteur);
+            selectMesureStatement.setInt(2, Graph.SIZE);
+            ResultSet donnee = selectMesureStatement.executeQuery();
+            while(donnee.next()){
+                r.add(donnee.getDouble("valeur"));
+            }
+            return r;
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.err);
+            return null;
         }
     }
 

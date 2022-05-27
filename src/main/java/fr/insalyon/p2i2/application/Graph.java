@@ -17,20 +17,16 @@ public class Graph extends Compo {
     private LinkedList<Double> ordonnee;
     private Color color;
 
+    public static final int SIZE = 180;
+
 
     public Graph(String title, Color colour) {
         super();
         setPreferredSize(new Dimension(400, 200));
         
-
         abscisse = new LinkedList<Double>();
-        abscisse.add(1.0);
-        abscisse.add(25.0);
-        abscisse.add(65.0);
         ordonnee = new LinkedList<Double>();
-        ordonnee.add(1.25);
-        ordonnee.add(2.98);
-        ordonnee.add(-4.5);
+        
         color = colour;
 
         titleTag = new JLabel(title);
@@ -38,7 +34,7 @@ public class Graph extends Compo {
         titleTag.setFont(boldFont);
         titleTag.setBounds(375,10,50,20);
         xA = -5;
-        xB = 120;
+        xB = 180;
         yA = min(ordonnee)-2;
         yB = max(ordonnee)+2;
     }
@@ -93,6 +89,33 @@ public class Graph extends Compo {
             A=B;
         }
     }
+
+    public void update(double nY){
+        if (abscisse.size() < SIZE){
+            abscisse.add((double)abscisse.size());
+            ordonnee.add(nY);
+        } else if(abscisse.size() == SIZE){
+            ordonnee.remove(0);
+            ordonnee.add(nY);
+        } else {
+            do{
+                abscisse.remove(0);
+                ordonnee.remove(0);
+            } while (abscisse.size() > SIZE);
+            abscisse.add((double)SIZE);
+            ordonnee.add(nY);
+        }
+        repaint();
+    }
+
+    public void init(LinkedList<Double> l){
+        for(int i = 0; i < SIZE; i++){
+            abscisse.add((double)i+1);
+            ordonnee.add(l.get(i));
+        }
+        repaint();
+    }
+
     /* L'idée c'est qu'on limite la taille des deux listes à 120 (ou 180) élements ce qui 
     correspond à 1 point par seconde pendant 2 (ou 3) minutes et à chaque fois qu'il y a
     une nouvelle mesure on vire l'element d'indice 0 et on rajoute la nouvelle valeur à 

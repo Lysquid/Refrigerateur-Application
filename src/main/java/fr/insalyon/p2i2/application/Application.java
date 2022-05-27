@@ -32,6 +32,10 @@ public class Application extends JPanel implements ActionListener {
     private Information gaz2;
     private Information gaz3;
 
+    private Graph graph1;
+    private Graph graph2;
+    private Graph graph3;
+
     private ConnexionBD connexion;
     private Timer timerInfo;
     private Timer timerRapide;
@@ -49,12 +53,18 @@ public class Application extends JPanel implements ActionListener {
 
         Column column1 = new Column();
         BoxPanel gridGraphs = new BoxPanel(true);
-        gridGraphs.add(new Graph("Température", 1, Color.blue));
-        gridGraphs.add(new Graph("Humidité", 2, Color.red));
-        gridGraphs.add(new Graph("Gaz", 3, Color.green));
+        graph1 = new Graph("Température", Color.blue);
+        graph2 = new Graph("Humidité", Color.red);
+        graph3 = new Graph("Gaz", Color.green); 
+        gridGraphs.add(graph1);
+        gridGraphs.add(graph2);
+        gridGraphs.add(graph3);
         Block blockGraphs = new Block("Graphiques", gridGraphs);
         column1.add(blockGraphs);
         add(column1);
+        graph1.init(connexion.getDonnee(1, true));
+        graph2.init(connexion.getDonnee(2, true));
+        graph3.init(connexion.getDonnee(3, true));
 
         Column column2 = new Column();
         column2.add(Box.createRigidArea(new Dimension(0, 50)));
@@ -124,11 +134,16 @@ public class Application extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == timerInfo) {
             temperature.maj(connexion.getDonnee(1));
+            graph1.update(connexion.getDonnee(1));
             humidite.maj(connexion.getDonnee(2));
             ouvert.maj(connexion.getOuverture() ? "oui" : "non");
             gaz1.maj((int) connexion.getDonnee(3));
             gaz2.maj((int) connexion.getDonnee(8));
             gaz3.maj((int) connexion.getDonnee(9));
+
+            graph1.update(connexion.getDonnee(1));
+            graph2.update(connexion.getDonnee(2));
+            graph3.update(connexion.getDonnee(3));
 
         } else if (e.getSource() == timerRapide) {
 
