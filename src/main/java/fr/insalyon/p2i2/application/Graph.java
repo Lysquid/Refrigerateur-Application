@@ -35,8 +35,8 @@ public class Graph extends Compo {
         titleTag.setBounds(375,10,50,20);
         xA = -5;
         xB = 180;
-        yA = min(ordonnee)-2;
-        yB = max(ordonnee)+2;
+        yA = -10;
+        yB = 10;
     }
 
     public double min(LinkedList<Double> list){
@@ -105,11 +105,13 @@ public class Graph extends Compo {
             abscisse.add((double)SIZE);
             ordonnee.add(nY);
         }
+        yA = min(ordonnee)-2;
+        yB = max(ordonnee)+2;
         repaint();
     }
 
     public void init(LinkedList<Double> l){
-        for(int i = 0; i < SIZE; i++){
+        for(int i = 0; i < l.size(); i++){
             abscisse.add((double)i+1);
             ordonnee.add(l.get(i));
         }
