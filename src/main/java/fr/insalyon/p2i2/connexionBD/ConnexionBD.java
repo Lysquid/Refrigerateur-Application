@@ -94,7 +94,7 @@ public class ConnexionBD {
     public ArrayList<Produit> getProduits() {
         ArrayList<Produit> listeProduits = new ArrayList<Produit>();
         try {
-            String query = "SELECT nomProduit, quantite, Produit.codeBarre "
+            String query = "SELECT nomProduit, quantite, Produit.codeBarre, marque, imageURL "
                     + "FROM Produit, CodeBarre "
                     + "WHERE Produit.codeBarre = CodeBarre.codebarre "
                     + "AND CodeBarre.dateCodeBarre IN (SELECT MAX(dateCodeBarre) FROM CodeBarre, Produit WHERE Produit.codeBarre = CodeBarre.codeBarre GROUP BY nomProduit) "
@@ -105,7 +105,8 @@ public class ConnexionBD {
             ResultSet Produits = selectProduitsStatement.executeQuery();
             while (Produits.next()) {
                 Produit aliment = new Produit(Produits.getString("nomProduit"),
-                        Produits.getInt("quantite"), Produits.getLong("codeBarre"));
+                        Produits.getInt("quantite"), Produits.getLong("codeBarre"), 
+                        Produits.getString("marque"), Produits.getString("imageURL"));
                 listeProduits.add(aliment);
             }
             return listeProduits;
