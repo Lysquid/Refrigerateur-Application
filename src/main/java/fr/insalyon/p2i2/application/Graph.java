@@ -66,7 +66,6 @@ public class Graph extends Compo {
         int hauteurVisibleFenetre = getSize().height + getInsets().top + getInsets().bottom;
         int largeurVisibleFenetre = getSize().width + getInsets().left + getInsets().right;
         int xEcran = (int) ((x - xA) / (xB - xA) * largeurVisibleFenetre);
-        int yEcran = (int) ((y - yA) / (yB - yB) * hauteurVisibleFenetre);        int xEcran = (int) ((x - xA) / (xB - xA) * largeurVisibleFenetre);
         int yEcran = (int) ((y - yA) / (yB - yB) * hauteurVisibleFenetre);
         return new Point(xEcran + getInsets().left, yEcran + getInsets().top);
     }
