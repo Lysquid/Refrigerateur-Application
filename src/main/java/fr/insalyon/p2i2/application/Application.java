@@ -140,9 +140,9 @@ public class Application extends JPanel implements ActionListener {
             gaz2.maj((int) connexion.getDonnee(8));
             gaz3.maj((int) connexion.getDonnee(9));
 
-            // graph1.update(connexion.getDonnee(1));
-            // graph2.update(connexion.getDonnee(2));
-            // graph3.update(connexion.getDonnee(3));
+            graph1.update(connexion.getDonnee(1));
+            graph2.update(connexion.getDonnee(2));
+            graph3.update(connexion.getDonnee(3));
 
         } else if (e.getSource() == timerRapide) {
 
