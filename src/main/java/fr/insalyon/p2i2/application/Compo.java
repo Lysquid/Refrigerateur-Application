@@ -7,6 +7,7 @@ public class Compo extends JPanel {
 
     protected static final Font mainFont = new Font(Application.fontName, Font.PLAIN, 18);
     protected static final Font boldFont = new Font(Application.fontName, Font.BOLD, 18);
+    protected static final Font smallFont = new Font(Application.fontName, Font.ITALIC, 17);
     protected static final Font biggerFont = new Font(Application.fontName, Font.PLAIN, 24);
     protected static final int inset = 10;
 
