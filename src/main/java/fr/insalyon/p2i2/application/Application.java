@@ -116,7 +116,7 @@ public class Application extends JPanel implements ActionListener {
         JScrollPane scrollPaneStock = new JScrollPane(gridStock);
 
         scrollPaneStock.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        Block blockStock = new Block("Stock", scrollPaneStock);
+        Block blockStock = new Block("Contenu", scrollPaneStock);
         column3.add(blockStock);
         column3.add(new JButton("Mode ajout"));
         add(column3);
