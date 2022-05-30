@@ -17,13 +17,13 @@ public class Graph extends Compo {
     private LinkedList<Double> ordonnee;
     private Color color;
 
-    private final int WIDTH = 400;
-    private final int HEIGHT = 200;
+    private static final int WIDTH = 400;
+    private static final int HEIGHT = 200;
 
     public static final int POINTS = 180;
 
     public Graph(String title, Color colour) {
-        super();
+        super(Graph.WIDTH, Graph.HEIGHT);
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         abscisse = new LinkedList<Double>();

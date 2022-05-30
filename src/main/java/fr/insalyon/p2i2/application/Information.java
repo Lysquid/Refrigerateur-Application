@@ -12,7 +12,7 @@ public class Information extends Compo {
     String unite;
 
     public Information(String capteur, String unite) {
-        setMySize(200, 80);
+        super(200);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         labelCapteur = new JLabel(capteur);

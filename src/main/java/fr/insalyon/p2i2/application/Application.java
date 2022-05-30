@@ -43,9 +43,14 @@ public class Application extends JPanel implements ActionListener {
     private BoxPanel gridStock;
     private BoxPanel gridAlerts;
 
+    private ArrayList<Produit> listeProduits;
+    private ArrayList<ProduitCompo> listeProduitsCompo;
+
     public Application() {
 
         connexion = new ConnexionBD();
+        listeProduits = new ArrayList<>();
+        listeProduitsCompo = new ArrayList<>();
 
         setLayout(new GridLayout(0, 3, padding, padding));
 
@@ -146,16 +151,26 @@ public class Application extends JPanel implements ActionListener {
 
         } else if (e.getSource() == timerRapide) {
 
-            gridStock.removeAll();
             ArrayList<Produit> nouveauxProduits = connexion.getProduits();
             for (Produit produit : nouveauxProduits) {
-                gridStock.add(new ProduitCompo(produit));
+                if (listeProduits.contains(produit)) {
+                    for (ProduitCompo compo : listeProduitsCompo) {
+                        if (produit.equals(compo.produit)) {
+                            compo.majQuantite(produit);
+                        }
+                    }
+                } else {
+                    ProduitCompo produitCompo = new ProduitCompo(produit);
+                    listeProduitsCompo.add(produitCompo);
+                    gridStock.add(produitCompo);
+                    listeProduits.add(produit);
+                }
             }
 
             gridAlerts.removeAll();
             ArrayList<Seuil> seuils = connexion.getSeuils();
             for (Seuil seuil : seuils) {
-                gridAlerts.add(new Alert(seuil));
+                gridAlerts.add(new Alerte(seuil));
             }
 
         }

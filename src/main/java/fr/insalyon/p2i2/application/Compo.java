@@ -11,15 +11,31 @@ public class Compo extends JPanel {
     protected static final Font biggerFont = new Font(Application.fontName, Font.PLAIN, 24);
     protected static final int inset = 10;
 
-    public Compo() {
-        setBackground(Color.LIGHT_GRAY);
+    protected int width;
+    protected int height = 0;
+    protected static final Color color = Color.LIGHT_GRAY;
 
+    public Compo() {
+        setBackground(color);
     }
 
-    public void setMySize(int w, int h) {
-        Dimension size = new Dimension(w, h);
-        setPreferredSize(size);
-        setMaximumSize(size);
+    public Compo(int width) {
+        this();
+        this.width = width;
+    }
+
+    public Compo(int width, int height) {
+        this(width);
+        this.height = height;
+    }
+
+    @Override
+    public Dimension getMaximumSize() {
+        if (height == 0) {
+            return new Dimension(width, super.getMaximumSize().height);
+        } else {
+            return new Dimension(width, height);
+        }
     }
 
 }

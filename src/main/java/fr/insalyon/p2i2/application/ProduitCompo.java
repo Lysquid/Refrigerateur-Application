@@ -1,18 +1,50 @@
 package fr.insalyon.p2i2.application;
 
-import java.awt.Insets;
+import java.awt.*;
+import java.io.IOException;
+import java.net.URL;
 
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.*;
 
 import fr.insalyon.p2i2.connexionBD.Produit;
 
 public class ProduitCompo extends Compo {
 
-    public ProduitCompo(Produit produit) {
-        setMySize(400, 100);
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+    public Produit produit;
+    private JLabel quantite;
 
+    public ProduitCompo(Produit produit) {
+        super(400);
+
+        JPanel textPanel = new JPanel() {
+            @Override
+            public Insets getInsets() {
+                int insets = 10;
+                return new Insets(insets, insets, insets, insets);
+            }
+        };
+        textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
+        textPanel.setBackground(Compo.color);
+
+        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        setAlignmentX(Component.LEFT_ALIGNMENT);
+
+
+        try {
+            URL url = new URL(produit.url);
+            JLabel image = new JLabel(new ImageIcon(ImageIO.read(url)));
+            image.setLocation(100, 0);
+            image.setAlignmentX(Component.RIGHT_ALIGNMENT);
+            image.setAlignmentY(Component.TOP_ALIGNMENT);
+            add(image);
+        } catch (IOException e) {
+        }
+
+        this.produit = produit;
         String nom;
         if (produit.nom.length() > 1) {
             nom = produit.nom.substring(0, 1).toUpperCase() + produit.nom.substring(1);
@@ -21,20 +53,22 @@ public class ProduitCompo extends Compo {
         }
         JLabel nomProduit = new JLabel(nom);
         nomProduit.setFont(boldFont);
-        add(nomProduit);
+        textPanel.add(nomProduit);
         JLabel marque = new JLabel(produit.marque);
         marque.setFont(mainFont);
-        add(marque);
-        // TODO : Ajouter l'image (chaud)
-        JLabel quantite = new JLabel("quantité : " + String.valueOf(produit.quantite));
+        textPanel.add(marque);
+        quantite = new JLabel();
+        majQuantite(produit);
         quantite.setFont(mainFont);
-        add(quantite);
+        textPanel.add(quantite);
+        textPanel.setAlignmentY(Component.TOP_ALIGNMENT);
+        add(textPanel);
 
     }
 
-    @Override
-    public Insets getInsets() {
-        return new Insets(inset, inset, inset, inset);
+    public void majQuantite(Produit nouveauProduit) {
+        produit = nouveauProduit;
+        quantite.setText("quantité : " + String.valueOf(produit.quantite));
     }
 
 }
