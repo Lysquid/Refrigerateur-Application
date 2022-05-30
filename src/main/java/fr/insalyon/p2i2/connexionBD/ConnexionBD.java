@@ -73,13 +73,13 @@ public class ConnexionBD {
         }
     }
 
-    public LinkedList<Double> getDonnee(int idCapteur, boolean size) {
+    public LinkedList<Double> getDonnees(int idCapteur) {
         try {
             LinkedList<Double> r = new LinkedList<Double>();
             String query = "SELECT valeur FROM Mesure, Capteur WHERE Capteur.idCapteur = Mesure.idCapteur AND Capteur.idCapteur = ? ORDER BY Mesure.dateMesure DESC LIMIT 0,?";
             PreparedStatement selectMesureStatement = this.connection.prepareStatement(query);
             selectMesureStatement.setInt(1, idCapteur);
-            selectMesureStatement.setInt(2, Graph.SIZE);
+            selectMesureStatement.setInt(2, Graph.POINTS);
             ResultSet donnee = selectMesureStatement.executeQuery();
             while (donnee.next()) {
                 r.add(donnee.getDouble("valeur"));
@@ -105,7 +105,7 @@ public class ConnexionBD {
             ResultSet Produits = selectProduitsStatement.executeQuery();
             while (Produits.next()) {
                 Produit aliment = new Produit(Produits.getString("nomProduit"),
-                        Produits.getInt("quantite"), Produits.getLong("codeBarre"), 
+                        Produits.getInt("quantite"), Produits.getLong("codeBarre"),
                         Produits.getString("marque"), Produits.getString("imageURL"));
                 listeProduits.add(aliment);
             }
@@ -147,7 +147,12 @@ public class ConnexionBD {
                     "ORDER BY nomCategorieProduit;";
 
             PreparedStatement selectCategorieProduitStatement = this.connection.prepareStatement(query1);
+
+            // long time1 = System.currentTimeMillis();
             ResultSet CategoriesProduits = selectCategorieProduitStatement.executeQuery();
+            // long time2 = System.currentTimeMillis();
+            // System.out.print(time2 - time1);
+            // System.out.println(" ms");
 
             while (CategoriesProduits.next()) {
 

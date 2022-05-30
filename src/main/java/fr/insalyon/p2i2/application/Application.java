@@ -59,9 +59,9 @@ public class Application extends JPanel implements ActionListener {
         gridGraphs.add(graph1);
         gridGraphs.add(graph2);
         gridGraphs.add(graph3);
-        graph1.init(connexion.getDonnee(1, true));
-        graph2.init(connexion.getDonnee(2, true));
-        graph3.init(connexion.getDonnee(3, true));
+        graph1.init(connexion.getDonnees(1));
+        graph2.init(connexion.getDonnees(2));
+        graph3.init(connexion.getDonnees(3));
         Block blockGraphs = new Block("Graphiques", gridGraphs);
         column1.add(blockGraphs);
         add(column1);
@@ -140,9 +140,9 @@ public class Application extends JPanel implements ActionListener {
             gaz2.maj((int) connexion.getDonnee(8));
             gaz3.maj((int) connexion.getDonnee(9));
 
-            graph1.update(connexion.getDonnee(1));
-            graph2.update(connexion.getDonnee(2));
-            graph3.update(connexion.getDonnee(3));
+            // graph1.update(connexion.getDonnee(1));
+            // graph2.update(connexion.getDonnee(2));
+            // graph3.update(connexion.getDonnee(3));
 
         } else if (e.getSource() == timerRapide) {
 
