@@ -12,7 +12,7 @@ public class Compo extends JPanel {
     protected static final int inset = 10;
 
     public Compo() {
-        setBackground(Color.GRAY);
+        setBackground(Color.LIGHT_GRAY);
 
     }
 

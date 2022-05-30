@@ -32,9 +32,9 @@ public class Graph extends Compo {
         color = colour;
 
         titleTag = new JLabel(title);
-        titleTag.setForeground(Color.gray);
+        titleTag.setForeground(Color.BLACK);
         titleTag.setFont(boldFont);
-        titleTag.setBounds((int) 0.9*WIDTH, (int) 0.05*HEIGHT, (int) 0.125*WIDTH, (int) 0.1*HEIGHT);
+        titleTag.setBounds((int) 0.9 * WIDTH, (int) 0.05 * HEIGHT, (int) 0.125 * WIDTH, (int) 0.1 * HEIGHT);
         add(titleTag);
         xA = -5;
         xB = 180;
@@ -63,24 +63,29 @@ public class Graph extends Compo {
     }
 
     public Point toScreen(double x, double y) {
-        int HauteurVisibleFenetre = getSize().height - getInsets().top - getInsets().bottom;
-        int LargeurVisibleFenetre = getSize().width - getInsets().left - getInsets().right;
-        int Xecran = (int) ((x - xA) / (xB - xA) * LargeurVisibleFenetre);
-        int Yecran = (int) ((y - yA) / (yB - yB) * HauteurVisibleFenetre);
-        return new Point(Xecran + getInsets().left, Yecran + getInsets().top);
+        int hauteurVisibleFenetre = getSize().height + getInsets().top + getInsets().bottom;
+        int largeurVisibleFenetre = getSize().width + getInsets().left + getInsets().right;
+        int xEcran = (int) ((x - xA) / (xB - xA) * largeurVisibleFenetre);
+        int yEcran = (int) ((y - yA) / (yB - yB) * hauteurVisibleFenetre);        int xEcran = (int) ((x - xA) / (xB - xA) * largeurVisibleFenetre);
+        int yEcran = (int) ((y - yA) / (yB - yB) * hauteurVisibleFenetre);
+        return new Point(xEcran + getInsets().left, yEcran + getInsets().top);
     }
 
     public void paint(Graphics g) {
         super.paint(g);
+
+        // Axes
         Point A, B;
         A = toScreen(0, yA);
         B = toScreen(0, yB);
         g.setColor(Color.black);
         g.drawLine(A.x, A.y, B.x, B.y);
+
         A = toScreen(xA, 0);
         B = toScreen(xB, 0);
         g.drawLine(A.x, A.y, B.x, B.y);
 
+        // Points
         g.setColor(color);
         double x = abscisse.get(0);
         double y = ordonnee.get(0);
@@ -98,7 +103,7 @@ public class Graph extends Compo {
         if (abscisse.size() >= POINTS) {
             ordonnee.remove(0);
         } else {
-            abscisse.add(abscisse.size()+1d);
+            abscisse.add(abscisse.size() + 1d);
         }
         ordonnee.add(nY);
         yA = min(ordonnee) - 2;
