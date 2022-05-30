@@ -55,7 +55,7 @@ public class Application extends JPanel implements ActionListener {
         BoxPanel gridGraphs = new BoxPanel(true);
         graph1 = new Graph("Température", Color.blue);
         graph2 = new Graph("Humidité", Color.red);
-        graph3 = new Graph("Gaz", Color.green); 
+        graph3 = new Graph("Gaz", Color.green);
         gridGraphs.add(graph1);
         gridGraphs.add(graph2);
         gridGraphs.add(graph3);
@@ -65,7 +65,6 @@ public class Application extends JPanel implements ActionListener {
         Block blockGraphs = new Block("Graphiques", gridGraphs);
         column1.add(blockGraphs);
         add(column1);
-        
 
         Column column2 = new Column();
         column2.add(Box.createRigidArea(new Dimension(0, 50)));
@@ -149,12 +148,10 @@ public class Application extends JPanel implements ActionListener {
 
             gridStock.removeAll();
             ArrayList<Produit> nouveauxProduits = connexion.getProduits();
-            // TODO : Ajouter seulement les nouveaux produits
             for (Produit produit : nouveauxProduits) {
                 gridStock.add(new ProduitCompo(produit));
             }
 
-            // TODO : Fixez moi cette requete -> fix par Nicolas
             gridAlerts.removeAll();
             ArrayList<Seuil> seuils = connexion.getSeuils();
             for (Seuil seuil : seuils) {

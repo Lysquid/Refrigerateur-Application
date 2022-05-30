@@ -119,12 +119,9 @@ public class ConnexionBD {
         try {
             String query = "SELECT porteOuverte FROM OuverturePorte ORDER BY dateOuverture DESC LIMIT 0,1;";
             PreparedStatement selectOuvertureStatement = this.connection.prepareStatement(query);
-            ResultSet Ouverture = selectOuvertureStatement.executeQuery();
-            if (Ouverture.next()) {
-                return Ouverture.getBoolean("porteOuverte");
-            } else {
-                return false;
-            }
+            ResultSet ouverture = selectOuvertureStatement.executeQuery();
+            ouverture.next();
+            return ouverture.getBoolean("porteOuverte");
         } catch (SQLException ex) {
             ex.printStackTrace(System.err);
             return false;
