@@ -5,12 +5,22 @@ public class Produit {
     public String nom;
     public long codebarre;
     public int quantite;
+    public String marque;
+    public String url;
 
     public Produit(String nom, int quantite, long codeBarre) {
         this.nom = nom;
         this.quantite = quantite;
         this.codebarre = codeBarre;
     }
+    public Produit(String nom, int quantite, long codeBarre, String marque, String url) {
+        this.nom = nom;
+        this.quantite = quantite;
+        this.codebarre = codeBarre;
+        this.marque = marque;
+        this.url = url;
+    }
+
 
     public String toString() {
         return (nom + " de quantité " + quantite + " et de code-barre " + codebarre);
