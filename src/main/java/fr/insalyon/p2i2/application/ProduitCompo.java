@@ -22,8 +22,7 @@ public class ProduitCompo extends Compo {
         JLabel nomProduit = new JLabel(nom);
         nomProduit.setFont(boldFont);
         add(nomProduit);
-        // TODO : Ajouter marque
-        JLabel marque = new JLabel("Marque");
+        JLabel marque = new JLabel(produit.marque);
         marque.setFont(mainFont);
         add(marque);
         // TODO : Ajouter l'image (chaud)

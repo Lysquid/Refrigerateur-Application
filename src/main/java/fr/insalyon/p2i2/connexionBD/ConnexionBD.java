@@ -105,7 +105,7 @@ public class ConnexionBD {
             ResultSet Produits = selectProduitsStatement.executeQuery();
             while (Produits.next()) {
                 Produit aliment = new Produit(Produits.getString("nomProduit"),
-                        Produits.getInt("quantite"), Produits.getLong("codeBarre"), 
+                        Produits.getInt("quantite"), Produits.getLong("codeBarre"),
                         Produits.getString("marque"), Produits.getString("imageURL"));
                 listeProduits.add(aliment);
             }
@@ -147,7 +147,12 @@ public class ConnexionBD {
                     "ORDER BY nomCategorieProduit;";
 
             PreparedStatement selectCategorieProduitStatement = this.connection.prepareStatement(query1);
+
+            // long time1 = System.currentTimeMillis();
             ResultSet CategoriesProduits = selectCategorieProduitStatement.executeQuery();
+            // long time2 = System.currentTimeMillis();
+            // System.out.print(time2 - time1);
+            // System.out.println(" ms");
 
             while (CategoriesProduits.next()) {
 
