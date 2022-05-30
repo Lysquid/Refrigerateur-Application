@@ -5,18 +5,17 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.BoxLayout;
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
 public class Block extends JPanel {
 
-    private final Color backgroundColor = Color.BLUE;
+    private final Color backgroundColor = Color.CYAN;
 
     public Block(String title, Component grid)
 
     {
 
-        setBackground(Color.CYAN);
+        setBackground(backgroundColor);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         Font font = new Font(getFont().getFontName(), Font.PLAIN, 30);

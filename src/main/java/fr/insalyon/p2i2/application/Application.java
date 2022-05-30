@@ -43,8 +43,6 @@ public class Application extends JPanel implements ActionListener {
     private BoxPanel gridStock;
     private BoxPanel gridAlerts;
 
-    private ArrayList<Produit> nouveauxProduits;
-
     public Application() {
 
         connexion = new ConnexionBD();
@@ -119,8 +117,10 @@ public class Application extends JPanel implements ActionListener {
         add(column3);
 
         timerInfo = new Timer(1000, this);
+        timerInfo.setInitialDelay(1);
         timerInfo.start();
         timerRapide = new Timer(500, this);
+        timerRapide.setInitialDelay(1);
         timerRapide.start();
 
     }
