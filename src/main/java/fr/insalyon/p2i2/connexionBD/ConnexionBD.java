@@ -73,13 +73,13 @@ public class ConnexionBD {
         }
     }
 
-    public LinkedList<Double> getDonnee(int idCapteur, boolean size) {
+    public LinkedList<Double> getDonnees(int idCapteur) {
         try {
             LinkedList<Double> r = new LinkedList<Double>();
             String query = "SELECT valeur FROM Mesure, Capteur WHERE Capteur.idCapteur = Mesure.idCapteur AND Capteur.idCapteur = ? ORDER BY Mesure.dateMesure DESC LIMIT 0,?";
             PreparedStatement selectMesureStatement = this.connection.prepareStatement(query);
             selectMesureStatement.setInt(1, idCapteur);
-            selectMesureStatement.setInt(2, Graph.SIZE);
+            selectMesureStatement.setInt(2, Graph.POINTS);
             ResultSet donnee = selectMesureStatement.executeQuery();
             while (donnee.next()) {
                 r.add(donnee.getDouble("valeur"));
