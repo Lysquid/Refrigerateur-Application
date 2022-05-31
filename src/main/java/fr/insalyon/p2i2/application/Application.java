@@ -25,8 +25,6 @@ import fr.insalyon.p2i2.connexionBD.Seuil;
 
 public class Application extends JPanel implements ActionListener {
 
-    private final int padding = 20;
-
     public static String fontName = null;
 
     private Information temperature;
@@ -51,6 +49,7 @@ public class Application extends JPanel implements ActionListener {
     private ArrayList<ProduitCompo> listeProduitsCompo;
 
     public static final Font font = new Font("SansSerif", Font.PLAIN, 18);
+    public static final int gap = 30;
 
     public Application() {
 
@@ -58,11 +57,12 @@ public class Application extends JPanel implements ActionListener {
         listeProduits = new ArrayList<>();
         listeProduitsCompo = new ArrayList<>();
 
-        setLayout(new GridLayout(0, 3, padding, padding));
+        setLayout(new GridLayout(0, 3, 0, 0));
 
         Column column1 = new Column();
         add(column1);
-        BoxPanel gridGraphs = new BoxPanel(true);
+        // BoxPanel gridGraphs = new BoxPanel(true);
+        GridPanel gridGraphs = new GridPanel(1, 3);
         Block blockGraphs = new Block("Graphiques", gridGraphs);
         column1.add(blockGraphs);
         graph1 = new Graph("Température", Color.blue);
@@ -80,52 +80,45 @@ public class Application extends JPanel implements ActionListener {
         JLabel logo = new JLabel(new ImageIcon("./fichiers/img/logo.png"));
         logo.setAlignmentX(Component.CENTER_ALIGNMENT);
         logo.setAlignmentY(Component.TOP_ALIGNMENT);
+        column2.addSpace();
         column2.add(logo);
-        column2.add(Box.createRigidArea(new Dimension(0, 10)));
+        column2.addSpace();
 
         // Ajout du block monitoring
-        BoxPanel gridMonitor = new BoxPanel(false);
+        GridPanel gridMonitor = new GridPanel(2, 3);
         Block blockMonitor = new Block("Monitoring", gridMonitor);
         column2.add(blockMonitor);
 
-        BoxPanel colonneMonitoring1 = new BoxPanel(true);
         temperature = new Information("Temperature", "°C");
-        colonneMonitoring1.add(temperature);
+        gridMonitor.add(temperature);
         humidite = new Information("Humidité", "%");
-        colonneMonitoring1.add(humidite);
+        gridMonitor.add(humidite);
         ouvert = new Information("Ouvert", "");
-        colonneMonitoring1.add(ouvert);
-        gridMonitor.add(colonneMonitoring1);
+        gridMonitor.add(ouvert);
 
-        BoxPanel colonneMonitoring2 = new BoxPanel(true);
         gaz1 = new Information("NH3", "ppm");
-        colonneMonitoring2.add(gaz1);
+        gridMonitor.add(gaz1);
         gaz2 = new Information("H2", "ppm");
-        colonneMonitoring2.add(gaz2);
+        gridMonitor.add(gaz2);
         gaz3 = new Information("CH4", "ppm");
-        colonneMonitoring2.add(gaz3);
-        gridMonitor.add(colonneMonitoring2);
+        gridMonitor.add(gaz3);
 
         // Ajout du block alerte
-        gridAlerts = new BoxPanel(true);
+        gridAlerts = new BoxPanel();
         JScrollPane scrollPaneAlerts = new JScrollPane(gridAlerts);
         scrollPaneAlerts.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        Block blockAlerts = new Block("Alertes", scrollPaneAlerts);
+        JButton boutonEffacer = new JButton("Effacer");
+        Block blockAlerts = new Block("Alertes", scrollPaneAlerts, boutonEffacer);
         column2.add(blockAlerts);
-
-        JButton jButton = new JButton("Effacer");
-        column2.add(jButton);
-        jButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         Column column3 = new Column();
         add(column3);
-        gridStock = new BoxPanel(true);
+        gridStock = new BoxPanel();
         JScrollPane scrollPaneStock = new JScrollPane(gridStock);
         scrollPaneStock.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        Block blockStock = new Block("Contenu", scrollPaneStock);
+        JButton boutonAjout = new JButton("Mode ajout");
+        Block blockStock = new Block("Contenu", scrollPaneStock, boutonAjout);
         column3.add(blockStock);
-
-        column3.add(new JButton("Mode ajout"));
 
         timerInfo = new Timer(1000, this);
         timerInfo.setInitialDelay(1);
@@ -138,7 +131,8 @@ public class Application extends JPanel implements ActionListener {
 
     @Override
     public Insets getInsets() {
-        return new Insets(padding, padding, padding, padding);
+        int insets = 0;
+        return new Insets(insets, insets, insets, insets);
     }
 
     @Override

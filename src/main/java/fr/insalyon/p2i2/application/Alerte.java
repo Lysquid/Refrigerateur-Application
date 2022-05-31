@@ -10,15 +10,15 @@ import java.awt.*;
 public class Alerte extends Compo {
 
     public Alerte(Seuil seuil) {
-        super(400);
+        super(true);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        JLabel nomAlerte = new JLabel("Seuil de " + seuil.typeDeMesure + " dépassé pour ");
+        JLabel nomAlerte = new JLabel("Seuil de " + seuil.typeDeMesure + " dépassé ");
         nomAlerte.setFont(boldFont);
         add(nomAlerte);
         double valeurSeuil = (seuil.valeur > seuil.seuilMax) ? seuil.seuilMax : seuil.seuilMin;
-        JLabel nomCategorie = new JLabel("les " + seuil.categorieProduit.toLowerCase());
+        JLabel nomCategorie = new JLabel("pour les " + seuil.categorieProduit.toLowerCase());
         nomCategorie.setFont(boldFont);
         add(nomCategorie);
         JLabel valeurActuel = new JLabel("Valeur actuelle : " + seuil.valeur + " " + seuil.unite);

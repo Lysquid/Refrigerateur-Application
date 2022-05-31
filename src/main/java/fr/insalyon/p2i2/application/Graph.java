@@ -23,9 +23,7 @@ public class Graph extends Compo {
     public static final int POINTS = 180;
 
     public Graph(String title, Color colour) {
-        super(Graph.WIDTH, Graph.HEIGHT);
-        setPreferredSize(new Dimension(WIDTH, HEIGHT));
-
+        super(false);
         abscisse = new LinkedList<Double>();
         ordonnee = new LinkedList<Double>();
 

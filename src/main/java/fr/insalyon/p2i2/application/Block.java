@@ -10,9 +10,9 @@ import javax.swing.*;
 public class Block extends JPanel {
 
     private final static Color backgroundColor = Color.CYAN;
-    private final static Font font = Application.font.deriveFont(Font.PLAIN, 30);
+    private final static Font font = Application.font.deriveFont(Font.PLAIN, 24);
 
-    public Block(String title, Component grid) {
+    public Block(String title, JComponent grid) {
 
         setBackground(backgroundColor);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -21,18 +21,27 @@ public class Block extends JPanel {
         label.setFont(font);
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(label);
-
-        add(Box.createRigidArea(new Dimension(0, 20)));
-
+        addSpace();
         // add(new JButton("Bouton"));
         add(grid);
 
     }
 
+    public Block(String title, JComponent grid, JComponent button) {
+        this(title, grid);
+        addSpace();
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        add(button);
+    }
+
+    private void addSpace() {
+        add(Box.createRigidArea(new Dimension(0, Application.gap / 2)));
+    }
+
     @Override
     public Insets getInsets() {
-        int insets = 20;
-        return new Insets(insets, insets, insets, insets);
+        int inset = Application.gap / 2;
+        return new Insets(inset, inset, inset, inset);
     }
 
 }

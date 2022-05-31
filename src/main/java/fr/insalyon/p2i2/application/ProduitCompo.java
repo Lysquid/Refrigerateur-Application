@@ -18,7 +18,7 @@ public class ProduitCompo extends Compo {
     private JLabel quantite;
 
     public ProduitCompo(Produit produit) {
-        super(400);
+        super(true);
 
         JPanel textPanel = new JPanel() {
             @Override
@@ -28,11 +28,10 @@ public class ProduitCompo extends Compo {
             }
         };
         textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
-        textPanel.setBackground(Compo.color);
+        textPanel.setOpaque(false);
 
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         setAlignmentX(Component.LEFT_ALIGNMENT);
-
 
         try {
             URL url = new URL(produit.url);
