@@ -9,16 +9,13 @@ import javax.swing.*;
 
 public class Block extends JPanel {
 
-    private final Color backgroundColor = Color.CYAN;
+    private final static Color backgroundColor = Color.CYAN;
+    private final static Font font = Application.font.deriveFont(Font.PLAIN, 30);
 
-    public Block(String title, Component grid)
-
-    {
+    public Block(String title, Component grid) {
 
         setBackground(backgroundColor);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        Font font = new Font(getFont().getFontName(), Font.PLAIN, 30);
 
         JLabel label = new JLabel(title, SwingConstants.CENTER);
         label.setFont(font);

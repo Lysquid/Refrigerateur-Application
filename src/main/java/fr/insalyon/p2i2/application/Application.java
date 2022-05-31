@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.awt.*;
 
@@ -48,6 +49,8 @@ public class Application extends JPanel implements ActionListener {
 
     private ArrayList<Produit> listeProduits;
     private ArrayList<ProduitCompo> listeProduitsCompo;
+
+    public static final Font font = new Font("SansSerif", Font.PLAIN, 18);
 
     public Application() {
 
