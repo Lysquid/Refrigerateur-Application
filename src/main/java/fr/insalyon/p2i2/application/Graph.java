@@ -52,7 +52,7 @@ public class Graph extends Compo {
 
     public Point conversion(double x, double y) {
         int xEcran = marginLeft + (int) ((getWidth() - marginLeft - marginRight) * x / valMax);
-        int yEcran = getHeight() - marginBottom - (int) (getHeight() * (y - valMin) / valMax);
+        int yEcran = getHeight() - marginBottom - (int) (getHeight() * (y - valMin) / (valMax - valMin));
         return new Point(xEcran, yEcran);
     }
 
