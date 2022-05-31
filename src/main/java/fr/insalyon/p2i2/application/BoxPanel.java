@@ -1,34 +1,24 @@
 package fr.insalyon.p2i2.application;
 
+import java.awt.Component;
+import java.awt.Dimension;
+
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-
 public class BoxPanel extends JPanel {
 
-    private static final int defaultGap = 15;
-
-    private boolean vertical;
-    private int gap;
-
-    public BoxPanel(boolean vertical, int gap) {
-        this.gap = gap;
-        this.vertical = vertical;
-        setLayout(new BoxLayout(this, vertical ? BoxLayout.Y_AXIS : BoxLayout.X_AXIS));
-    }
-
-    public BoxPanel(boolean vertical) {
-        this(vertical, defaultGap);
-        setBackground(Color.YELLOW);
+    public BoxPanel() {
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setOpaque(false);
+        setBackground(Application.backgroundColor);
     }
 
     @Override
     public Component add(Component comp) {
         if (getComponentCount() > 0) {
-            super.add(Box.createRigidArea(new Dimension(vertical ? 0 : gap, vertical ? gap : 0)));
+            super.add(Box.createRigidArea(new Dimension(0, Application.gap)));
         }
         return super.add(comp);
     }

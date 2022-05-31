@@ -62,23 +62,26 @@ public class ConnexionBD {
             PreparedStatement selectMesureStatement = this.connection.prepareStatement(query);
             selectMesureStatement.setInt(1, idCapteur);
             ResultSet donnee = selectMesureStatement.executeQuery();
-            donnee.next();
-            return donnee.getDouble("valeur");
+            if (donnee.next()) {
+                return donnee.getDouble("valeur");
+            } else {
+                return 0;
+            }
         } catch (SQLException ex) {
             ex.printStackTrace(System.err);
             return 0;
         }
     }
 
-    public LinkedList<Double> getDonnee(int idCapteur, boolean size) {
+    public LinkedList<Double> getDonnees(int idCapteur) {
         try {
             LinkedList<Double> r = new LinkedList<Double>();
             String query = "SELECT valeur FROM Mesure, Capteur WHERE Capteur.idCapteur = Mesure.idCapteur AND Capteur.idCapteur = ? ORDER BY Mesure.dateMesure DESC LIMIT 0,?";
             PreparedStatement selectMesureStatement = this.connection.prepareStatement(query);
             selectMesureStatement.setInt(1, idCapteur);
-            selectMesureStatement.setInt(2, Graph.SIZE);
+            selectMesureStatement.setInt(2, Graph.POINTS);
             ResultSet donnee = selectMesureStatement.executeQuery();
-            while(donnee.next()){
+            while (donnee.next()) {
                 r.add(donnee.getDouble("valeur"));
             }
             return r;
@@ -91,18 +94,19 @@ public class ConnexionBD {
     public ArrayList<Produit> getProduits() {
         ArrayList<Produit> listeProduits = new ArrayList<Produit>();
         try {
-            String query = "SELECT nomProduit, quantite, Produit.codeBarre "
-            + "FROM Produit, CodeBarre "
-            + "WHERE Produit.codeBarre = CodeBarre.codebarre "
-            + "AND CodeBarre.dateCodeBarre IN (SELECT MAX(dateCodeBarre) FROM CodeBarre, Produit WHERE Produit.codeBarre = CodeBarre.codeBarre GROUP BY nomProduit) "
-            + "AND quantite != 0 "
-            + "GROUP BY nomProduit "
-            + "ORDER BY dateCodeBarre DESC";
+            String query = "SELECT nomProduit, quantite, Produit.codeBarre, marque, imageURL, masse "
+                    + "FROM Produit, CodeBarre "
+                    + "WHERE Produit.codeBarre = CodeBarre.codebarre "
+                    + "AND CodeBarre.dateCodeBarre IN (SELECT MAX(dateCodeBarre) FROM CodeBarre, Produit WHERE Produit.codeBarre = CodeBarre.codeBarre GROUP BY nomProduit) "
+                    + "AND quantite != 0 "
+                    + "GROUP BY nomProduit "
+                    + "ORDER BY dateCodeBarre DESC";
             PreparedStatement selectProduitsStatement = this.connection.prepareStatement(query);
-            ResultSet Produits = selectProduitsStatement.executeQuery();
-            while (Produits.next()) {
-                Produit aliment = new Produit(Produits.getString("nomProduit"),
-                        Produits.getInt("quantite"), Produits.getLong("codeBarre"));
+            ResultSet result = selectProduitsStatement.executeQuery();
+            while (result.next()) {
+                Produit aliment = new Produit(result.getString("nomProduit"),
+                        result.getInt("quantite"), result.getLong("codeBarre"),
+                        result.getString("marque"), result.getString("imageURL"), result.getInt("masse"));
                 listeProduits.add(aliment);
             }
             return listeProduits;
@@ -116,9 +120,9 @@ public class ConnexionBD {
         try {
             String query = "SELECT porteOuverte FROM OuverturePorte ORDER BY dateOuverture DESC LIMIT 0,1;";
             PreparedStatement selectOuvertureStatement = this.connection.prepareStatement(query);
-            ResultSet Ouverture = selectOuvertureStatement.executeQuery();
-            Ouverture.next();
-            return Ouverture.getBoolean("porteOuverte");
+            ResultSet ouverture = selectOuvertureStatement.executeQuery();
+            ouverture.next();
+            return ouverture.getBoolean("porteOuverte");
         } catch (SQLException ex) {
             ex.printStackTrace(System.err);
             return false;
@@ -129,52 +133,56 @@ public class ConnexionBD {
         ArrayList<Seuil> listeSeuils = new ArrayList<>();
         try {
 
-            String query1 = 
-            "SELECT DISTINCT nomCategorieProduit, nomTypeMesure, valeur, unite, seuilMin, seuilMax " +
-            "FROM Seuil, TypeMesure, Mesure, Capteur, Produit, CategorieProduit, AssociationCategorie " +
-            "WHERE Seuil.idTypeMesure = TypeMesure.idTypeMesure " +
-            "AND Capteur.idTypeMesure = TypeMesure.idTypeMesure " +
-            "AND Mesure.idCapteur = Capteur.idCapteur " +
-            "AND Seuil.idCategorieProduit = CategorieProduit.idCategorieProduit " +
-            "AND CategorieProduit.idCategorieProduit = AssociationCategorie.idCategorieProduit " +
-            "AND Mesure.dateMesure IN (SELECT MAX(dateMesure) FROM Mesure, Capteur WHERE Capteur.idCapteur = Mesure.idCapteur GROUP BY nomCapteur) " +
-            "AND (Capteur.idCapteur = 1 OR Capteur.idCapteur = 2) " +
-            "AND (seuilMax < valeur OR seuilMin > valeur) " +
-            "ORDER BY nomCategorieProduit;";
+            String query1 = "SELECT DISTINCT nomCategorieProduit, nomTypeMesure, valeur, unite, seuilMin, seuilMax " +
+                    "FROM Seuil, TypeMesure, Mesure, Capteur, Produit, CategorieProduit, AssociationCategorie " +
+                    "WHERE Seuil.idTypeMesure = TypeMesure.idTypeMesure " +
+                    "AND Capteur.idTypeMesure = TypeMesure.idTypeMesure " +
+                    "AND Mesure.idCapteur = Capteur.idCapteur " +
+                    "AND Seuil.idCategorieProduit = CategorieProduit.idCategorieProduit " +
+                    "AND CategorieProduit.idCategorieProduit = AssociationCategorie.idCategorieProduit " +
+                    "AND Mesure.dateMesure IN (SELECT MAX(dateMesure) FROM Mesure, Capteur WHERE Capteur.idCapteur = Mesure.idCapteur GROUP BY nomCapteur) "
+                    +
+                    "AND (Capteur.idCapteur = 1 OR Capteur.idCapteur = 2) " +
+                    "AND (seuilMax < valeur OR seuilMin > valeur) " +
+                    "ORDER BY nomCategorieProduit;";
 
             PreparedStatement selectCategorieProduitStatement = this.connection.prepareStatement(query1);
+
+            // long time1 = System.currentTimeMillis();
             ResultSet CategoriesProduits = selectCategorieProduitStatement.executeQuery();
+            // long time2 = System.currentTimeMillis();
+            // System.out.print(time2 - time1);
+            // System.out.println(" ms");
 
             while (CategoriesProduits.next()) {
 
                 ArrayList<String> listeProduits = new ArrayList<>();
 
-                String query2 = 
-                "SELECT nomProduit " +
-                "FROM Produit, AssociationCategorie, CategorieProduit " +
-                "WHERE Produit.codeBarre = AssociationCategorie.codeBarre " +
-                "AND AssociationCategorie.idCategorieProduit = CategorieProduit.idCategorieProduit " +
-                "AND nomCategorieProduit = ?;";
+                String query2 = "SELECT nomProduit " +
+                        "FROM Produit, AssociationCategorie, CategorieProduit " +
+                        "WHERE Produit.codeBarre = AssociationCategorie.codeBarre " +
+                        "AND AssociationCategorie.idCategorieProduit = CategorieProduit.idCategorieProduit " +
+                        "AND nomCategorieProduit = ?;";
 
                 PreparedStatement selectProduitsStatement = this.connection.prepareStatement(query2);
                 selectProduitsStatement.setString(1, CategoriesProduits.getString("nomCategorieProduit"));
                 ResultSet Produits = selectProduitsStatement.executeQuery();
 
-                while(Produits.next()){
+                while (Produits.next()) {
                     listeProduits.add(Produits.getString("nomProduit"));
                 }
-                
+
                 Seuil seuil = new Seuil(
                         listeProduits,
                         CategoriesProduits.getString("nomCategorieProduit"),
-                        CategoriesProduits.getString("nomTypeMesure"), 
+                        CategoriesProduits.getString("nomTypeMesure"),
                         CategoriesProduits.getFloat("seuilMin"),
-                        CategoriesProduits.getFloat("seuilMax"), 
-                        CategoriesProduits.getFloat("valeur"), 
+                        CategoriesProduits.getFloat("seuilMax"),
+                        CategoriesProduits.getFloat("valeur"),
                         CategoriesProduits.getString("unite"));
-                
+
                 listeSeuils.add(seuil);
-                //System.out.println(seuil.toString());
+                // System.out.println(seuil.toString());
             }
             return listeSeuils;
         } catch (SQLException ex) {

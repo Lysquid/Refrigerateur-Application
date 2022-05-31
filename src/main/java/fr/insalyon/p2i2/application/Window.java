@@ -1,8 +1,10 @@
 package fr.insalyon.p2i2.application;
 
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.JFrame;
+import javax.swing.UIManager;
+
+import com.formdev.flatlaf.FlatLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 
 public class Window extends JFrame {
 
@@ -20,10 +22,10 @@ public class Window extends JFrame {
 
     private void lookAndFeel() {
         try {
-            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-                | UnsupportedLookAndFeelException e) {
-            e.printStackTrace();
+            FlatLaf.registerCustomDefaultsSource("fr.insalyon.p2i2.themes");
+            UIManager.setLookAndFeel(new FlatLightLaf());
+        } catch (Exception ex) {
+            System.err.println("Failed to initialize LaF");
         }
     }
 
