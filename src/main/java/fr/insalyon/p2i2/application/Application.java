@@ -38,7 +38,7 @@ public class Application extends JPanel implements ActionListener {
 
     private ConnexionBD connexion;
     private Timer timerInfo;
-    private Timer timerRapide;
+    private Timer timerLent;
 
     private BoxPanel gridStock;
     private BoxPanel gridAlerts;
@@ -128,9 +128,9 @@ public class Application extends JPanel implements ActionListener {
         timerInfo = new Timer(1000, this);
         timerInfo.setInitialDelay(1);
         timerInfo.start();
-        timerRapide = new Timer(500, this);
-        timerRapide.setInitialDelay(1);
-        timerRapide.start();
+        timerLent = new Timer(60000, this);
+        timerLent.setInitialDelay(1);
+        timerLent.start();
 
     }
 
@@ -154,7 +154,7 @@ public class Application extends JPanel implements ActionListener {
             graph2.update(connexion.getDonnee(2));
             graph3.update(connexion.getDonnee(3));
 
-        } else if (e.getSource() == timerRapide) {
+        } else if (e.getSource() == timerLent) {
             ArrayList<Produit> nouveauxProduits = connexion.getProduits();
             for (Produit produit : nouveauxProduits) {
                 if (listeProduits.contains(produit)) {
