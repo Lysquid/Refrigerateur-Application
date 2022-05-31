@@ -1,6 +1,7 @@
 package fr.insalyon.p2i2.application;
 
-import java.awt.*;
+import java.awt.Component;
+import java.awt.Insets;
 import java.io.IOException;
 import java.net.URL;
 
@@ -8,7 +9,7 @@ import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.*;
+import javax.swing.JPanel;
 
 import fr.insalyon.p2i2.connexionBD.Produit;
 

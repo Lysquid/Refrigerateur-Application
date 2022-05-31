@@ -1,11 +1,12 @@
 package fr.insalyon.p2i2.application;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Insets;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
 
 public class Column extends JPanel {
 

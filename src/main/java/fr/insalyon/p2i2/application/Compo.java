@@ -1,7 +1,10 @@
 package fr.insalyon.p2i2.application;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+
 import javax.swing.JPanel;
-import java.awt.*;
 
 public class Compo extends JPanel {
 

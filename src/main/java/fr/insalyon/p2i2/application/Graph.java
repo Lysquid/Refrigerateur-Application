@@ -1,10 +1,11 @@
 package fr.insalyon.p2i2.application;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Point;
 import java.util.LinkedList;
 
-import javax.swing.*;
+import javax.swing.JLabel;
 
 public class Graph extends Compo {
 

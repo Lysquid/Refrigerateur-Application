@@ -1,11 +1,12 @@
 package fr.insalyon.p2i2.application;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
-
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
 
 public class BoxPanel extends JPanel {
 

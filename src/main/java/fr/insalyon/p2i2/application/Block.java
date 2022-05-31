@@ -1,11 +1,17 @@
 package fr.insalyon.p2i2.application;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Insets;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.BoxLayout;
-import java.awt.*;
-import javax.swing.*;
 
 public class Block extends JPanel {
 

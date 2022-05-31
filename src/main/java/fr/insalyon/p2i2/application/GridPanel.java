@@ -1,11 +1,9 @@
 package fr.insalyon.p2i2.application;
 
-import javax.swing.BoxLayout;
-import javax.swing.JPanel;
+import java.awt.Color;
+import java.awt.GridLayout;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+import javax.swing.JPanel;
 
 public class GridPanel extends JPanel {
 

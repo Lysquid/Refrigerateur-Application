@@ -1,8 +1,8 @@
 package fr.insalyon.p2i2.application;
 
+import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.JFrame;
 
 public class Window extends JFrame {
 

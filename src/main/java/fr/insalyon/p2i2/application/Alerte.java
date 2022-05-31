@@ -1,11 +1,11 @@
 package fr.insalyon.p2i2.application;
 
-import javax.swing.*;
+import java.awt.Insets;
 
-import fr.insalyon.p2i2.connexionBD.Produit;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+
 import fr.insalyon.p2i2.connexionBD.Seuil;
-
-import java.awt.*;
 
 public class Alerte extends Compo {
 

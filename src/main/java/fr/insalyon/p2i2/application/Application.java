@@ -1,17 +1,14 @@
 package fr.insalyon.p2i2.application;
 
+import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.ArrayList;
-import java.awt.*;
 
-import javax.imageio.ImageIO;
-import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
