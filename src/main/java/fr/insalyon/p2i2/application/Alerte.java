@@ -1,6 +1,7 @@
 package fr.insalyon.p2i2.application;
 
 import java.awt.Insets;
+import java.awt.Dimension;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -10,11 +11,11 @@ import fr.insalyon.p2i2.connexionBD.Seuil;
 public class Alerte extends Compo {
 
     public Alerte(Seuil seuil) {
-        super(true);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        JLabel nomAlerte = new JLabel("Seuil de " + seuil.typeDeMesure + " dépassé pour les " + seuil.categorieProduit.toLowerCase());
+        JLabel nomAlerte = new JLabel(
+                "Seuil de " + seuil.typeDeMesure + " dépassé pour les " + seuil.categorieProduit.toLowerCase());
         nomAlerte.setFont(boldFont);
         add(nomAlerte);
         double valeurSeuil = (seuil.valeur > seuil.seuilMax) ? seuil.seuilMax : seuil.seuilMin;
@@ -32,7 +33,7 @@ public class Alerte extends Compo {
         add(produitsConcernes);
         for (String produit : seuil.produits) {
             JLabel nomProduits = new JLabel(produit);
-            nomProduits.setFont(smallFont);
+            nomProduits.setFont(italicFont);
             add(nomProduits);
         }
     }
@@ -40,6 +41,11 @@ public class Alerte extends Compo {
     @Override
     public Insets getInsets() {
         return new Insets(inset, inset, inset, inset);
+    }
+
+    @Override
+    public Dimension getMaximumSize() {
+        return new Dimension(getParent().getWidth(), super.getMaximumSize().height);
     }
 
 }

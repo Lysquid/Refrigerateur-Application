@@ -36,7 +36,7 @@ public class Block extends JPanel {
         this(title, grid);
         addSpace();
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(button);
+        this.add(button);
     }
 
     private void addSpace() {

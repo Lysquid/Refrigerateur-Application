@@ -2,6 +2,7 @@ package fr.insalyon.p2i2.application;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Insets;
@@ -9,9 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -46,9 +47,9 @@ public class Application extends JPanel implements ActionListener {
     private ArrayList<Produit> listeProduits;
     private ArrayList<ProduitCompo> listeProduitsCompo;
 
-    public static final Font font = new Font("Dialog", Font.PLAIN, 18);
     public static final int gap = 30;
-
+    public static final int compoInset = 12;
+    public static final int compoBorderSize = 2;
     public static final Color backgroundColor = Color.decode("#f2f2f2");
     public static final Color blockColor = Color.decode("#ffffff");
     public static final Color borderColor = Color.decode("#d6d6d6");
@@ -67,8 +68,6 @@ public class Application extends JPanel implements ActionListener {
         add(column1);
         // BoxPanel gridGraphs = new BoxPanel(true);
         GridPanel gridGraphs = new GridPanel(1, 3);
-        Block blockGraphs = new Block("Graphiques", gridGraphs);
-        column1.add(blockGraphs);
         graph1 = new Graph("Température", Color.blue);
         graph2 = new Graph("Humidité", Color.red);
         graph3 = new Graph("Gaz", Color.green);
@@ -78,6 +77,15 @@ public class Application extends JPanel implements ActionListener {
         graph1.init(connexion.getDonnees(1));
         graph2.init(connexion.getDonnees(2));
         graph3.init(connexion.getDonnees(3));
+        Graph[] listeGraphs = { graph1, graph2, graph3 };
+        JComboBox<Graph> comboBoxGraphs = new JComboBox<Graph>(listeGraphs) {
+            @Override
+            public Dimension getMaximumSize() {
+                return super.getPreferredSize();
+            }
+        };
+        Block blockGraphs = new Block("Graphiques", gridGraphs, comboBoxGraphs);
+        column1.add(blockGraphs);
 
         Column column2 = new Column();
         add(column2);
@@ -109,8 +117,7 @@ public class Application extends JPanel implements ActionListener {
         // Ajout du block alerte
         gridAlerts = new BoxPanel();
         JScrollPane scrollPaneAlerts = new ScrollPane(gridAlerts);
-        JButton boutonEffacer = new JButton("Effacer");
-        Block blockAlerts = new Block("Alertes", scrollPaneAlerts, boutonEffacer);
+        Block blockAlerts = new Block("Alertes", scrollPaneAlerts);
         column2.add(blockAlerts);
 
         Column column3 = new Column();

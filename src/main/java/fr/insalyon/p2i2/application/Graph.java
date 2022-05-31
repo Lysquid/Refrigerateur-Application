@@ -17,18 +17,19 @@ public class Graph extends Compo {
     private LinkedList<Double> abscisse;
     private LinkedList<Double> ordonnee;
     private Color color;
+    private String title;
 
     private static final int WIDTH = 400;
     private static final int HEIGHT = 200;
 
     public static final int POINTS = 180;
 
-    public Graph(String title, Color colour) {
-        super(false);
+    public Graph(String title, Color color) {
+        this.title = title;
+        this.color = color;
         abscisse = new LinkedList<Double>();
         ordonnee = new LinkedList<Double>();
 
-        color = colour;
 
         titleTag = new JLabel(title);
         titleTag.setForeground(Color.BLACK);
@@ -39,6 +40,11 @@ public class Graph extends Compo {
         xB = 180;
         yA = -10;
         yB = 10;
+    }
+
+    @Override
+    public String toString() {
+        return title;
     }
 
     public double min(LinkedList<Double> list) {

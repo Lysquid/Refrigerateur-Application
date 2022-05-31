@@ -12,27 +12,14 @@ public class Compo extends JPanel {
 
     protected static final Font mainFont = UIManager.getFont("defaultFont");
     protected static final Font boldFont = UIManager.getFont("semibold.font");
-    protected static final Font smallFont = UIManager.getFont("small.font");
+    protected static final Font italicFont = UIManager.getFont("defaultFont").deriveFont(Font.ITALIC);
     protected static final Font biggerFont = UIManager.getFont("large.font");
-    protected static final int inset = 10;
-    protected static final int borderSize = 2;
+    protected static final int inset = Application.compoInset;
+    protected static final int borderSize = Application.compoBorderSize;
 
-    protected boolean fullWidth = false;
-
-    public Compo(boolean fullWidth) {
-        this.fullWidth = fullWidth;
+    public Compo() {
         setBackground(Application.blockColor);
         setBorder(BorderFactory.createMatteBorder(borderSize, borderSize, borderSize, borderSize,
                 Application.borderColor));
     }
-
-    @Override
-    public Dimension getMaximumSize() {
-        if (fullWidth) {
-            return new Dimension(getParent().getWidth(), super.getMaximumSize().height);
-        } else {
-            return super.getMaximumSize();
-        }
-    }
-
 }

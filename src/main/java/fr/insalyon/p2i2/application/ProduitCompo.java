@@ -2,6 +2,7 @@ package fr.insalyon.p2i2.application;
 
 import java.awt.Component;
 import java.awt.Insets;
+import java.awt.Dimension;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -17,16 +18,16 @@ import fr.insalyon.p2i2.connexionBD.Produit;
 
 public class ProduitCompo extends Compo {
 
+    private static final int imageTimeout = 200;
     public Produit produit;
     private JLabel quantite;
 
-    public ProduitCompo(Produit produit) {
-        super(true);
 
+    public ProduitCompo(Produit produit) {
         JPanel textPanel = new JPanel() {
             @Override
             public Insets getInsets() {
-                int insets = 10;
+                int insets = Compo.inset;
                 return new Insets(insets, insets, insets, insets);
             }
         };
@@ -39,8 +40,8 @@ public class ProduitCompo extends Compo {
         try {
             URL url = new URL(produit.url);
             URLConnection con = url.openConnection();
-            con.setConnectTimeout(100);
-            con.setReadTimeout(100);
+            con.setConnectTimeout(imageTimeout);
+            con.setReadTimeout(imageTimeout);
             InputStream in = con.getInputStream();
             JLabel image = new JLabel(new ImageIcon(ImageIO.read(in)));
             in.close();
@@ -79,6 +80,11 @@ public class ProduitCompo extends Compo {
     public void majQuantite(Produit nouveauProduit) {
         produit = nouveauProduit;
         quantite.setText("quantité : " + String.valueOf(produit.quantite));
+    }
+
+    @Override
+    public Dimension getMaximumSize() {
+        return new Dimension(480, super.getMaximumSize().height);
     }
 
 }
