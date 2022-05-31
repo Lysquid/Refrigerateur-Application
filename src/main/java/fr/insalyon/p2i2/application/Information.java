@@ -1,6 +1,6 @@
 package fr.insalyon.p2i2.application;
 
-import java.awt.*;
+import java.awt.Insets;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -12,7 +12,6 @@ public class Information extends Compo {
     String unite;
 
     public Information(String capteur, String unite) {
-        setMySize(200, 80);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         labelCapteur = new JLabel(capteur);

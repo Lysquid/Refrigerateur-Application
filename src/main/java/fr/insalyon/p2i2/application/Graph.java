@@ -1,10 +1,11 @@
 package fr.insalyon.p2i2.application;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Point;
 import java.util.LinkedList;
 
-import javax.swing.*;
+import javax.swing.JLabel;
 
 public class Graph extends Compo {
 
@@ -16,30 +17,29 @@ public class Graph extends Compo {
     private LinkedList<Double> abscisse;
     private LinkedList<Double> ordonnee;
     private Color color;
-
-    private final int WIDTH = 400;
-    private final int HEIGHT = 200;
+    private String title;
 
     public static final int POINTS = 180;
 
-    public Graph(String title, Color colour) {
-        super();
-        setPreferredSize(new Dimension(WIDTH, HEIGHT));
-
+    public Graph(String title, Color color) {
+        this.title = title;
+        this.color = color;
         abscisse = new LinkedList<Double>();
         ordonnee = new LinkedList<Double>();
-
-        color = colour;
 
         titleTag = new JLabel(title);
         titleTag.setForeground(Color.BLACK);
         titleTag.setFont(boldFont);
-        titleTag.setBounds((int) 0.9 * WIDTH, (int) 0.05 * HEIGHT, (int) 0.125 * WIDTH, (int) 0.1 * HEIGHT);
         add(titleTag);
         xA = -5;
         xB = 180;
         yA = -10;
         yB = 10;
+    }
+
+    @Override
+    public String toString() {
+        return title;
     }
 
     public double min(LinkedList<Double> list) {
@@ -68,8 +68,8 @@ public class Graph extends Compo {
         return new Point(xEcran, yEcran);
     }
 
-    public void paint(Graphics g) {
-        super.paint(g);
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
 
         // Axes
         Point A, B;

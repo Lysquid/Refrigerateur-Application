@@ -1,0 +1,87 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r, echo = FALSE, include=FALSE}
+rm(list = ls())
+Sys.setenv(LANG = "en")
+library(RMariaDB)
+library(lubridate)
+library(scales)
+library(ggplot2)
+library(plotly)
+library(tidyverse)
+library(DBI)
+
+con = dbConnect(RMariaDB::MariaDB(),
+                host = "fimi-bd-srv1.insa-lyon.fr",
+                database = "G221_A_BD1", dbname = "G221_A_BD1", 
+                user = "G221_A",
+                password = "G221_A", 
+                port = 3306)
+dbListTables(con)
+
+```
+
+Etudions dans un premier temps ce qu'a mangé l'utilisateur la semaine passée.
+```{r}
+dateDebut = as_datetime("2022-05-23 00:00:01", tz = "UTC")
+dateFin = as_datetime("2022-05-29 23:59:59", tz = "UTC")
+
+homme = TRUE
+apportMoyen = 0
+
+q = "SELECT DISTINCT Produit.codeBarre, nomProduit, energieKcal, quantite FROM Produit, CodeBarre WHERE CodeBarre.codeBarre = Produit.CodeBarre AND ajout = 1 AND dateCodeBarre > '2022-05-23 00:00:01' AND dateCodeBarre < '2022-05-29 23:59:59' GROUP BY Produit.codeBarre"
+
+data = dbGetQuery(con,q)
+data
+
+betterData = data.frame("nomProduit" = data$nomProduit, "quantite" = data$quantite, "energie " = data$energieKcal)
+
+Kcalories = c(sum(betterData$energie*betterData$quantite))
+KcaloriesJournalier = round(Kcalories/7)
+
+KcaloriesDifference = 0
+sexe = "allo"
+if(homme){
+  apportMoyen = 2600
+  KcaloriesDifference = round(abs(KcaloriesJournalier - apportMoyen))
+  sexe = "hommes"
+} else{
+  apportMoyen = 2100
+  KcaloriesDifference = round(abs(KcaloriesJournalier - apportMoyen))
+  sexe = "femmes"
+}
+
+cat("l'utilisateur a consommé", Kcalories, "kcal sur la semaine du", as.character(dateDebut),"au", as.character(dateFin), ", ce qui fait une moyenne de", KcaloriesJournalier ,"Kcal par jours, soit une différence de ", KcaloriesDifference, "Kcal avec l'apport calorique moyen pour les", sexe, "(apport moyen de", apportMoyen, "Kcal)")
+```
+
+Voyons maintenant de quels aliments l'utilisateur tiré son apport calorifique cette semaine
+
+```{r}
+pieMaterial = data.frame("nomProduit" = betterData$nomProduit, "props" = betterData$quantite*betterData$energie/Kcalories)
+
+pieMaterial2= pieMaterial[!(pieMaterial$props < 0.01),]
+pieMaterial2
+
+pieMaterial2 = pieMaterial2 %>%
+  arrange(desc(pieMaterial2$nomProduit)) %>%
+  mutate(lab.ypos = cumsum(pieMaterial2$props) - 0.5*props)
+
+ggplot(pieMaterial2, aes(x = "", y = props, fill = nomProduit)) +
+  geom_bar(width = 1, stat = "identity", color ="white") +
+  geom_text(aes(label = scales::percent(props, accuracy=1)), position = position_stack(vjust = 0.5)) +
+  coord_polar(theta = "y") +
+  theme_void() + 
+  ggtitle("Contribution des aliments mangés la semaine passée à l'apport énergétique")
+  
+
+```
+
+
+
+
+
