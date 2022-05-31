@@ -19,9 +19,6 @@ public class Graph extends Compo {
     private Color color;
     private String title;
 
-    private static final int WIDTH = 400;
-    private static final int HEIGHT = 200;
-
     public static final int POINTS = 180;
 
     public Graph(String title, Color color) {
@@ -30,11 +27,9 @@ public class Graph extends Compo {
         abscisse = new LinkedList<Double>();
         ordonnee = new LinkedList<Double>();
 
-
         titleTag = new JLabel(title);
         titleTag.setForeground(Color.BLACK);
         titleTag.setFont(boldFont);
-        titleTag.setBounds((int) 0.9 * WIDTH, (int) 0.05 * HEIGHT, (int) 0.125 * WIDTH, (int) 0.1 * HEIGHT);
         add(titleTag);
         xA = -5;
         xB = 180;
@@ -75,8 +70,8 @@ public class Graph extends Compo {
         return new Point(xEcran + getInsets().left, yEcran + getInsets().top);
     }
 
-    public void paint(Graphics g) {
-        super.paint(g);
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
 
         // Axes
         Point A, B;

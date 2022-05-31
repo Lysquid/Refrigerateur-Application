@@ -51,7 +51,6 @@ public class Application extends JPanel implements ActionListener {
     public static final Color backgroundColor = Color.decode("#f2f2f2");
     public static final Color blockColor = Color.decode("#ffffff");
     public static final Color borderColor = Color.decode("#d6d6d6");
-    public static final Color accentColor = Color.decode("#737df5");
 
     public Application() {
 
