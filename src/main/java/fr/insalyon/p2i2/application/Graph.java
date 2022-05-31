@@ -4,7 +4,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.LinkedList;
-
+import java.util.Collections;
+import java.awt.*;
+import javax.swing.*;
+import java.util.LinkedList;
 import javax.swing.JLabel;
 
 public class Graph extends Compo {
@@ -18,8 +21,16 @@ public class Graph extends Compo {
     private LinkedList<Double> ordonnee;
     private Color color;
     private String title;
+    double valMax;
+    double valMin;
+    int abscisseMax;
 
     public static final int POINTS = 180;
+
+    private static final int marginRight = 20;
+    private static final int marginLeft = 40;
+    private static final int marginTop = 40;
+    private static final int marginBottom = 20;
 
     public Graph(String title, Color color) {
         this.title = title;
@@ -31,10 +42,7 @@ public class Graph extends Compo {
         titleTag.setForeground(Color.BLACK);
         titleTag.setFont(boldFont);
         add(titleTag);
-        xA = -5;
-        xB = 180;
-        yA = -10;
-        yB = 10;
+
     }
 
     @Override
@@ -42,55 +50,39 @@ public class Graph extends Compo {
         return title;
     }
 
-    public double min(LinkedList<Double> list) {
-        double min = list.get(0);
-        for (double m : list) {
-            if (m < min) {
-                min = m;
-            }
-        }
-        return min;
-    }
-
-    public double max(LinkedList<Double> list) {
-        double max = list.get(0);
-        for (double m : list) {
-            if (m > max) {
-                max = m;
-            }
-        }
-        return max;
-    }
-
-    public Point toScreen(double x, double y) {
-        int xEcran = (int) (((xB-xA)/400.0)*x + xA);
-        int yEcran = (int) (((yA-yB)/200.0)*y + yA);
+    public Point conversion(double x, double y) {
+        int xEcran = marginLeft + (int) ((getWidth() - marginLeft - marginRight) * x / valMax);
+        int yEcran = getHeight() - marginBottom - (int) (getHeight() * (y - valMin) / valMax);
         return new Point(xEcran, yEcran);
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        abscisseMax = Collections.max(abscisse).intValue();
+        valMax = Collections.max(ordonnee) * 1.2;
+        valMin = Collections.min(ordonnee) * 0.9;
+
         // Axes
         Point A, B;
-        A = toScreen(0, yA);
-        B = toScreen(0, yB);
-        g.setColor(Color.black);
-        g.drawLine(A.x, A.y, B.x, B.y);
-        A = toScreen(xA, 0);
-        B = toScreen(xB, 0);
-        g.drawLine(A.x, A.y, B.x, B.y);
+        A = new Point(marginLeft, getHeight() - marginBottom);
+        B = new Point(marginLeft, marginTop);
+        g2d.setColor(Color.black);
+        g2d.drawLine(A.x, A.y, B.x, B.y);
 
         // Points
-        g.setColor(color);
+        g2d.setColor(color);
         double x = abscisse.get(0);
         double y = ordonnee.get(0);
-        A = toScreen(x, y);
+        A = conversion(x, y);
         for (int i = 1; i < abscisse.size(); i++) {
             x = abscisse.get(i);
             y = ordonnee.get(i);
-            B = toScreen(x, y);
-            g.drawLine(A.x, A.y, B.x, B.y);
+            B = conversion(x, y);
+            g2d.drawLine(A.x, A.y, B.x, B.y);
             A = B;
         }
     }
@@ -102,8 +94,6 @@ public class Graph extends Compo {
             abscisse.add(abscisse.size() + 1d);
         }
         ordonnee.add(nY);
-        yA = min(ordonnee) - 2;
-        yB = max(ordonnee) + 2;
         repaint();
     }
 

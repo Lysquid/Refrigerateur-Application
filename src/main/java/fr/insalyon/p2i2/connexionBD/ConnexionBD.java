@@ -124,7 +124,6 @@ public class ConnexionBD {
             ouverture.next();
             return ouverture.getBoolean("porteOuverte");
         } catch (SQLException ex) {
-            ex.printStackTrace(System.err);
             return false;
         }
     }
@@ -153,6 +152,7 @@ public class ConnexionBD {
             // long time2 = System.currentTimeMillis();
             // System.out.print(time2 - time1);
             // System.out.println(" ms");
+            System.out.println(CategoriesProduits.next());
 
             while (CategoriesProduits.next()) {
 
