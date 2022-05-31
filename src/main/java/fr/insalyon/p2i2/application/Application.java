@@ -49,7 +49,6 @@ public class Application extends JPanel implements ActionListener {
 
     public static final int gap = 30;
     public static final int compoInset = 12;
-    public static final int compoBorderSize = 2;
     public static final Color backgroundColor = Color.decode("#f2f2f2");
     public static final Color blockColor = Color.decode("#ffffff");
     public static final Color borderColor = Color.decode("#d6d6d6");

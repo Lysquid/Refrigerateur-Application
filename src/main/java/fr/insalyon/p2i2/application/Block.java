@@ -34,13 +34,17 @@ public class Block extends JPanel {
 
     public Block(String title, JComponent grid, JComponent button) {
         this(title, grid);
-        addSpace();
+        addSpace(Application.gap);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.add(button);
     }
 
+    private void addSpace(int size) {
+        add(Box.createRigidArea(new Dimension(0, size)));
+    }
+
     private void addSpace() {
-        add(Box.createRigidArea(new Dimension(0, Application.gap / 2)));
+        addSpace(Application.gap / 2);
     }
 
     @Override

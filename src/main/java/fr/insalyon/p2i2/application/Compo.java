@@ -8,6 +8,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
+import com.formdev.flatlaf.FlatClientProperties;
+
 public class Compo extends JPanel {
 
     protected static final Font mainFont = UIManager.getFont("defaultFont");
@@ -15,11 +17,9 @@ public class Compo extends JPanel {
     protected static final Font italicFont = UIManager.getFont("defaultFont").deriveFont(Font.ITALIC);
     protected static final Font biggerFont = UIManager.getFont("large.font");
     protected static final int inset = Application.compoInset;
-    protected static final int borderSize = Application.compoBorderSize;
 
     public Compo() {
         setBackground(Application.blockColor);
-        setBorder(BorderFactory.createMatteBorder(borderSize, borderSize, borderSize, borderSize,
-                Application.borderColor));
+        putClientProperty(FlatClientProperties.STYLE_CLASS, "myRoundPanel");
     }
 }
