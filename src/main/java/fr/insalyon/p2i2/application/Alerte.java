@@ -14,13 +14,11 @@ public class Alerte extends Compo {
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        JLabel nomAlerte = new JLabel("Seuil de " + seuil.typeDeMesure + " dépassé ");
+        JLabel nomAlerte = new JLabel("Seuil de " + seuil.typeDeMesure + " dépassé pour les " + seuil.categorieProduit.toLowerCase());
         nomAlerte.setFont(boldFont);
         add(nomAlerte);
         double valeurSeuil = (seuil.valeur > seuil.seuilMax) ? seuil.seuilMax : seuil.seuilMin;
-        JLabel nomCategorie = new JLabel("pour les " + seuil.categorieProduit.toLowerCase());
-        nomCategorie.setFont(boldFont);
-        add(nomCategorie);
+
         JLabel valeurActuel = new JLabel("Valeur actuelle : " + seuil.valeur + " " + seuil.unite);
         valeurActuel.setFont(mainFont);
         add(valeurActuel);

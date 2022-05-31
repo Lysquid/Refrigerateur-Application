@@ -39,12 +39,11 @@ public class ProduitCompo extends Compo {
         try {
             URL url = new URL(produit.url);
             URLConnection con = url.openConnection();
-            con.setConnectTimeout(10);
-            con.setReadTimeout(10);
+            con.setConnectTimeout(100);
+            con.setReadTimeout(100);
             InputStream in = con.getInputStream();
             JLabel image = new JLabel(new ImageIcon(ImageIO.read(in)));
             in.close();
-            System.out.println("wow2");
             image.setLocation(100, 0);
             image.setAlignmentX(Component.RIGHT_ALIGNMENT);
             image.setAlignmentY(Component.TOP_ALIGNMENT);
@@ -65,6 +64,9 @@ public class ProduitCompo extends Compo {
         JLabel marque = new JLabel(produit.marque);
         marque.setFont(mainFont);
         textPanel.add(marque);
+        JLabel masse = new JLabel(Integer.toString(produit.masse) + " g");
+        masse.setFont(mainFont);
+        textPanel.add(masse);
         quantite = new JLabel();
         majQuantite(produit);
         quantite.setFont(mainFont);
