@@ -1,10 +1,7 @@
 package fr.insalyon.p2i2.application;
 
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Color;
 
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 

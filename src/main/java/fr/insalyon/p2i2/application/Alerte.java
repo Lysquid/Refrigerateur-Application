@@ -1,7 +1,7 @@
 package fr.insalyon.p2i2.application;
 
-import java.awt.Insets;
 import java.awt.Dimension;
+import java.awt.Insets;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;

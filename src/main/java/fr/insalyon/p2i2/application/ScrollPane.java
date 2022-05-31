@@ -1,7 +1,8 @@
 package fr.insalyon.p2i2.application;
 
+import java.awt.Component;
+
 import javax.swing.JScrollPane;
-import java.awt.*;
 
 public class ScrollPane extends JScrollPane {
 

@@ -1,8 +1,8 @@
 package fr.insalyon.p2i2.application;
 
 import java.awt.Component;
-import java.awt.Insets;
 import java.awt.Dimension;
+import java.awt.Insets;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;

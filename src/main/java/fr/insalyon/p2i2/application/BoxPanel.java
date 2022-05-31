@@ -1,6 +1,5 @@
 package fr.insalyon.p2i2.application;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 
