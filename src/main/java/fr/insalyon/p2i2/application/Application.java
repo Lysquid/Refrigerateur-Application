@@ -95,15 +95,14 @@ public class Application extends JPanel implements ActionListener {
 
         temperature = new Information("Temperature", "°C");
         gridMonitor.add(temperature);
-        humidite = new Information("Humidité", "%");
-        gridMonitor.add(humidite);
-        ouvert = new Information("Ouvert", "");
-        gridMonitor.add(ouvert);
-
         gaz1 = new Information("NH3", "ppm");
         gridMonitor.add(gaz1);
+        humidite = new Information("Humidité", "%");
+        gridMonitor.add(humidite);
         gaz2 = new Information("H2", "ppm");
         gridMonitor.add(gaz2);
+        ouvert = new Information("Ouvert", "");
+        gridMonitor.add(ouvert);
         gaz3 = new Information("CH4", "ppm");
         gridMonitor.add(gaz3);
 

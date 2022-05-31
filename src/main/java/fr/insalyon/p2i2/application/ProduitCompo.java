@@ -38,7 +38,6 @@ public class ProduitCompo extends Compo {
 
         try {
             URL url = new URL(produit.url);
-            System.out.println("wow");
             URLConnection con = url.openConnection();
             con.setConnectTimeout(10);
             con.setReadTimeout(10);

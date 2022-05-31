@@ -6,13 +6,14 @@ import java.awt.Color;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 
 public class Compo extends JPanel {
 
-    protected static final Font mainFont = Application.font.deriveFont(Font.PLAIN, 18);
-    protected static final Font boldFont = Application.font.deriveFont(Font.BOLD, 18);
-    protected static final Font smallFont = Application.font.deriveFont(Font.ITALIC, 17);
-    protected static final Font biggerFont = Application.font.deriveFont(Font.PLAIN, 24);
+    protected static final Font mainFont = UIManager.getFont("defaultFont");
+    protected static final Font boldFont = UIManager.getFont("semibold.font");
+    protected static final Font smallFont = UIManager.getFont("small.font");
+    protected static final Font biggerFont = UIManager.getFont("large.font");
     protected static final int inset = 10;
     protected static final int borderSize = 2;
 

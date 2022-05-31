@@ -11,10 +11,11 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 
 public class Block extends JPanel {
 
-    private final static Font font = Application.font.deriveFont(Font.PLAIN, 24);
+    private final static Font font = UIManager.getFont("h2.font");
 
     public Block(String title, JComponent grid) {
 

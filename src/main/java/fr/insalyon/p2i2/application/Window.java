@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 
 public class Window extends JFrame {
@@ -22,6 +23,7 @@ public class Window extends JFrame {
 
     private void lookAndFeel() {
         try {
+            FlatLaf.registerCustomDefaultsSource("fr.insalyon.p2i2.themes");
             UIManager.setLookAndFeel(new FlatLightLaf());
         } catch (Exception ex) {
             System.err.println("Failed to initialize LaF");
