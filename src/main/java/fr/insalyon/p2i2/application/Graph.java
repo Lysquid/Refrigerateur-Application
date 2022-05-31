@@ -2,20 +2,16 @@ package fr.insalyon.p2i2.application;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
-import java.util.LinkedList;
+import java.awt.RenderingHints;
 import java.util.Collections;
-import java.awt.*;
-import javax.swing.*;
 import java.util.LinkedList;
+
 import javax.swing.JLabel;
 
 public class Graph extends Compo {
 
-    private double xA;
-    private double xB;
-    private double yA;
-    private double yB;
     private JLabel titleTag;
     private LinkedList<Double> abscisse;
     private LinkedList<Double> ordonnee;
