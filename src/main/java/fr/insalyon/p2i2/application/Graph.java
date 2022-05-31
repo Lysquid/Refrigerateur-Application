@@ -63,11 +63,9 @@ public class Graph extends Compo {
     }
 
     public Point toScreen(double x, double y) {
-        int hauteurVisibleFenetre = getSize().height + getInsets().top + getInsets().bottom;
-        int largeurVisibleFenetre = getSize().width + getInsets().left + getInsets().right;
-        int xEcran = (int) ((x - xA) / (xB - xA) * largeurVisibleFenetre);
-        int yEcran = (int) ((y - yA) / (yB - yB) * hauteurVisibleFenetre);
-        return new Point(xEcran + getInsets().left, yEcran + getInsets().top);
+        int xEcran = (int) (((xB-xA)/400.0)*x + xA);
+        int yEcran = (int) (((yA-yB)/200.0)*y + yA);
+        return new Point(xEcran, yEcran);
     }
 
     public void paint(Graphics g) {
@@ -79,7 +77,6 @@ public class Graph extends Compo {
         B = toScreen(0, yB);
         g.setColor(Color.black);
         g.drawLine(A.x, A.y, B.x, B.y);
-
         A = toScreen(xA, 0);
         B = toScreen(xB, 0);
         g.drawLine(A.x, A.y, B.x, B.y);
