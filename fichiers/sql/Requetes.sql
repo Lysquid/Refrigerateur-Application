@@ -134,10 +134,10 @@ AND Mesure.dateMesure IN (SELECT MAX(dateMesure) FROM Mesure, Capteur WHERE Capt
 AND (Capteur.idCapteur = 1 OR Capteur.idCapteur = 2)
 AND (seuilMax < valeur OR seuilMin > valeur);
 
--- Selection des produits appartenant a une certaine categorie de produit
+-- Selection des produits des le réfrigérateur appartenant a une certaine categorie de produit
 
 SELECT nomProduit
 FROM Produit, AssociationCategorie, CategorieProduit
 WHERE Produit.codeBarre = AssociationCategorie.codeBarre
 AND AssociationCategorie.idCategorieProduit = CategorieProduit.idCategorieProduit
-AND nomCategorieProduit = "Fromages";
+AND nomCategorieProduit = ?;
