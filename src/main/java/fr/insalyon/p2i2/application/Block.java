@@ -1,6 +1,5 @@
 package fr.insalyon.p2i2.application;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -15,13 +14,12 @@ import javax.swing.SwingConstants;
 
 public class Block extends JPanel {
 
-    private final static Color backgroundColor = Color.CYAN;
     private final static Font font = Application.font.deriveFont(Font.PLAIN, 24);
 
     public Block(String title, JComponent grid) {
 
-        setBackground(backgroundColor);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setOpaque(false);
 
         JLabel label = new JLabel(title, SwingConstants.CENTER);
         label.setFont(font);

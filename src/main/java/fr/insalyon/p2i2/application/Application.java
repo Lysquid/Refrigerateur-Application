@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -45,8 +46,13 @@ public class Application extends JPanel implements ActionListener {
     private ArrayList<Produit> listeProduits;
     private ArrayList<ProduitCompo> listeProduitsCompo;
 
-    public static final Font font = new Font("SansSerif", Font.PLAIN, 18);
+    public static final Font font = new Font("Dialog", Font.PLAIN, 18);
     public static final int gap = 30;
+
+    public static final Color backgroundColor = Color.decode("#f2f2f2");
+    public static final Color blockColor = Color.decode("#ffffff");
+    public static final Color borderColor = Color.decode("#d6d6d6");
+    public static final Color accentColor = Color.decode("#737df5");
 
     public Application() {
 
@@ -54,7 +60,8 @@ public class Application extends JPanel implements ActionListener {
         listeProduits = new ArrayList<>();
         listeProduitsCompo = new ArrayList<>();
 
-        setLayout(new GridLayout(0, 3, 0, 0));
+        setLayout(new GridLayout(0, 3));
+        setBackground(backgroundColor);
 
         Column column1 = new Column();
         add(column1);
@@ -102,8 +109,7 @@ public class Application extends JPanel implements ActionListener {
 
         // Ajout du block alerte
         gridAlerts = new BoxPanel();
-        JScrollPane scrollPaneAlerts = new JScrollPane(gridAlerts);
-        scrollPaneAlerts.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane scrollPaneAlerts = new ScrollPane(gridAlerts);
         JButton boutonEffacer = new JButton("Effacer");
         Block blockAlerts = new Block("Alertes", scrollPaneAlerts, boutonEffacer);
         column2.add(blockAlerts);
@@ -111,8 +117,7 @@ public class Application extends JPanel implements ActionListener {
         Column column3 = new Column();
         add(column3);
         gridStock = new BoxPanel();
-        JScrollPane scrollPaneStock = new JScrollPane(gridStock);
-        scrollPaneStock.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane scrollPaneStock = new ScrollPane(gridStock);
         JButton boutonAjout = new JButton("Mode ajout");
         Block blockStock = new Block("Contenu", scrollPaneStock, boutonAjout);
         column3.add(blockStock);
@@ -128,7 +133,7 @@ public class Application extends JPanel implements ActionListener {
 
     @Override
     public Insets getInsets() {
-        int insets = 0;
+        int insets = Application.gap / 2;
         return new Insets(insets, insets, insets, insets);
     }
 
@@ -147,7 +152,6 @@ public class Application extends JPanel implements ActionListener {
             graph3.update(connexion.getDonnee(3));
 
         } else if (e.getSource() == timerRapide) {
-
             ArrayList<Produit> nouveauxProduits = connexion.getProduits();
             for (Produit produit : nouveauxProduits) {
                 if (listeProduits.contains(produit)) {

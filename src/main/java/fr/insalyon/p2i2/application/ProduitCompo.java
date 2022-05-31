@@ -3,7 +3,9 @@ package fr.insalyon.p2i2.application;
 import java.awt.Component;
 import java.awt.Insets;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.net.URLConnection;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
@@ -36,7 +38,14 @@ public class ProduitCompo extends Compo {
 
         try {
             URL url = new URL(produit.url);
-            JLabel image = new JLabel(new ImageIcon(ImageIO.read(url)));
+            System.out.println("wow");
+            URLConnection con = url.openConnection();
+            con.setConnectTimeout(10);
+            con.setReadTimeout(10);
+            InputStream in = con.getInputStream();
+            JLabel image = new JLabel(new ImageIcon(ImageIO.read(in)));
+            in.close();
+            System.out.println("wow2");
             image.setLocation(100, 0);
             image.setAlignmentX(Component.RIGHT_ALIGNMENT);
             image.setAlignmentY(Component.TOP_ALIGNMENT);

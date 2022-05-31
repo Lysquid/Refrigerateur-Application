@@ -1,6 +1,5 @@
 package fr.insalyon.p2i2.application;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Insets;
 
@@ -11,8 +10,8 @@ import javax.swing.JPanel;
 public class Column extends JPanel {
 
     public Column() {
-        setBackground(Color.GREEN);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setOpaque(false);
     }
 
     @Override

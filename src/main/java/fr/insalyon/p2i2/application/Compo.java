@@ -1,9 +1,10 @@
 package fr.insalyon.p2i2.application;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Color;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 public class Compo extends JPanel {
@@ -13,13 +14,15 @@ public class Compo extends JPanel {
     protected static final Font smallFont = Application.font.deriveFont(Font.ITALIC, 17);
     protected static final Font biggerFont = Application.font.deriveFont(Font.PLAIN, 24);
     protected static final int inset = 10;
+    protected static final int borderSize = 2;
 
     protected boolean fullWidth = false;
-    protected static final Color color = Color.LIGHT_GRAY;
 
     public Compo(boolean fullWidth) {
         this.fullWidth = fullWidth;
-        setBackground(color);
+        setBackground(Application.blockColor);
+        setBorder(BorderFactory.createMatteBorder(borderSize, borderSize, borderSize, borderSize,
+                Application.borderColor));
     }
 
     @Override
