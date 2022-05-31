@@ -6,15 +6,14 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.util.Collections;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 import javax.swing.JLabel;
 
 public class Graph extends Compo {
 
     private JLabel titleTag;
-    private LinkedList<Double> abscisse;
-    private LinkedList<Double> ordonnee;
+    private ArrayList<Double> mesures;
     private Color color;
     private String title;
     double valMax;
@@ -31,8 +30,7 @@ public class Graph extends Compo {
     public Graph(String title, Color color) {
         this.title = title;
         this.color = color;
-        abscisse = new LinkedList<Double>();
-        ordonnee = new LinkedList<Double>();
+        mesures = new ArrayList<Double>();
 
         titleTag = new JLabel(title);
         titleTag.setForeground(Color.BLACK);
@@ -58,9 +56,8 @@ public class Graph extends Compo {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        abscisseMax = Collections.max(abscisse).intValue();
-        valMax = Collections.max(ordonnee) * 1.2;
-        valMin = Collections.min(ordonnee) * 0.9;
+        valMax = Collections.max(mesures) * 1.2;
+        valMin = Collections.min(mesures) * 0.9;
 
         // Axes
         Point A, B;
@@ -71,32 +68,33 @@ public class Graph extends Compo {
 
         // Points
         g2d.setColor(color);
-        double x = abscisse.get(0);
-        double y = ordonnee.get(0);
-        A = conversion(x, y);
-        for (int i = 1; i < abscisse.size(); i++) {
-            x = abscisse.get(i);
-            y = ordonnee.get(i);
-            B = conversion(x, y);
+        double mesure = mesures.get(0);
+        A = conversion(0, mesure);
+        for (int i = 1; i < Graph.POINTS; i++) {
+            mesure = mesures.get(i);
+            if (mesure == -1) {
+                continue;
+            }
+            B = conversion(i, mesure);
             g2d.drawLine(A.x, A.y, B.x, B.y);
             A = B;
         }
     }
 
-    public void update(double nY) {
-        if (abscisse.size() >= POINTS) {
-            ordonnee.remove(0);
+    public void update(double mesure) {
+        mesures.remove(0);
+        if (mesure == -1d) {
+            mesures.remove(0);
         } else {
-            abscisse.add(abscisse.size() + 1d);
+            mesures.add(mesure);
         }
-        ordonnee.add(nY);
         repaint();
     }
 
-    public void init(LinkedList<Double> l) {
-        for (int i = 0; i < l.size(); i++) {
-            abscisse.add((double) i + 1);
-            ordonnee.add(l.get(i));
+    public void init(ArrayList<Double> mesures) {
+        this.mesures = mesures;
+        while (mesures.size() < Graph.POINTS) {
+            mesures.add(0, -1d);
         }
         repaint();
     }

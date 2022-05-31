@@ -73,9 +73,9 @@ public class ConnexionBD {
         }
     }
 
-    public LinkedList<Double> getDonnees(int idCapteur) {
+    public ArrayList<Double> getDonnees(int idCapteur) {
         try {
-            LinkedList<Double> mesures = new LinkedList<Double>();
+            ArrayList<Double> mesures = new ArrayList<Double>();
             String query = "SELECT valeur FROM Mesure, Capteur WHERE Capteur.idCapteur = Mesure.idCapteur AND Capteur.idCapteur = ? ORDER BY Mesure.dateMesure DESC LIMIT 0,?";
             PreparedStatement selectMesureStatement = this.connection.prepareStatement(query);
             selectMesureStatement.setInt(1, idCapteur);
