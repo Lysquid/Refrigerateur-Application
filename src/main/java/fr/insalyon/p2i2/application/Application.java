@@ -9,8 +9,11 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.Box;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.Timer;
@@ -55,7 +58,10 @@ public class Application extends JPanel implements ActionListener {
         setLayout(new GridLayout(0, 3, padding, padding));
 
         Column column1 = new Column();
+        add(column1);
         BoxPanel gridGraphs = new BoxPanel(true);
+        Block blockGraphs = new Block("Graphiques", gridGraphs);
+        column1.add(blockGraphs);
         graph1 = new Graph("Température", Color.blue);
         graph2 = new Graph("Humidité", Color.red);
         graph3 = new Graph("Gaz", Color.green);
@@ -65,61 +71,58 @@ public class Application extends JPanel implements ActionListener {
         graph1.init(connexion.getDonnees(1));
         graph2.init(connexion.getDonnees(2));
         graph3.init(connexion.getDonnees(3));
-        Block blockGraphs = new Block("Graphiques", gridGraphs);
-        column1.add(blockGraphs);
-        add(column1);
 
         Column column2 = new Column();
-        column2.add(Box.createRigidArea(new Dimension(0, 50)));
+        add(column2);
+        JLabel logo = new JLabel(new ImageIcon("./fichiers/img/logo.png"));
+        logo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        logo.setAlignmentY(Component.TOP_ALIGNMENT);
+        column2.add(logo);
+        column2.add(Box.createRigidArea(new Dimension(0, 10)));
 
         // Ajout du block monitoring
         BoxPanel gridMonitor = new BoxPanel(false);
-
-        BoxPanel colonne1 = new BoxPanel(true);
-        temperature = new Information("Temperature", "°C");
-        colonne1.add(temperature);
-        humidite = new Information("Humidité", "%");
-        colonne1.add(humidite);
-        ouvert = new Information("Ouvert", "");
-        colonne1.add(ouvert);
-        gridMonitor.add(colonne1);
-
-        BoxPanel colonne2 = new BoxPanel(true);
-        gaz1 = new Information("NH3", "ppm");
-        colonne2.add(gaz1);
-        gaz2 = new Information("H2", "ppm");
-        colonne2.add(gaz2);
-        gaz3 = new Information("CH4", "ppm");
-        colonne2.add(gaz3);
-        gridMonitor.add(colonne2);
-
         Block blockMonitor = new Block("Monitoring", gridMonitor);
         column2.add(blockMonitor);
 
+        BoxPanel colonneMonitoring1 = new BoxPanel(true);
+        temperature = new Information("Temperature", "°C");
+        colonneMonitoring1.add(temperature);
+        humidite = new Information("Humidité", "%");
+        colonneMonitoring1.add(humidite);
+        ouvert = new Information("Ouvert", "");
+        colonneMonitoring1.add(ouvert);
+        gridMonitor.add(colonneMonitoring1);
+
+        BoxPanel colonneMonitoring2 = new BoxPanel(true);
+        gaz1 = new Information("NH3", "ppm");
+        colonneMonitoring2.add(gaz1);
+        gaz2 = new Information("H2", "ppm");
+        colonneMonitoring2.add(gaz2);
+        gaz3 = new Information("CH4", "ppm");
+        colonneMonitoring2.add(gaz3);
+        gridMonitor.add(colonneMonitoring2);
+
         // Ajout du block alerte
         gridAlerts = new BoxPanel(true);
-
         JScrollPane scrollPaneAlerts = new JScrollPane(gridAlerts);
         scrollPaneAlerts.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
         Block blockAlerts = new Block("Alertes", scrollPaneAlerts);
-
         column2.add(blockAlerts);
+
         JButton jButton = new JButton("Effacer");
         column2.add(jButton);
         jButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(column2);
 
         Column column3 = new Column();
+        add(column3);
         gridStock = new BoxPanel(true);
-
         JScrollPane scrollPaneStock = new JScrollPane(gridStock);
-
         scrollPaneStock.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         Block blockStock = new Block("Contenu", scrollPaneStock);
         column3.add(blockStock);
+
         column3.add(new JButton("Mode ajout"));
-        add(column3);
 
         timerInfo = new Timer(1000, this);
         timerInfo.setInitialDelay(1);
