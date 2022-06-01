@@ -143,7 +143,7 @@ public class ConnexionBD {
             LocalDateTime dateActuelle = LocalDateTime.now();
             float diffDate = ChronoUnit.MINUTES.between(derniereDate, dateActuelle);
 
-            if (porteOuverte && diffDate >= TEMPS_ALERTE_OUVERTURE){
+            if ((porteOuverte == true) && (diffDate >= TEMPS_ALERTE_OUVERTURE)){
                 Seuil seuil = new Seuil("Réfrigérateur", TEMPS_ALERTE_OUVERTURE, "Durée", diffDate, "minutes");
                 listeSeuils.add(seuil);
                 // System.out.println(seuil);
