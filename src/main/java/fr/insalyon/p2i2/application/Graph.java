@@ -75,7 +75,7 @@ public class Graph extends Compo {
         pointA = conversion(0, mesure);
         for (int i = 1; i < Graph.NB_POINTS; i++) {
             mesure = mesures.get(i);
-            if (mesure < 0) {
+            if (mesure == Double.NaN) {
                 continue;
             }
             pointB = conversion(i, mesure);
@@ -177,7 +177,7 @@ public class Graph extends Compo {
     public void init(ArrayList<Double> mesures) {
         this.mesures = mesures;
         while (mesures.size() < NB_POINTS) {
-            mesures.add(0, -1d);
+            mesures.add(0, Double.NaN);
         }
         repaint();
     }

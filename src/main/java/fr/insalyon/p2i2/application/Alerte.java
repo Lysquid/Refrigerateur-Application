@@ -14,9 +14,9 @@ public class Alerte extends Compo {
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        if (seuil.categorieProduit == "Réfrigérateur"){
+        if (seuil.categorieProduit == "Réfrigérateur") {
             JLabel nomAlerte = new JLabel(
-                "Attention, votre " + seuil.categorieProduit + " est resté ouvert trop longtemps !!!");
+                    "Attention, votre " + seuil.categorieProduit + " est resté ouvert trop longtemps !!!");
             nomAlerte.setFont(boldFont);
             add(nomAlerte);
             double valeurSeuil = (seuil.valeur > seuil.seuilMax) ? seuil.seuilMax : seuil.seuilMin;
@@ -62,7 +62,7 @@ public class Alerte extends Compo {
 
     @Override
     public Dimension getMaximumSize() {
-        return new Dimension(getParent().getWidth(), super.getMaximumSize().height);
+        return new Dimension(Application.scrollCompoSize, super.getMaximumSize().height);
     }
 
 }

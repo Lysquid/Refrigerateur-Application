@@ -63,7 +63,7 @@ public class ConnexionBD {
 
     }
 
-    public double getDonnee(int idCapteur) {
+    public double getDonnee(int idCapteur, boolean graph) {
         try {
 
             String query = "SELECT valeur, idMesure FROM Mesure, Capteur WHERE Capteur.idCapteur = Mesure.idCapteur AND Capteur.idCapteur = ? ORDER BY Mesure.dateMesure DESC LIMIT 0,1";
@@ -73,10 +73,10 @@ public class ConnexionBD {
             if (donnee.next()) {
                 int idMesure = donnee.getInt("idMesure");
                 double mesure;
-                if (idMesure != donnesPrec.getOrDefault(idCapteur, -1)) {
+                if (idMesure != donnesPrec.getOrDefault(idCapteur, -1) || !graph) {
                     mesure = donnee.getDouble("valeur");
                 } else {
-                    mesure = -1d;
+                    mesure = Double.NaN;
                 }
                 donnesPrec.put(idCapteur, idMesure);
                 return mesure;
@@ -87,6 +87,10 @@ public class ConnexionBD {
             ex.printStackTrace(System.err);
             return 0;
         }
+    }
+
+    public double getDonnee(int idCapteur) {
+        return getDonnee(idCapteur, false);
     }
 
     public ArrayList<Double> getDonnees(int idCapteur) {
