@@ -22,7 +22,6 @@ public class ProduitCompo extends Compo {
     public Produit produit;
     private JLabel quantite;
 
-
     public ProduitCompo(Produit produit) {
         JPanel textPanel = new JPanel() {
             @Override
@@ -84,7 +83,7 @@ public class ProduitCompo extends Compo {
 
     @Override
     public Dimension getMaximumSize() {
-        return new Dimension(480, super.getMaximumSize().height);
+        return new Dimension(getParent().getWidth() - 67, super.getMaximumSize().height);
     }
 
 }
