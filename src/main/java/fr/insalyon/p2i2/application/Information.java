@@ -19,13 +19,15 @@ public class Information extends Compo {
         labelValeur = new JLabel();
         labelValeur.setFont(biggerFont);
         this.unite = unite;
-        maj(0);
         this.add(labelCapteur);
         this.add(labelValeur);
     }
 
     public void maj(double valeur) {
-        labelValeur.setText(String.valueOf(Math.round(valeur * 10) / 10.0) + " " + unite);
+        if (valeur != Double.NaN) {
+            labelValeur.setText(String.valueOf(Math.round(valeur * 10) / 10.0) + " " + unite);
+        }
+
     }
 
     public void maj(int valeur) {
