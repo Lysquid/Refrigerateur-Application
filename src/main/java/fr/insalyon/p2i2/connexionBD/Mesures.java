@@ -6,7 +6,7 @@ public class Mesures {
 
     private HashMap<Integer, Double> mesures;
     private HashMap<Integer, Integer> aJour;
-    private final static int nbPasAJour = 10;
+    private final static int nbPasAJour = 3;
     private final int[] capteurs = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
     public static final double coeffLissage = 0.1;
