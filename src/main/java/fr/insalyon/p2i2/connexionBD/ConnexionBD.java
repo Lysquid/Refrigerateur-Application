@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.HashMap;
 
 import fr.insalyon.p2i2.application.Graph;
 
@@ -21,12 +21,15 @@ public class ConnexionBD {
     private final String nomBD = "G221_A_BD1";
     private final String loginBD = "G221_A";
     private final String motdepasseBD = "G221_A";
+    private HashMap<Integer, Integer> donnesPrec;
 
     private Connection connection;
 
-    private final int TEMPS_ALERTE_OUVERTURE = 3; //en minute
+    private final int TEMPS_ALERTE_OUVERTURE = 3; // en minute
 
     public ConnexionBD() {
+
+        donnesPrec = new HashMap<>();
 
         try {
             // Enregistrement de la classe du driver par le driverManager
@@ -63,12 +66,20 @@ public class ConnexionBD {
     public double getDonnee(int idCapteur) {
         try {
 
-            String query = "SELECT valeur FROM Mesure, Capteur WHERE Capteur.idCapteur = Mesure.idCapteur AND Capteur.idCapteur = ? ORDER BY Mesure.dateMesure DESC LIMIT 0,1";
+            String query = "SELECT valeur, idMesure FROM Mesure, Capteur WHERE Capteur.idCapteur = Mesure.idCapteur AND Capteur.idCapteur = ? ORDER BY Mesure.dateMesure DESC LIMIT 0,1";
             PreparedStatement selectMesureStatement = this.connection.prepareStatement(query);
             selectMesureStatement.setInt(1, idCapteur);
             ResultSet donnee = selectMesureStatement.executeQuery();
             if (donnee.next()) {
-                return donnee.getDouble("valeur");
+                int idMesure = donnee.getInt("idMesure");
+                double mesure;
+                if (idMesure != donnesPrec.getOrDefault(idCapteur, -1)) {
+                    mesure = donnee.getDouble("valeur");
+                } else {
+                    mesure = -1d;
+                }
+                donnesPrec.put(idCapteur, idMesure);
+                return mesure;
             } else {
                 return 0;
             }
@@ -140,18 +151,18 @@ public class ConnexionBD {
             String query3 = "SELECT dateOuverture FROM OuverturePorte ORDER BY dateOuverture DESC LIMIT 0,1;";
             PreparedStatement selectOuvertureStatement = this.connection.prepareStatement(query3);
             ResultSet dateOuverture = selectOuvertureStatement.executeQuery();
-            //System.out.println(dateOuverture);
+            // System.out.println(dateOuverture);
             dateOuverture.next();
             Date derniereDateOuverture = dateOuverture.getDate(1);
-            //System.out.println(derniereDateOuverture);
+            // System.out.println(derniereDateOuverture);
             LocalDateTime derniereDate = derniereDateOuverture.toLocalDate().atStartOfDay();
             LocalDateTime dateActuelle = LocalDateTime.now();
             float diffDate = ChronoUnit.MINUTES.between(derniereDate, dateActuelle);
 
-            if (diffDate >= TEMPS_ALERTE_OUVERTURE){
+            if (diffDate >= TEMPS_ALERTE_OUVERTURE) {
                 Seuil seuil = new Seuil("Réfrigérateur", TEMPS_ALERTE_OUVERTURE, "Durée", diffDate, "minutes");
                 listeSeuils.add(seuil);
-                //System.out.println(seuil);
+                // System.out.println(seuil);
             }
 
             String query1 = "SELECT DISTINCT nomCategorieProduit, nomTypeMesure, valeur, unite, seuilMin, seuilMax " +
@@ -206,7 +217,7 @@ public class ConnexionBD {
                 // System.out.println(seuil.toString());
             }
             return listeSeuils;
-            
+
         } catch (SQLException ex) {
             ex.printStackTrace(System.err);
             return listeSeuils;
