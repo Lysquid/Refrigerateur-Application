@@ -83,9 +83,9 @@ public class Application extends JPanel implements ActionListener {
         String[] listeCapteursGaz = capteursGaz.keySet().toArray(new String[capteursGaz.size()]);
 
         GridPanel gridGraphs = new GridPanel(1, 3);
-        graphTemp = new Graph("Température", "°C", Color.blue);
-        graphHumi = new Graph("Humidité", "%", Color.red);
-        graphGaz = new Graph("Gaz", "ppm", Color.green);
+        graphTemp = new Graph("Température", "°C", Color.decode("#0f6a92"));
+        graphHumi = new Graph("Humidité", "%", Color.decode("#7e4ea9"));
+        graphGaz = new Graph("Gaz", "ppm", Color.decode("#bc5090"));
         gridGraphs.add(graphTemp);
         gridGraphs.add(graphHumi);
         gridGraphs.add(graphGaz);

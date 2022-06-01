@@ -125,20 +125,17 @@ public class Graph extends Compo {
             inc = 100;
             roundDigits = -2;
         } else if (etendue < 5000) {
-            inc = 200;
-            roundDigits = -2;
-        } else if (etendue < 10000) {
             inc = 1000;
+            roundDigits = -3;
+        } else if (etendue < 10000) {
+            inc = 2000;
             roundDigits = -3;
         } else if (etendue < 50000) {
             inc = 10000;
-            roundDigits = -3;
-        } else if (etendue < 100000) {
-            inc = 20000;
             roundDigits = -4;
         } else {
-            inc = 100000;
-            roundDigits = -5;
+            inc = 20000;
+            roundDigits = -4;
         }
 
         String format;
