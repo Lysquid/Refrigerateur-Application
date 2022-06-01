@@ -24,7 +24,7 @@ public class ConnexionBD {
 
     private Connection connection;
 
-    private final int TEMPS_ALERTE_OUVERTURE = 180; //en seconde
+    private final int TEMPS_ALERTE_OUVERTURE = 3; //en minute
 
     public ConnexionBD() {
 
@@ -192,13 +192,18 @@ public class ConnexionBD {
             String query3 = "SELECT dateOuverture FROM OuverturePorte ORDER BY dateOuverture DESC LIMIT 0,1;";
             PreparedStatement selectOuvertureStatement = this.connection.prepareStatement(query3);
             ResultSet dateOuverture = selectOuvertureStatement.executeQuery();
-            LocalDateTime derniereDateOuverture = dateOuverture.getTimestamp("dateOuverture").toLocalDateTime();
+            //System.out.println(dateOuverture);
+            dateOuverture.next();
+            Date derniereDateOuverture = dateOuverture.getDate(1);
+            //System.out.println(derniereDateOuverture);
+            LocalDateTime derniereDate = derniereDateOuverture.toLocalDate().atStartOfDay();
             LocalDateTime dateActuelle = LocalDateTime.now();
-            float diffDate = ChronoUnit.SECONDS.between(dateActuelle, derniereDateOuverture);
-            System.out.println(diffDate);
+            float diffDate = ChronoUnit.MINUTES.between(derniereDate, dateActuelle);
+
             if (diffDate >= TEMPS_ALERTE_OUVERTURE){
-                Seuil seuil = new Seuil("Réfrigérateur", TEMPS_ALERTE_OUVERTURE, "Durée", diffDate, "secondes");
+                Seuil seuil = new Seuil("Réfrigérateur", TEMPS_ALERTE_OUVERTURE, "Durée", diffDate, "minutes");
                 listeSeuils.add(seuil);
+                //System.out.println(seuil);
             }
 
             return listeSeuils;

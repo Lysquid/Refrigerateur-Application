@@ -31,6 +31,6 @@ public class Seuil {
 
     public String toString(){
         return("Seuil de " + typeDeMesure + " sur la categorie " + categorieProduit 
-        + ": Seuil Min  = " + seuilMin + ". Seuil Max  = " + seuilMax + ". Valeur Actuelle = "+ valeur + unite);
+        + ": Seuil Min  = " + seuilMin + ". Seuil Max  = " + seuilMax + ". Valeur Actuelle = "+ valeur + " " + unite);
     }
 }
