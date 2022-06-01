@@ -75,6 +75,11 @@ public class Application extends JPanel implements ActionListener {
         capteursGaz.put("NH3", 3);
         capteursGaz.put("CO", 4);
         capteursGaz.put("NO2", 5);
+        capteursGaz.put("C3H8", 6);
+        capteursGaz.put("C4H10", 7);
+        capteursGaz.put("CH4", 8);
+        capteursGaz.put("H2", 9);
+        capteursGaz.put("C2H5OH", 10);
         String[] listeCapteursGaz = capteursGaz.keySet().toArray(new String[capteursGaz.size()]);
 
         GridPanel gridGraphs = new GridPanel(1, 3);
@@ -86,7 +91,6 @@ public class Application extends JPanel implements ActionListener {
         gridGraphs.add(graphGaz);
         graphTemp.init(connexion.getDonnees(1));
         graphHumi.init(connexion.getDonnees(2));
-        graphGaz.init(connexion.getDonnees(3));
 
         comboBoxGraphs = new JComboBox<String>(listeCapteursGaz) {
             @Override
@@ -95,6 +99,8 @@ public class Application extends JPanel implements ActionListener {
             }
         };
         comboBoxGraphs.addActionListener(this);
+        comboBoxGraphs.setSelectedItem("CH4");
+
         Block blockGraphs = new Block("Graphiques", gridGraphs, comboBoxGraphs);
         column1.add(blockGraphs);
 
@@ -206,7 +212,6 @@ public class Application extends JPanel implements ActionListener {
         }
         if (e.getSource() == comboBoxGraphs) {
             int idCapteur = capteursGaz.get(comboBoxGraphs.getSelectedItem());
-            System.out.println(idCapteur);
             graphGaz.init(connexion.getDonnees(idCapteur));
 
         }

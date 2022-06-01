@@ -133,10 +133,14 @@ public class Graph extends Compo {
         } else if (etendue < 50000) {
             inc = 10000;
             roundDigits = -3;
-        } else {
+        } else if (etendue < 100000) {
             inc = 20000;
             roundDigits = -4;
+        } else {
+            inc = 100000;
+            roundDigits = -5;
         }
+
         String format;
         if (roundDigits == 2) {
             format = "#.##";
