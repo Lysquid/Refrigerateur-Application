@@ -44,7 +44,7 @@ public class ConnexionBD {
                             + " FROM information_schema.tables"
                             + " WHERE table_schema NOT LIKE '%_schema' AND table_schema != 'mysql'"
                             + " ORDER BY table_schema, table_name");
-            ResultSet result = statement.executeQuery();
+            statement.executeQuery();
 
         } catch (Exception ex) {
             ex.printStackTrace(System.err);
