@@ -97,62 +97,27 @@ public class Graph extends Compo {
         g2d.drawLine(pointA.x, pointA.y, pointB.x, pointB.y);
 
         // Graduations
-        double etendue = valMax - valMin;
-        double inc;
-        int roundDigits;
-        if (etendue < 0.05) {
-            inc = 0.01;
-            roundDigits = 2;
-        } else if (etendue < 0.1) {
-            inc = 0.02;
-            roundDigits = 2;
-        } else if (etendue < 0.5) {
-            inc = 0.1;
-            roundDigits = 1;
-        } else if (etendue < 1) {
-            inc = 0.2;
-            roundDigits = 1;
-        } else if (etendue < 5) {
-            inc = 1;
-            roundDigits = 0;
-        } else if (etendue < 10) {
-            inc = 2;
-            roundDigits = 0;
-        } else if (etendue < 50) {
-            inc = 10;
-            roundDigits = -1;
-        } else if (etendue < 100) {
-            inc = 20;
-            roundDigits = -1;
-        } else if (etendue < 500) {
-            inc = 200;
-            roundDigits = -2;
-        } else if (etendue < 1000) {
-            inc = 100;
-            roundDigits = -2;
-        } else if (etendue < 5000) {
-            inc = 1000;
-            roundDigits = -3;
-        } else if (etendue < 10000) {
-            inc = 2000;
-            roundDigits = -3;
-        } else if (etendue < 50000) {
-            inc = 10000;
-            roundDigits = -4;
-        } else {
-            inc = 20000;
-            roundDigits = -4;
+        double etendue = (valMax - valMin) * 100;
+
+        double inc = 0.01;
+        int roundDigits = 2;
+
+        while (true) {
+            if (etendue < 5) {
+                break;
+            } else if (etendue < 10) {
+                inc *= 2;
+                break;
+            } else if (etendue < 20) {
+                inc *= 5;
+                break;
+            }
+            roundDigits -= 1;
+            inc *= 10;
+            etendue /= 10;
         }
 
-        String format;
-        if (roundDigits == 2) {
-            format = "#.##";
-        } else if (roundDigits == 1) {
-            format = "#.#";
-        } else {
-            format = "#";
-        }
-        DecimalFormat df = new DecimalFormat(format);
+        DecimalFormat df = new DecimalFormat("#.###");
 
         double val = round(valMin, roundDigits) - inc;
         while (val <= valMax + inc) {
@@ -187,7 +152,7 @@ public class Graph extends Compo {
     }
 
     public static double round(double val, int nbDigits) {
-        double puissance = Math.pow(10, nbDigits);
+        double puissance = Math.pow(10, nbDigits - 1);
         return Math.round(val * puissance) / puissance;
     }
 
