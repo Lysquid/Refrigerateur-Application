@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
+import javax.management.ListenerNotFoundException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -52,7 +53,7 @@ public class Application extends JPanel implements ActionListener {
     private ArrayList<ProduitCompo> listeProduitsCompo;
 
     private JButton boutonAjout;
-    private Boolean Ajout = true;
+    private Boolean modeAjout = true;
     private Mesures mesures;
 
     public static final int gap = 30;
@@ -166,17 +167,18 @@ public class Application extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == boutonAjout) {
-            if (Ajout) {
-                Ajout = false;
-                boutonAjout.setText("Mode Retrait");
+            connexion.majQuantite(modeAjout);
+            if (modeAjout) {
+                modeAjout = false;
+                boutonAjout.setText("Mode retrait");
             } else {
-                Ajout = true;
-                boutonAjout.setText("Mode Ajout");
+                modeAjout = true;
+                boutonAjout.setText("Mode ajout");
             }
-            // System.out.println(boutonAjout.getText());
         }
 
         if (e.getSource() == timerInfo) {
+            // Maj monitoring
             mesures.maj(connexion);
             temperature.maj(mesures.get(1));
             humidite.maj(mesures.get(2));
@@ -185,12 +187,16 @@ public class Application extends JPanel implements ActionListener {
             gaz2.maj((int) mesures.get(8));
             gaz3.maj((int) mesures.get(9));
 
+            // Maj graphs
             graphTemp.maj(mesures.get(1), mesures.getAJour(1));
             graphHumi.maj(mesures.get(2), mesures.getAJour(2));
             int idCapteur = capteursGaz.get(comboBoxGraphs.getSelectedItem());
             graphGaz.maj(mesures.get(idCapteur), mesures.getAJour(idCapteur));
 
-        } else if (e.getSource() == timerLent) {
+            // Maj quantités dans la BD
+            connexion.majQuantite(modeAjout);
+
+            // Maj produits
             ArrayList<Produit> nouveauxProduits = connexion.getProduits();
             for (Produit produit : nouveauxProduits) {
                 if (listeProduits.contains(produit)) {
@@ -206,7 +212,21 @@ public class Application extends JPanel implements ActionListener {
                     listeProduits.add(produit);
                 }
             }
-
+            ArrayList<ProduitCompo> aEnlever = new ArrayList<>();
+            for (ProduitCompo compo : listeProduitsCompo) {
+                if (!nouveauxProduits.contains(compo.produit)) {
+                    gridStock.remove(compo);
+                    listeProduits.remove(compo.produit);
+                    aEnlever.add(compo);
+                }
+            }
+            listeProduitsCompo.removeAll(aEnlever);
+            gridStock.removeAll();
+            for (ProduitCompo produitCompo : listeProduitsCompo) {
+                gridStock.add(produitCompo);
+            }
+        } else if (e.getSource() == timerLent) {
+            // Maj alertes
             gridAlerts.removeAll();
             ArrayList<Seuil> seuils = connexion.getSeuils();
             for (Seuil seuil : seuils) {

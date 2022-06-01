@@ -82,11 +82,11 @@ public class ConnexionBD {
                 mesuresPrec.put(idCapteur, idMesure);
                 return mesure;
             } else {
-                return 0;
+                return Double.NaN;
             }
         } catch (SQLException ex) {
             ex.printStackTrace(System.err);
-            return 0;
+            return Double.NaN;
         }
     }
 
@@ -143,8 +143,8 @@ public class ConnexionBD {
             LocalDateTime dateActuelle = LocalDateTime.now();
             float diffDate = ChronoUnit.MINUTES.between(derniereDate, dateActuelle);
 
-            if ((porteOuverte == true) && (diffDate >= TEMPS_ALERTE_OUVERTURE)){
-                Seuil seuil = new Seuil("Réfrigérateur", TEMPS_ALERTE_OUVERTURE, "Durée", diffDate, "minutes");
+            if ((porteOuverte == true) && (diffDate >= TEMPS_ALERTE_OUVERTURE)) {
+                Seuil seuil = new Seuil("réfrigérateur", TEMPS_ALERTE_OUVERTURE, "durée", diffDate, "minutes");
                 listeSeuils.add(seuil);
                 // System.out.println(seuil);
             }
@@ -206,5 +206,35 @@ public class ConnexionBD {
             ex.printStackTrace(System.err);
             return listeSeuils;
         }
+    }
+
+    public void majQuantite(boolean ajout) {
+        PreparedStatement selectCodeBarreStatement;
+        try {
+            selectCodeBarreStatement = connection.prepareStatement("SELECT codeBarre"
+                    + " FROM CodeBarre"
+                    + " WHERE ajout IS NULL;");
+            PreparedStatement updateProduitStatement = connection.prepareStatement("UPDATE Produit"
+                    + " SET quantite = quantite + ?"
+                    + " WHERE codeBarre = ?;");
+            PreparedStatement updateCodeBarreStatement = connection.prepareStatement("UPDATE CodeBarre"
+                    + " SET ajout = ?"
+                    + " WHERE ajout IS NULL;");
+            ResultSet result = selectCodeBarreStatement.executeQuery();
+
+            while (result.next()) {
+                long codeBarre = result.getLong(1);
+
+                updateProduitStatement.setInt(1, ajout ? 1 : -1);
+                updateProduitStatement.setLong(2, codeBarre);
+                updateProduitStatement.executeUpdate();
+            }
+
+            updateCodeBarreStatement.setBoolean(1, ajout);
+            updateCodeBarreStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 }

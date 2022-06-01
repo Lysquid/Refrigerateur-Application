@@ -11,7 +11,7 @@ public class ScrollPane extends JScrollPane {
         setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         setOpaque(false);
         setBorder(null);
-        getVerticalScrollBar().setUnitIncrement(14);
+        getVerticalScrollBar().setUnitIncrement(20);
 
     }
 }
