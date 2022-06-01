@@ -1,7 +1,6 @@
 package fr.insalyon.p2i2.connexionBD;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -122,7 +121,7 @@ public class ConnexionBD {
             String query3 = "SELECT porteOuverte, dateOuverture FROM OuverturePorte ORDER BY dateOuverture DESC LIMIT 0,1;";
             PreparedStatement selectOuvertureStatement = this.connection.prepareStatement(query3);
             ResultSet dateOuverture = selectOuvertureStatement.executeQuery();
-            
+
             if (dateOuverture.next()) {
 
                 Boolean porteOuverte = dateOuverture.getBoolean("porteOuverte");
@@ -131,7 +130,7 @@ public class ConnexionBD {
                 float diffDate = ChronoUnit.MINUTES.between(derniereDate, dateActuelle);
 
                 if ((porteOuverte == true) && (diffDate >= TEMPS_ALERTE_OUVERTURE)) {
-                    Seuil seuil = new Seuil("réfrigérateur", TEMPS_ALERTE_OUVERTURE, "durée", diffDate, "minutes");
+                    Seuil seuil = new Seuil("réfrigérateur", TEMPS_ALERTE_OUVERTURE, "durée", diffDate, "min");
                     listeSeuils.add(seuil);
                 }
 
