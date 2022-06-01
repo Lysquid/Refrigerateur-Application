@@ -75,16 +75,16 @@ public class ConnexionBD {
 
     public LinkedList<Double> getDonnees(int idCapteur) {
         try {
-            LinkedList<Double> r = new LinkedList<Double>();
+            LinkedList<Double> mesures = new LinkedList<Double>();
             String query = "SELECT valeur FROM Mesure, Capteur WHERE Capteur.idCapteur = Mesure.idCapteur AND Capteur.idCapteur = ? ORDER BY Mesure.dateMesure DESC LIMIT 0,?";
             PreparedStatement selectMesureStatement = this.connection.prepareStatement(query);
             selectMesureStatement.setInt(1, idCapteur);
             selectMesureStatement.setInt(2, Graph.POINTS);
             ResultSet donnee = selectMesureStatement.executeQuery();
             while (donnee.next()) {
-                r.add(donnee.getDouble("valeur"));
+                mesures.add(donnee.getDouble("valeur"));
             }
-            return r;
+            return mesures;
         } catch (SQLException ex) {
             ex.printStackTrace(System.err);
             return null;
@@ -124,7 +124,6 @@ public class ConnexionBD {
             ouverture.next();
             return ouverture.getBoolean("porteOuverte");
         } catch (SQLException ex) {
-            ex.printStackTrace(System.err);
             return false;
         }
     }
@@ -153,6 +152,7 @@ public class ConnexionBD {
             // long time2 = System.currentTimeMillis();
             // System.out.print(time2 - time1);
             // System.out.println(" ms");
+            System.out.println(CategoriesProduits.next());
 
             while (CategoriesProduits.next()) {
 
