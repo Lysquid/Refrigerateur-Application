@@ -141,3 +141,8 @@ FROM Produit, AssociationCategorie, CategorieProduit
 WHERE Produit.codeBarre = AssociationCategorie.codeBarre
 AND AssociationCategorie.idCategorieProduit = CategorieProduit.idCategorieProduit
 AND nomCategorieProduit = ?;
+
+SELECT nutriscore, COUNT(nomProduit)
+FROM Produit
+WHERE nutriscore IS NOT NULL
+GROUP BY nutriscore;
