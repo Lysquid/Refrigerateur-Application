@@ -15,7 +15,7 @@ import javax.swing.UIManager;
 
 public class Block extends JPanel {
 
-    private final static Font font = UIManager.getFont("h2.font");
+    private static final Font font = UIManager.getFont("h2.font");
 
     public Block(String title, JComponent grid) {
 

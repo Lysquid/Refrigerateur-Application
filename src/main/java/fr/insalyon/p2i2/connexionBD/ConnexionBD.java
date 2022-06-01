@@ -11,8 +11,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import fr.insalyon.p2i2.application.Graph;
-
 public class ConnexionBD {
 
     // À adapter à votre BD
@@ -32,17 +30,13 @@ public class ConnexionBD {
         mesuresPrec = new HashMap<>();
 
         try {
-            // Enregistrement de la classe du driver par le driverManager
-            // Class.forName("com.mysql.jdbc.Driver");
-            // System.out.println("Driver trouvé...");
-            // Création d'une connexion sur la base de donnée
             String urlJDBC = "jdbc:mysql://" + this.serveurBD + ":" + this.portBD + "/" + this.nomBD;
             urlJDBC += "?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Europe/Paris";
 
-            System.out.println("Connexion à " + urlJDBC);
+            System.out.println("Connexion à la BD ...");
             this.connection = DriverManager.getConnection(urlJDBC, this.loginBD, this.motdepasseBD);
 
-            System.out.println("Connexion établie...");
+            System.out.println("Connexion établie.");
 
             // Requête de test pour lister les tables existantes dans les BDs MySQL
             PreparedStatement statement = this.connection.prepareStatement(
@@ -50,13 +44,8 @@ public class ConnexionBD {
                             + " FROM information_schema.tables"
                             + " WHERE table_schema NOT LIKE '%_schema' AND table_schema != 'mysql'"
                             + " ORDER BY table_schema, table_name");
-            ResultSet result = statement.executeQuery();
+            statement.executeQuery();
 
-            // System.out.println("Liste des tables:");
-            while (result.next()) {
-                // System.out.println("- " + result.getString("table_schema") + "." +
-                // result.getString("table_name"));
-            }
         } catch (Exception ex) {
             ex.printStackTrace(System.err);
         }
@@ -73,7 +62,6 @@ public class ConnexionBD {
             if (donnee.next()) {
                 int idMesure = donnee.getInt("idMesure");
                 double mesure;
-                // System.out.println(idMesure + " " + mesuresPrec.getOrDefault(idCapteur, -1));
                 if (idMesure != mesuresPrec.getOrDefault(idCapteur, -1)) {
                     mesure = donnee.getDouble("valeur");
                 } else {
@@ -82,11 +70,11 @@ public class ConnexionBD {
                 mesuresPrec.put(idCapteur, idMesure);
                 return mesure;
             } else {
-                return 0;
+                return Double.NaN;
             }
         } catch (SQLException ex) {
             ex.printStackTrace(System.err);
-            return 0;
+            return Double.NaN;
         }
     }
 
@@ -134,31 +122,31 @@ public class ConnexionBD {
             String query3 = "SELECT porteOuverte, dateOuverture FROM OuverturePorte ORDER BY dateOuverture DESC LIMIT 0,1;";
             PreparedStatement selectOuvertureStatement = this.connection.prepareStatement(query3);
             ResultSet dateOuverture = selectOuvertureStatement.executeQuery();
-            // System.out.println(dateOuverture);
-            dateOuverture.next();
-            LocalDateTime derniereDate = dateOuverture.getTimestamp("dateOuverture").toLocalDateTime();
-            Boolean porteOuverte = dateOuverture.getBoolean("porteOuverte");
-            //System.out.println(derniereDateOuverture);
-            LocalDateTime dateActuelle = LocalDateTime.now();
-            float diffDate = ChronoUnit.MINUTES.between(derniereDate, dateActuelle);
-            System.out.println(derniereDate);
-            System.out.println(dateActuelle);
-            System.out.println(diffDate);
+            
+            if (dateOuverture.next()) {
 
-            if ((porteOuverte == true) && (diffDate >= TEMPS_ALERTE_OUVERTURE)){
-                Seuil seuil = new Seuil("Réfrigérateur", TEMPS_ALERTE_OUVERTURE, "Durée", diffDate, "minutes");
-                listeSeuils.add(seuil);
-                // System.out.println(seuil);
+                Boolean porteOuverte = dateOuverture.getBoolean("porteOuverte");
+                LocalDateTime derniereDate = dateOuverture.getTimestamp("dateOuverture").toLocalDateTime();
+                LocalDateTime dateActuelle = LocalDateTime.now();
+                float diffDate = ChronoUnit.MINUTES.between(derniereDate, dateActuelle);
+
+                if ((porteOuverte == true) && (diffDate >= TEMPS_ALERTE_OUVERTURE)) {
+                    Seuil seuil = new Seuil("réfrigérateur", TEMPS_ALERTE_OUVERTURE, "durée", diffDate, "minutes");
+                    listeSeuils.add(seuil);
+                }
+
             }
 
-            String query1 = "SELECT DISTINCT nomCategorieProduit, nomTypeMesure, valeur, unite, seuilMin, seuilMax " +
+            String query1 = "SELECT DISTINCT nomCategorieProduit, nomTypeMesure, valeur, unite, seuilMin, seuilMax "
+                    +
                     "FROM Seuil, TypeMesure, Mesure, Capteur, Produit, CategorieProduit, AssociationCategorie " +
                     "WHERE Seuil.idTypeMesure = TypeMesure.idTypeMesure " +
                     "AND Capteur.idTypeMesure = TypeMesure.idTypeMesure " +
                     "AND Mesure.idCapteur = Capteur.idCapteur " +
                     "AND Seuil.idCategorieProduit = CategorieProduit.idCategorieProduit " +
                     "AND CategorieProduit.idCategorieProduit = AssociationCategorie.idCategorieProduit " +
-                    "AND Mesure.dateMesure IN (SELECT MAX(dateMesure) FROM Mesure, Capteur WHERE Capteur.idCapteur = Mesure.idCapteur GROUP BY nomCapteur) " +
+                    "AND Mesure.dateMesure IN (SELECT MAX(dateMesure) FROM Mesure, Capteur WHERE Capteur.idCapteur = Mesure.idCapteur GROUP BY nomCapteur) "
+                    +
                     "AND (Capteur.idCapteur = 1 OR Capteur.idCapteur = 2) " +
                     "AND (seuilMax < valeur OR seuilMin > valeur) " +
                     "ORDER BY nomCategorieProduit;";
@@ -169,7 +157,6 @@ public class ConnexionBD {
             ResultSet CategoriesProduits = selectCategorieProduitStatement.executeQuery();
             // long time2 = System.currentTimeMillis();
             // System.out.print(time2 - time1);
-            // System.out.println(" ms");
 
             while (CategoriesProduits.next()) {
 
@@ -199,7 +186,6 @@ public class ConnexionBD {
                         CategoriesProduits.getString("unite"));
 
                 listeSeuils.add(seuil);
-                // System.out.println(seuil.toString());
             }
             return listeSeuils;
 
@@ -207,5 +193,35 @@ public class ConnexionBD {
             ex.printStackTrace(System.err);
             return listeSeuils;
         }
+    }
+
+    public void majQuantite(boolean ajout) {
+        PreparedStatement selectCodeBarreStatement;
+        try {
+            selectCodeBarreStatement = connection.prepareStatement("SELECT codeBarre"
+                    + " FROM CodeBarre"
+                    + " WHERE ajout IS NULL;");
+            PreparedStatement updateProduitStatement = connection.prepareStatement("UPDATE Produit"
+                    + " SET quantite = quantite + ?"
+                    + " WHERE codeBarre = ?;");
+            PreparedStatement updateCodeBarreStatement = connection.prepareStatement("UPDATE CodeBarre"
+                    + " SET ajout = ?"
+                    + " WHERE ajout IS NULL;");
+            ResultSet result = selectCodeBarreStatement.executeQuery();
+
+            while (result.next()) {
+                long codeBarre = result.getLong(1);
+
+                updateProduitStatement.setInt(1, ajout ? 1 : -1);
+                updateProduitStatement.setLong(2, codeBarre);
+                updateProduitStatement.executeUpdate();
+            }
+
+            updateCodeBarreStatement.setBoolean(1, ajout);
+            updateCodeBarreStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 }
