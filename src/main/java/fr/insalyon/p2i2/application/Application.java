@@ -54,6 +54,7 @@ public class Application extends JPanel implements ActionListener {
     public static final Color backgroundColor = Color.decode("#f2f2f2");
     public static final Color blockColor = Color.decode("#ffffff");
     public static final Color borderColor = Color.decode("#d6d6d6");
+    public static final Color graphColor = Color.decode("#222222");
 
     public Application() {
 
@@ -68,15 +69,15 @@ public class Application extends JPanel implements ActionListener {
         add(column1);
         // BoxPanel gridGraphs = new BoxPanel(true);
         GridPanel gridGraphs = new GridPanel(1, 3);
-        graph1 = new Graph("Température", Color.blue);
-        graph2 = new Graph("Humidité", Color.red);
-        graph3 = new Graph("Gaz", Color.green);
+        graph1 = new Graph("Température", "°C", Color.blue);
+        graph2 = new Graph("Humidité", "%", Color.red);
+        graph3 = new Graph("Gaz", "ppm", Color.green);
         gridGraphs.add(graph1);
         gridGraphs.add(graph2);
         gridGraphs.add(graph3);
         graph1.init(connexion.getDonnees(1));
         graph2.init(connexion.getDonnees(2));
-        graph3.init(connexion.getDonnees(3));
+        graph3.init(connexion.getDonnees(8));
         Graph[] listeGraphs = { graph1, graph2, graph3 };
         JComboBox<Graph> comboBoxGraphs = new JComboBox<Graph>(listeGraphs) {
             @Override
@@ -167,7 +168,7 @@ public class Application extends JPanel implements ActionListener {
 
             graph1.update(connexion.getDonnee(1));
             graph2.update(connexion.getDonnee(2));
-            graph3.update(connexion.getDonnee(3));
+            graph3.update(connexion.getDonnee(8));
 
         } else if (e.getSource() == timerLent) {
             ArrayList<Produit> nouveauxProduits = connexion.getProduits();
