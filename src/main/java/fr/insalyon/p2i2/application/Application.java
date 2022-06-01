@@ -127,11 +127,11 @@ public class Application extends JPanel implements ActionListener {
         gridMonitor.add(gaz1);
         humidite = new Information("Humidité", "%");
         gridMonitor.add(humidite);
-        gaz2 = new Information("H2", "ppm");
+        gaz2 = new Information("CH4", "ppm");
         gridMonitor.add(gaz2);
         ouvert = new Information("Ouvert", "");
         gridMonitor.add(ouvert);
-        gaz3 = new Information("CH4", "ppm");
+        gaz3 = new Information("H2", "ppm");
         gridMonitor.add(gaz3);
 
         // Ajout du block alerte
@@ -183,9 +183,9 @@ public class Application extends JPanel implements ActionListener {
             temperature.maj(mesures.get(1));
             humidite.maj(mesures.get(2));
             ouvert.maj(connexion.getOuverture() ? "oui" : "non");
-            gaz1.maj((int) mesures.get(3));
-            gaz2.maj((int) mesures.get(8));
-            gaz3.maj((int) mesures.get(9));
+            gaz1.maj((int) mesures.get(capteursGaz.get(gaz1.capteur)));
+            gaz2.maj((int) mesures.get(capteursGaz.get(gaz2.capteur)));
+            gaz3.maj((int) mesures.get(capteursGaz.get(gaz3.capteur)));
 
             // Maj graphs
             graphTemp.maj(mesures.get(1), mesures.getAJour(1));

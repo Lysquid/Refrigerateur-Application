@@ -125,9 +125,10 @@ public class Graph extends Compo {
             if (pointA.y > marginTop && pointA.y < getHeight() - marginBottom) {
                 pointB = new Point(pointA.x - 5, pointA.y);
                 g.drawLine(pointA.x, pointA.y, pointB.x, pointB.y);
-                pointA.x -= 35 + (int) (5 * Math.abs(roundDigits));
+                String stringVal = df.format(val);
+                pointA.x -= 15 + (int) (7 * stringVal.length());
                 pointA.y += 6;
-                g2d.drawString(df.format(val), pointA.x, pointA.y);
+                g2d.drawString(stringVal, pointA.x, pointA.y);
             }
             val += inc;
         }

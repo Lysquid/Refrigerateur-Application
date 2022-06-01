@@ -10,8 +10,10 @@ public class Information extends Compo {
     JLabel labelCapteur = new JLabel();
     JLabel labelValeur = new JLabel();
     String unite;
+    public String capteur;
 
     public Information(String capteur, String unite) {
+        this.capteur = capteur;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         labelCapteur = new JLabel(capteur);
