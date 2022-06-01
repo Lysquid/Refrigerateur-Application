@@ -7,9 +7,9 @@ import javax.swing.JLabel;
 
 public class Information extends Compo {
 
-    JLabel labelCapteur = new JLabel();
-    JLabel labelValeur = new JLabel();
-    String unite;
+    private JLabel labelCapteur = new JLabel();
+    private JLabel labelValeur = new JLabel();
+    private String unite;
     public String capteur;
 
     public Information(String capteur, String unite) {

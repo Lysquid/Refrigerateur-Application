@@ -9,9 +9,8 @@ public class ScrollPane extends JScrollPane {
     public ScrollPane(Component view) {
         super(view);
         setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        getVerticalScrollBar().setUnitIncrement(20);
         setOpaque(false);
         setBorder(null);
-        getVerticalScrollBar().setUnitIncrement(20);
-
     }
 }

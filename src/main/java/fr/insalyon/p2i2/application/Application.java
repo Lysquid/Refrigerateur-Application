@@ -25,8 +25,6 @@ import fr.insalyon.p2i2.connexionBD.Seuil;
 
 public class Application extends JPanel implements ActionListener {
 
-    public static String fontName = null;
-
     private Information temperature;
     private Information humidite;
     private Information ouvert;

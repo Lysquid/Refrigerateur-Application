@@ -19,8 +19,8 @@ import fr.insalyon.p2i2.connexionBD.Produit;
 public class ProduitCompo extends Compo {
 
     private static final int imageTimeout = 200;
-    public Produit produit;
     private JLabel quantite;
+    public Produit produit;
 
     public ProduitCompo(Produit produit) {
         JPanel textPanel = new JPanel() {

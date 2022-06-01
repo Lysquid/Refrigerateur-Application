@@ -23,7 +23,7 @@ public class ConnexionBD {
 
     private Connection connection;
 
-    private final int TEMPS_ALERTE_OUVERTURE = 3; // en minute
+    private static final int TEMPS_ALERTE_OUVERTURE = 3; // en minute
 
     public ConnexionBD() {
 

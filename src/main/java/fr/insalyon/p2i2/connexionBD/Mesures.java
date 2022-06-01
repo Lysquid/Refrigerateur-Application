@@ -6,22 +6,22 @@ public class Mesures {
 
     private HashMap<Integer, Double> mesures;
     private HashMap<Integer, Integer> aJour;
-    private final static int nbPasAJour = 3;
-    private final int[] capteurs = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+    private static final int NB_PAS_A_JOUR = 3;
+    private static final int[] CAPTEURS = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
     public static final double coeffLissage = 0.1;
 
     public Mesures() {
         mesures = new HashMap<>();
         aJour = new HashMap<>();
-        for (int capteur : capteurs) {
+        for (int capteur : CAPTEURS) {
             mesures.put(capteur, Double.NaN);
-            aJour.put(capteur, nbPasAJour);
+            aJour.put(capteur, NB_PAS_A_JOUR);
         }
     }
 
     public void maj(ConnexionBD connexion) {
-        for (int idCapteur : capteurs) {
+        for (int idCapteur : CAPTEURS) {
             double mesureBrute = connexion.getNouvelleMesure(idCapteur);
             if (Double.isNaN(mesureBrute)) {
                 aJour.put(idCapteur, aJour.get(idCapteur) + 1);
@@ -42,7 +42,7 @@ public class Mesures {
     }
 
     public boolean getAJour(int idCapteur) {
-        return aJour.get(idCapteur) < nbPasAJour;
+        return aJour.get(idCapteur) < NB_PAS_A_JOUR;
     }
 
 }

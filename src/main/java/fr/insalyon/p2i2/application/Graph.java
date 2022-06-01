@@ -17,20 +17,19 @@ public class Graph extends Compo {
     private ArrayList<Double> mesures;
     private Color color;
     private String titre;
-    double valMax;
-    double valMin;
-    int xDispo;
-    int yDispo;
 
-    public static final int NB_POINTS = 60;
-    public static final int NB_GRADUATIONS = 5;
+    private double valMax;
+    private double valMin;
+    private int xDispo;
+    private int yDispo;
 
-    private static final int marginRight = 20;
-    private static final int marginLeft = 70;
-    private static final int marginTop = 50;
-    private static final int marginBottom = 30;
-    private static final int marginGraphTop = 20;
-    private static final int marginGraphBottom = 20;
+    private static final int NB_POINTS = 60;
+    private static final int MARGIN_RIGHT = 20;
+    private static final int MARGIN_LEFT = 70;
+    private static final int MARGIN_TOP = 50;
+    private static final int MARGIN_BOTTOM = 30;
+    private static final int MARGIN_GRAPH_TOP = 20;
+    private static final int MARGIN_GRAPH_BOTTOM = 20;
 
     public Graph(String titre, String unite, Color color) {
         this.titre = titre;
@@ -55,9 +54,9 @@ public class Graph extends Compo {
         return titre;
     }
 
-    public Point conversion(int abscisse, double val) {
-        int xEcran = marginLeft + (int) (xDispo * abscisse / Graph.NB_POINTS);
-        int yEcran = getHeight() - marginBottom - marginGraphBottom
+    private Point conversion(int abscisse, double val) {
+        int xEcran = MARGIN_LEFT + (int) (xDispo * abscisse / Graph.NB_POINTS);
+        int yEcran = getHeight() - MARGIN_BOTTOM - MARGIN_GRAPH_BOTTOM
                 - (int) (yDispo * (val - valMin) / (valMax - valMin));
         return new Point(xEcran, yEcran);
     }
@@ -67,8 +66,8 @@ public class Graph extends Compo {
 
         valMax = minMax(mesures, true);
         valMin = minMax(mesures, false);
-        xDispo = getWidth() - marginLeft - marginRight;
-        yDispo = getHeight() - marginTop - marginBottom - marginGraphTop - marginGraphTop;
+        xDispo = getWidth() - MARGIN_LEFT - MARGIN_RIGHT;
+        yDispo = getHeight() - MARGIN_TOP - MARGIN_BOTTOM - MARGIN_GRAPH_TOP - MARGIN_GRAPH_TOP;
 
         // Antialiasing
         Graphics2D g2d = (Graphics2D) g;
@@ -92,8 +91,8 @@ public class Graph extends Compo {
         // Axes
         g2d.setColor(Application.graphColor);
         g2d.setFont(Compo.smallFont);
-        pointA = new Point(marginLeft, getHeight() - marginBottom);
-        pointB = new Point(marginLeft, marginTop);
+        pointA = new Point(MARGIN_LEFT, getHeight() - MARGIN_BOTTOM);
+        pointB = new Point(MARGIN_LEFT, MARGIN_TOP);
         g2d.drawLine(pointA.x, pointA.y, pointB.x, pointB.y);
 
         // Graduations
@@ -122,7 +121,7 @@ public class Graph extends Compo {
         double val = round(valMin, roundDigits) - inc * 10;
         while (val <= valMax + inc) {
             pointA = conversion(0, val);
-            if (pointA.y > marginTop && pointA.y < getHeight() - marginBottom) {
+            if (pointA.y > MARGIN_TOP && pointA.y < getHeight() - MARGIN_BOTTOM) {
                 pointB = new Point(pointA.x - 5, pointA.y);
                 g.drawLine(pointA.x, pointA.y, pointB.x, pointB.y);
                 String stringVal = df.format(val);
@@ -135,7 +134,7 @@ public class Graph extends Compo {
 
     }
 
-    public static double minMax(ArrayList<Double> list, boolean max) {
+    private static double minMax(ArrayList<Double> list, boolean max) {
         ArrayList<Double> listeWithOutNan = new ArrayList<>();
         for (double val : list) {
             if (!Double.isNaN(val)) {
@@ -152,7 +151,7 @@ public class Graph extends Compo {
         }
     }
 
-    public static double round(double val, int nbDigits) {
+    private static double round(double val, int nbDigits) {
         double puissance = Math.pow(10, nbDigits - 1);
         return Math.round(val * puissance) / puissance;
     }
@@ -166,15 +165,5 @@ public class Graph extends Compo {
         }
         repaint();
     }
-
-    /*
-     * L'idée c'est qu'on limite la taille des deux listes à 120 (ou 180) élements
-     * ce qui
-     * correspond à 1 point par seconde pendant 2 (ou 3) minutes et à chaque fois
-     * qu'il y a
-     * une nouvelle mesure on vire l'element d'indice 0 et on rajoute la nouvelle
-     * valeur à
-     * la fin puis on repaint.
-     */
 
 }
