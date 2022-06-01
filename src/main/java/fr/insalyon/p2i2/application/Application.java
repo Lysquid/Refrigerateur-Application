@@ -8,6 +8,8 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -32,9 +34,9 @@ public class Application extends JPanel implements ActionListener {
     private Information gaz2;
     private Information gaz3;
 
-    private Graph graph1;
-    private Graph graph2;
-    private Graph graph3;
+    private Graph graphTemp;
+    private Graph graphHumi;
+    private Graph graphGaz;
 
     private ConnexionBD connexion;
     private Timer timerInfo;
@@ -42,6 +44,8 @@ public class Application extends JPanel implements ActionListener {
 
     private BoxPanel gridStock;
     private BoxPanel gridAlerts;
+    private JComboBox<String> comboBoxGraphs;
+    private HashMap<String, Integer> capteursGaz;
 
     private ArrayList<Produit> listeProduits;
     private ArrayList<ProduitCompo> listeProduitsCompo;
@@ -67,24 +71,30 @@ public class Application extends JPanel implements ActionListener {
 
         Column column1 = new Column();
         add(column1);
-        // BoxPanel gridGraphs = new BoxPanel(true);
+        capteursGaz = new HashMap<>();
+        capteursGaz.put("NH3", 3);
+        capteursGaz.put("CO", 4);
+        capteursGaz.put("NO2", 5);
+        String[] listeCapteursGaz = capteursGaz.keySet().toArray(new String[capteursGaz.size()]);
+
         GridPanel gridGraphs = new GridPanel(1, 3);
-        graph1 = new Graph("Température", "°C", Color.blue);
-        graph2 = new Graph("Humidité", "%", Color.red);
-        graph3 = new Graph("Gaz", "ppm", Color.green);
-        gridGraphs.add(graph1);
-        gridGraphs.add(graph2);
-        gridGraphs.add(graph3);
-        graph1.init(connexion.getDonnees(1));
-        graph2.init(connexion.getDonnees(2));
-        graph3.init(connexion.getDonnees(8));
-        Graph[] listeGraphs = { graph1, graph2, graph3 };
-        JComboBox<Graph> comboBoxGraphs = new JComboBox<Graph>(listeGraphs) {
+        graphTemp = new Graph("Température", "°C", Color.blue);
+        graphHumi = new Graph("Humidité", "%", Color.red);
+        graphGaz = new Graph("Gaz", "ppm", Color.green);
+        gridGraphs.add(graphTemp);
+        gridGraphs.add(graphHumi);
+        gridGraphs.add(graphGaz);
+        graphTemp.init(connexion.getDonnees(1));
+        graphHumi.init(connexion.getDonnees(2));
+        graphGaz.init(connexion.getDonnees(3));
+
+        comboBoxGraphs = new JComboBox<String>(listeCapteursGaz) {
             @Override
             public Dimension getMaximumSize() {
                 return super.getPreferredSize();
             }
         };
+        comboBoxGraphs.addActionListener(this);
         Block blockGraphs = new Block("Graphiques", gridGraphs, comboBoxGraphs);
         column1.add(blockGraphs);
 
@@ -147,15 +157,15 @@ public class Application extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == boutonAjout){
-            if (Ajout){
+        if (e.getSource() == boutonAjout) {
+            if (Ajout) {
                 Ajout = false;
                 boutonAjout.setText("Mode Retrait");
             } else {
                 Ajout = true;
                 boutonAjout.setText("Mode Ajout");
             }
-            //System.out.println(boutonAjout.getText());
+            // System.out.println(boutonAjout.getText());
         }
 
         if (e.getSource() == timerInfo) {
@@ -166,9 +176,10 @@ public class Application extends JPanel implements ActionListener {
             gaz2.maj((int) connexion.getDonnee(8));
             gaz3.maj((int) connexion.getDonnee(9));
 
-            graph1.update(connexion.getDonnee(1));
-            graph2.update(connexion.getDonnee(2));
-            graph3.update(connexion.getDonnee(8));
+            graphTemp.update(connexion.getDonnee(1));
+            graphHumi.update(connexion.getDonnee(2));
+            int idCapteur = capteursGaz.get(comboBoxGraphs.getSelectedItem());
+            graphGaz.update(connexion.getDonnee(idCapteur));
 
         } else if (e.getSource() == timerLent) {
             ArrayList<Produit> nouveauxProduits = connexion.getProduits();
@@ -192,9 +203,13 @@ public class Application extends JPanel implements ActionListener {
             for (Seuil seuil : seuils) {
                 gridAlerts.add(new Alerte(seuil));
             }
+        }
+        if (e.getSource() == comboBoxGraphs) {
+            int idCapteur = capteursGaz.get(comboBoxGraphs.getSelectedItem());
+            System.out.println(idCapteur);
+            graphGaz.init(connexion.getDonnees(idCapteur));
 
         }
-
     }
 
 }
