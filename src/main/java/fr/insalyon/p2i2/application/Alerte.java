@@ -14,18 +14,16 @@ public class Alerte extends Compo {
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        if (seuil.categorieProduit == "Réfrigérateur") {
+        if (seuil.typeDeMesure == "durée") {
             JLabel nomAlerte = new JLabel(
-                    "Attention, votre " + seuil.categorieProduit + " est resté ouvert trop longtemps !!!");
+                    "Le " + seuil.categorieProduit + " est ouvert depuis trop longtemps !");
             nomAlerte.setFont(boldFont);
             add(nomAlerte);
             double valeurSeuil = (seuil.valeur > seuil.seuilMax) ? seuil.seuilMax : seuil.seuilMin;
-            JLabel valeurActuel = new JLabel("Durée d'ouverture : " + seuil.valeur + " " + seuil.unite);
+            JLabel valeurActuel = new JLabel("Durée d'ouverture : " + (int) seuil.valeur + " " + seuil.unite);
             valeurActuel.setFont(mainFont);
             add(valeurActuel);
-            JLabel valeurSeuilMin = new JLabel(
-                    "Durée " + ((seuil.valeur > seuil.seuilMax) ? "maximale" : "minimale") + " : " + valeurSeuil + " "
-                            + seuil.unite);
+            JLabel valeurSeuilMin = new JLabel("Durée maximale : " + (int) valeurSeuil + " " + seuil.unite);
             valeurSeuilMin.setFont(mainFont);
             add(valeurSeuilMin);
 
