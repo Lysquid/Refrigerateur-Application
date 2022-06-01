@@ -6,8 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.text.DecimalFormat;
-import java.util.Collections;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.JLabel;
 

@@ -10,7 +10,6 @@ import java.net.URLConnection;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
-import javax.swing.FocusManager;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,10 +21,8 @@ public class ProduitCompo extends Compo {
     private static final int imageTimeout = 200;
     public Produit produit;
     private JLabel quantite;
-    private ScrollPane scrollPane;
 
     public ProduitCompo(Produit produit) {
-        scrollPane = scrollPane;
         JPanel textPanel = new JPanel() {
             @Override
             public Insets getInsets() {

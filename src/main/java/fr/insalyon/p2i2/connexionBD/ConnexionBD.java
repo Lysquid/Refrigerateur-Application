@@ -11,8 +11,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import fr.insalyon.p2i2.application.Graph;
-
 public class ConnexionBD {
 
     // À adapter à votre BD
