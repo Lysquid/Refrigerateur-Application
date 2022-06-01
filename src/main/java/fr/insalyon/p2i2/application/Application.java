@@ -205,7 +205,7 @@ public class Application extends JPanel implements ActionListener {
                     }
                 } else {
                     ProduitCompo produitCompo = new ProduitCompo(produit);
-                    listeProduitsCompo.add(produitCompo);
+                    listeProduitsCompo.add(0, produitCompo);
                     gridStock.add(produitCompo);
                     listeProduits.add(produit);
                 }
