@@ -21,7 +21,7 @@ public class ConnexionBD {
     private final String nomBD = "G221_A_BD1";
     private final String loginBD = "G221_A";
     private final String motdepasseBD = "G221_A";
-    private HashMap<Integer, Integer> donnesPrec;
+    private HashMap<Integer, Integer> mesuresPrec;
 
     private Connection connection;
 
@@ -29,7 +29,7 @@ public class ConnexionBD {
 
     public ConnexionBD() {
 
-        donnesPrec = new HashMap<>();
+        mesuresPrec = new HashMap<>();
 
         try {
             // Enregistrement de la classe du driver par le driverManager
@@ -63,7 +63,7 @@ public class ConnexionBD {
 
     }
 
-    public double getDonnee(int idCapteur, boolean graph) {
+    public double getNouvelleMesure(int idCapteur) {
         try {
 
             String query = "SELECT valeur, idMesure FROM Mesure, Capteur WHERE Capteur.idCapteur = Mesure.idCapteur AND Capteur.idCapteur = ? ORDER BY Mesure.dateMesure DESC LIMIT 0,1";
@@ -73,12 +73,13 @@ public class ConnexionBD {
             if (donnee.next()) {
                 int idMesure = donnee.getInt("idMesure");
                 double mesure;
-                if (idMesure != donnesPrec.getOrDefault(idCapteur, -1) || !graph) {
+                // System.out.println(idMesure + " " + mesuresPrec.getOrDefault(idCapteur, -1));
+                if (idMesure != mesuresPrec.getOrDefault(idCapteur, -1)) {
                     mesure = donnee.getDouble("valeur");
                 } else {
                     mesure = Double.NaN;
                 }
-                donnesPrec.put(idCapteur, idMesure);
+                mesuresPrec.put(idCapteur, idMesure);
                 return mesure;
             } else {
                 return 0;
@@ -86,28 +87,6 @@ public class ConnexionBD {
         } catch (SQLException ex) {
             ex.printStackTrace(System.err);
             return 0;
-        }
-    }
-
-    public double getDonnee(int idCapteur) {
-        return getDonnee(idCapteur, false);
-    }
-
-    public ArrayList<Double> getDonnees(int idCapteur) {
-        try {
-            ArrayList<Double> mesures = new ArrayList<Double>();
-            String query = "SELECT valeur FROM Mesure, Capteur WHERE Capteur.idCapteur = Mesure.idCapteur AND Capteur.idCapteur = ? ORDER BY Mesure.dateMesure DESC LIMIT 0,?";
-            PreparedStatement selectMesureStatement = this.connection.prepareStatement(query);
-            selectMesureStatement.setInt(1, idCapteur);
-            selectMesureStatement.setInt(2, Graph.NB_POINTS);
-            ResultSet donnee = selectMesureStatement.executeQuery();
-            while (donnee.next()) {
-                mesures.add(donnee.getDouble("valeur"));
-            }
-            return mesures;
-        } catch (SQLException ex) {
-            ex.printStackTrace(System.err);
-            return null;
         }
     }
 

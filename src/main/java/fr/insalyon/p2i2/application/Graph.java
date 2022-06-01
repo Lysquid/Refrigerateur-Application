@@ -22,7 +22,7 @@ public class Graph extends Compo {
     int xDispo;
     int yDispo;
 
-    public static final int NB_POINTS = 180;
+    public static final int NB_POINTS = 60;
     public static final int NB_GRADUATIONS = 5;
 
     private static final int marginRight = 20;
@@ -35,13 +35,19 @@ public class Graph extends Compo {
     public Graph(String titre, String unite, Color color) {
         this.titre = titre;
         this.color = color;
-        mesures = new ArrayList<Double>();
 
         titleTag = new JLabel(titre + " (" + unite + ")");
         titleTag.setForeground(Color.BLACK);
         titleTag.setFont(boldFont);
         add(titleTag);
+        init();
+    }
 
+    public void init() {
+        mesures = new ArrayList<>();
+        for (int i = 0; i < NB_POINTS; i++) {
+            mesures.add(Double.NaN);
+        }
     }
 
     @Override
@@ -59,8 +65,8 @@ public class Graph extends Compo {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        valMax = Collections.max(mesures);
-        valMin = Collections.min(mesures);
+        valMax = minMax(mesures, true);
+        valMin = minMax(mesures, false);
         xDispo = getWidth() - marginLeft - marginRight;
         yDispo = getHeight() - marginTop - marginBottom - marginGraphTop - marginGraphTop;
 
@@ -70,16 +76,16 @@ public class Graph extends Compo {
 
         // Points
         g2d.setColor(color);
-        Point pointA, pointB;
-        double mesure = mesures.get(0);
-        pointA = conversion(0, mesure);
-        for (int i = 1; i < Graph.NB_POINTS; i++) {
-            mesure = mesures.get(i);
-            if (mesure == Double.NaN) {
-                continue;
+        Point pointA = null;
+        Point pointB = null;
+        for (int i = 0; i < Graph.NB_POINTS; i++) {
+            double mesure = mesures.get(i);
+            if (!Double.isNaN(mesure)) {
+                pointB = conversion(i, mesure);
+                if (pointA != null) {
+                    g2d.drawLine(pointA.x, pointA.y, pointB.x, pointB.y);
+                }
             }
-            pointB = conversion(i, mesure);
-            g2d.drawLine(pointA.x, pointA.y, pointB.x, pointB.y);
             pointA = pointB;
         }
 
@@ -163,21 +169,31 @@ public class Graph extends Compo {
 
     }
 
+    public static double minMax(ArrayList<Double> list, boolean max) {
+        ArrayList<Double> listeWithOutNan = new ArrayList<>();
+        for (double val : list) {
+            if (!Double.isNaN(val)) {
+                listeWithOutNan.add(val);
+            }
+        }
+        if (max) {
+            return Collections.max(listeWithOutNan);
+        } else {
+            return Collections.min(listeWithOutNan);
+        }
+    }
+
     public static double round(double val, int nbDigits) {
         double puissance = Math.pow(10, nbDigits);
         return Math.round(val * puissance) / puissance;
     }
 
-    public void update(double mesure) {
+    public void maj(double mesure, boolean aJour) {
         mesures.remove(0);
-        mesures.add(mesure);
-        repaint();
-    }
-
-    public void init(ArrayList<Double> mesures) {
-        this.mesures = mesures;
-        while (mesures.size() < NB_POINTS) {
-            mesures.add(0, Double.NaN);
+        if (aJour) {
+            mesures.add(mesure);
+        } else {
+            mesures.add(Double.NaN);
         }
         repaint();
     }

@@ -20,6 +20,7 @@ import javax.swing.JScrollPane;
 import javax.swing.Timer;
 
 import fr.insalyon.p2i2.connexionBD.ConnexionBD;
+import fr.insalyon.p2i2.connexionBD.Mesures;
 import fr.insalyon.p2i2.connexionBD.Produit;
 import fr.insalyon.p2i2.connexionBD.Seuil;
 
@@ -52,6 +53,7 @@ public class Application extends JPanel implements ActionListener {
 
     private JButton boutonAjout;
     private Boolean Ajout = true;
+    private Mesures mesures;
 
     public static final int gap = 30;
     public static final int compoInset = 12;
@@ -66,6 +68,7 @@ public class Application extends JPanel implements ActionListener {
         connexion = new ConnexionBD();
         listeProduits = new ArrayList<>();
         listeProduitsCompo = new ArrayList<>();
+        mesures = new Mesures();
 
         setLayout(new GridLayout(0, 3));
         setBackground(backgroundColor);
@@ -90,8 +93,6 @@ public class Application extends JPanel implements ActionListener {
         gridGraphs.add(graphTemp);
         gridGraphs.add(graphHumi);
         gridGraphs.add(graphGaz);
-        graphTemp.init(connexion.getDonnees(1));
-        graphHumi.init(connexion.getDonnees(2));
 
         comboBoxGraphs = new JComboBox<String>(listeCapteursGaz) {
             @Override
@@ -150,7 +151,7 @@ public class Application extends JPanel implements ActionListener {
         timerInfo = new Timer(1000, this);
         timerInfo.setInitialDelay(1);
         timerInfo.start();
-        timerLent = new Timer(60000, this);
+        timerLent = new Timer(10000, this);
         timerLent.setInitialDelay(1);
         timerLent.start();
 
@@ -176,17 +177,18 @@ public class Application extends JPanel implements ActionListener {
         }
 
         if (e.getSource() == timerInfo) {
-            temperature.maj(connexion.getDonnee(1));
-            humidite.maj(connexion.getDonnee(2));
+            mesures.maj(connexion);
+            temperature.maj(mesures.get(1));
+            humidite.maj(mesures.get(2));
             ouvert.maj(connexion.getOuverture() ? "oui" : "non");
-            gaz1.maj((int) connexion.getDonnee(3));
-            gaz2.maj((int) connexion.getDonnee(8));
-            gaz3.maj((int) connexion.getDonnee(9));
+            gaz1.maj((int) mesures.get(3));
+            gaz2.maj((int) mesures.get(8));
+            gaz3.maj((int) mesures.get(9));
 
-            graphTemp.update(connexion.getDonnee(1));
-            graphHumi.update(connexion.getDonnee(2));
+            graphTemp.maj(mesures.get(1), mesures.getAJour(1));
+            graphHumi.maj(mesures.get(2), mesures.getAJour(2));
             int idCapteur = capteursGaz.get(comboBoxGraphs.getSelectedItem());
-            graphGaz.update(connexion.getDonnee(idCapteur));
+            graphGaz.maj(mesures.get(idCapteur), mesures.getAJour(idCapteur));
 
         } else if (e.getSource() == timerLent) {
             ArrayList<Produit> nouveauxProduits = connexion.getProduits();
@@ -212,9 +214,7 @@ public class Application extends JPanel implements ActionListener {
             }
         }
         if (e.getSource() == comboBoxGraphs) {
-            int idCapteur = capteursGaz.get(comboBoxGraphs.getSelectedItem());
-            graphGaz.init(connexion.getDonnees(idCapteur));
-
+            graphGaz.init();
         }
     }
 
