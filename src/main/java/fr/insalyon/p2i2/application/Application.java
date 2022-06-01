@@ -46,6 +46,9 @@ public class Application extends JPanel implements ActionListener {
     private ArrayList<Produit> listeProduits;
     private ArrayList<ProduitCompo> listeProduitsCompo;
 
+    private JButton boutonAjout;
+    private Boolean Ajout = true;
+
     public static final int gap = 30;
     public static final int compoInset = 12;
     public static final Color backgroundColor = Color.decode("#f2f2f2");
@@ -121,7 +124,8 @@ public class Application extends JPanel implements ActionListener {
         add(column3);
         gridStock = new BoxPanel();
         JScrollPane scrollPaneStock = new ScrollPane(gridStock);
-        JButton boutonAjout = new JButton("Mode ajout");
+        boutonAjout = new JButton("Mode ajout");
+        boutonAjout.addActionListener(this);
         Block blockStock = new Block("Contenu", scrollPaneStock, boutonAjout);
         column3.add(blockStock);
 
@@ -142,6 +146,17 @@ public class Application extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == boutonAjout){
+            if (Ajout){
+                Ajout = false;
+                boutonAjout.setText("Mode Suppression");
+            } else {
+                Ajout = true;
+                boutonAjout.setText("Mode Ajout");
+            }
+            System.out.println(boutonAjout.getText());
+        }
+
         if (e.getSource() == timerInfo) {
             temperature.maj(connexion.getDonnee(1));
             humidite.maj(connexion.getDonnee(2));
