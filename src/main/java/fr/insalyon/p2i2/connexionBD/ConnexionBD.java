@@ -24,7 +24,7 @@ public class ConnexionBD {
 
     private Connection connection;
 
-    private final int TEMPS_ALERTE_OUVERTURE = 180; //en seconde
+    private final int TEMPS_ALERTE_OUVERTURE = 180; // en seconde
 
     public ConnexionBD() {
 
@@ -157,7 +157,6 @@ public class ConnexionBD {
             // long time2 = System.currentTimeMillis();
             // System.out.print(time2 - time1);
             // System.out.println(" ms");
-            System.out.println(CategoriesProduits.next());
 
             while (CategoriesProduits.next()) {
 
@@ -196,7 +195,7 @@ public class ConnexionBD {
             LocalDateTime dateActuelle = LocalDateTime.now();
             float diffDate = ChronoUnit.SECONDS.between(dateActuelle, derniereDateOuverture);
             System.out.println(diffDate);
-            if (diffDate >= TEMPS_ALERTE_OUVERTURE){
+            if (diffDate >= TEMPS_ALERTE_OUVERTURE) {
                 Seuil seuil = new Seuil("Réfrigérateur", TEMPS_ALERTE_OUVERTURE, "Durée", diffDate, "secondes");
                 listeSeuils.add(seuil);
             }
