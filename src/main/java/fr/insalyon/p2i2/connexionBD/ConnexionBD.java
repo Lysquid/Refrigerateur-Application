@@ -1,10 +1,13 @@
 package fr.insalyon.p2i2.connexionBD;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -20,6 +23,8 @@ public class ConnexionBD {
     private final String motdepasseBD = "G221_A";
 
     private Connection connection;
+
+    private final int TEMPS_ALERTE_OUVERTURE = 180; //en seconde
 
     public ConnexionBD() {
 
@@ -184,6 +189,18 @@ public class ConnexionBD {
                 listeSeuils.add(seuil);
                 // System.out.println(seuil.toString());
             }
+            String query3 = "SELECT dateOuverture FROM OuverturePorte ORDER BY dateOuverture DESC LIMIT 0,1;";
+            PreparedStatement selectOuvertureStatement = this.connection.prepareStatement(query3);
+            ResultSet dateOuverture = selectOuvertureStatement.executeQuery();
+            LocalDateTime derniereDateOuverture = dateOuverture.getTimestamp("dateOuverure").toLocalDateTime();
+            LocalDateTime dateActuelle = LocalDateTime.now();
+            float diffDate = ChronoUnit.SECONDS.between(dateActuelle, derniereDateOuverture);
+            System.out.println(diffDate);
+            if (diffDate >= TEMPS_ALERTE_OUVERTURE){
+                Seuil seuil = new Seuil("Réfrigérateur", TEMPS_ALERTE_OUVERTURE, "Durée", diffDate, "secondes");
+                listeSeuils.add(seuil);
+            }
+
             return listeSeuils;
         } catch (SQLException ex) {
             ex.printStackTrace(System.err);
