@@ -1,5 +1,7 @@
 package fr.insalyon.p2i2.application;
 
+import java.awt.Dimension;
+
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
@@ -11,8 +13,8 @@ public class Window extends JFrame {
     public Window() {
         lookAndFeel();
         setTitle("Albert le frigidaire");
-        setSize(1600, 870);
-        setResizable(false);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setMinimumSize(new Dimension(800, 450));
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         add(new Application());
