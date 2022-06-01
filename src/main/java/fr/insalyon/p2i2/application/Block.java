@@ -22,7 +22,7 @@ public class Block extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setOpaque(false);
 
-        JLabel label = new JLabel(title, SwingConstants.CENTER);
+        JLabel label = new JLabel(title.toUpperCase(), SwingConstants.CENTER);
         label.setFont(font);
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(label);
