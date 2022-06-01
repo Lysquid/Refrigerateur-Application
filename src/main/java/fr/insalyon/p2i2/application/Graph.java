@@ -119,7 +119,7 @@ public class Graph extends Compo {
 
         DecimalFormat df = new DecimalFormat("#.###");
 
-        double val = round(valMin, roundDigits) - inc;
+        double val = round(valMin, roundDigits) - inc * 10;
         while (val <= valMax + inc) {
             pointA = conversion(0, val);
             if (pointA.y > marginTop && pointA.y < getHeight() - marginBottom) {

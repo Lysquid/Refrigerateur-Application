@@ -19,11 +19,12 @@ public class Alerte extends Compo {
                     "Le " + seuil.categorieProduit + " est ouvert depuis trop longtemps !");
             nomAlerte.setFont(boldFont);
             add(nomAlerte);
-            double valeurSeuil = (seuil.valeur > seuil.seuilMax) ? seuil.seuilMax : seuil.seuilMin;
-            JLabel valeurActuel = new JLabel("Durée d'ouverture : " + (int) seuil.valeur + " " + seuil.unite);
+            JLabel valeurActuel = new JLabel(
+                    "Durée d'ouverture : " + (int) Math.round(seuil.valeur) + " " + seuil.unite);
             valeurActuel.setFont(mainFont);
             add(valeurActuel);
-            JLabel valeurSeuilMin = new JLabel("Durée maximale : " + (int) valeurSeuil + " " + seuil.unite);
+            JLabel valeurSeuilMin = new JLabel(
+                    "Durée maximale : " + (int) Math.round(seuil.seuilMax) + " " + seuil.unite);
             valeurSeuilMin.setFont(mainFont);
             add(valeurSeuilMin);
 
@@ -32,14 +33,13 @@ public class Alerte extends Compo {
                     "Seuil de " + seuil.typeDeMesure + " dépassé pour les " + seuil.categorieProduit.toLowerCase());
             nomAlerte.setFont(boldFont);
             add(nomAlerte);
-            double valeurSeuil = (seuil.valeur > seuil.seuilMax) ? seuil.seuilMax : seuil.seuilMin;
-
-            JLabel valeurActuel = new JLabel("Valeur actuelle : " + seuil.valeur + " " + seuil.unite);
+            JLabel valeurActuel = new JLabel("Valeur actuelle : " + (int) Math.round(seuil.valeur) + " " + seuil.unite);
             valeurActuel.setFont(mainFont);
             add(valeurActuel);
+            double valeurSeuil = (seuil.valeur > seuil.seuilMax) ? seuil.seuilMax : seuil.seuilMin;
             JLabel valeurSeuilMin = new JLabel(
-                    "Seuil " + ((seuil.valeur > seuil.seuilMax) ? "maximal" : "minimal") + " : " + valeurSeuil + " "
-                            + seuil.unite);
+                    "Seuil " + ((seuil.valeur > seuil.seuilMax) ? "maximal" : "minimal") + " : "
+                            + (int) Math.round(valeurSeuil) + " " + seuil.unite);
             valeurSeuilMin.setFont(mainFont);
             add(valeurSeuilMin);
             JLabel produitsConcernes = new JLabel("Produits concernés :");
