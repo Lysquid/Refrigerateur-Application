@@ -192,7 +192,7 @@ public class ConnexionBD {
             String query3 = "SELECT dateOuverture FROM OuverturePorte ORDER BY dateOuverture DESC LIMIT 0,1;";
             PreparedStatement selectOuvertureStatement = this.connection.prepareStatement(query3);
             ResultSet dateOuverture = selectOuvertureStatement.executeQuery();
-            LocalDateTime derniereDateOuverture = dateOuverture.getTimestamp("dateOuverure").toLocalDateTime();
+            LocalDateTime derniereDateOuverture = dateOuverture.getTimestamp("dateOuverture").toLocalDateTime();
             LocalDateTime dateActuelle = LocalDateTime.now();
             float diffDate = ChronoUnit.SECONDS.between(dateActuelle, derniereDateOuverture);
             System.out.println(diffDate);
