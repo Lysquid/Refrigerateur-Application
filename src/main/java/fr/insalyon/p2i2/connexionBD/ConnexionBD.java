@@ -137,18 +137,19 @@ public class ConnexionBD {
         ArrayList<Seuil> listeSeuils = new ArrayList<>();
         try {
 
-            String query3 = "SELECT dateOuverture FROM OuverturePorte ORDER BY dateOuverture DESC LIMIT 0,1;";
+            String query3 = "SELECT porteOuverte, dateOuverture FROM OuverturePorte ORDER BY dateOuverture DESC LIMIT 0,1;";
             PreparedStatement selectOuvertureStatement = this.connection.prepareStatement(query3);
             ResultSet dateOuverture = selectOuvertureStatement.executeQuery();
             //System.out.println(dateOuverture);
             dateOuverture.next();
-            Date derniereDateOuverture = dateOuverture.getDate(1);
+            Date derniereDateOuverture = dateOuverture.getDate("dateOuverture");
+            Boolean porteOuverte = dateOuverture.getBoolean("porteOuverte");
             //System.out.println(derniereDateOuverture);
             LocalDateTime derniereDate = derniereDateOuverture.toLocalDate().atStartOfDay();
             LocalDateTime dateActuelle = LocalDateTime.now();
             float diffDate = ChronoUnit.MINUTES.between(derniereDate, dateActuelle);
 
-            if (diffDate >= TEMPS_ALERTE_OUVERTURE){
+            if (porteOuverte && diffDate >= TEMPS_ALERTE_OUVERTURE){
                 Seuil seuil = new Seuil("Réfrigérateur", TEMPS_ALERTE_OUVERTURE, "Durée", diffDate, "minutes");
                 listeSeuils.add(seuil);
                 //System.out.println(seuil);
@@ -161,8 +162,7 @@ public class ConnexionBD {
                     "AND Mesure.idCapteur = Capteur.idCapteur " +
                     "AND Seuil.idCategorieProduit = CategorieProduit.idCategorieProduit " +
                     "AND CategorieProduit.idCategorieProduit = AssociationCategorie.idCategorieProduit " +
-                    "AND Mesure.dateMesure IN (SELECT MAX(dateMesure) FROM Mesure, Capteur WHERE Capteur.idCapteur = Mesure.idCapteur GROUP BY nomCapteur) "
-                    +
+                    "AND Mesure.dateMesure IN (SELECT MAX(dateMesure) FROM Mesure, Capteur WHERE Capteur.idCapteur = Mesure.idCapteur GROUP BY nomCapteur) " +
                     "AND (Capteur.idCapteur = 1 OR Capteur.idCapteur = 2) " +
                     "AND (seuilMax < valeur OR seuilMin > valeur) " +
                     "ORDER BY nomCategorieProduit;";
