@@ -79,7 +79,7 @@ public class ConnexionBD {
             String query = "SELECT valeur FROM Mesure, Capteur WHERE Capteur.idCapteur = Mesure.idCapteur AND Capteur.idCapteur = ? ORDER BY Mesure.dateMesure DESC LIMIT 0,?";
             PreparedStatement selectMesureStatement = this.connection.prepareStatement(query);
             selectMesureStatement.setInt(1, idCapteur);
-            selectMesureStatement.setInt(2, Graph.POINTS);
+            selectMesureStatement.setInt(2, Graph.NB_POINTS);
             ResultSet donnee = selectMesureStatement.executeQuery();
             while (donnee.next()) {
                 mesures.add(donnee.getDouble("valeur"));
