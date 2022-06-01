@@ -149,12 +149,12 @@ public class Application extends JPanel implements ActionListener {
         if (e.getSource() == boutonAjout){
             if (Ajout){
                 Ajout = false;
-                boutonAjout.setText("Mode Suppression");
+                boutonAjout.setText("Mode Retrait");
             } else {
                 Ajout = true;
                 boutonAjout.setText("Mode Ajout");
             }
-            System.out.println(boutonAjout.getText());
+            //System.out.println(boutonAjout.getText());
         }
 
         if (e.getSource() == timerInfo) {
