@@ -21,6 +21,14 @@ public class Seuil {
         unite = Unite;
     }
 
+    public Seuil(String CategorieProduit, float SeuilMax, String TypeDeMesure, float Valeur, String Unite){
+        categorieProduit = CategorieProduit;
+        seuilMax = SeuilMax;
+        typeDeMesure = TypeDeMesure;
+        valeur = Valeur;
+        unite = Unite;
+    }
+
     public String toString(){
         return("Seuil de " + typeDeMesure + " sur la categorie " + categorieProduit 
         + ": Seuil Min  = " + seuilMin + ". Seuil Max  = " + seuilMax + ". Valeur Actuelle = "+ valeur + unite);
