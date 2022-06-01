@@ -137,6 +137,23 @@ public class ConnexionBD {
         ArrayList<Seuil> listeSeuils = new ArrayList<>();
         try {
 
+            String query3 = "SELECT dateOuverture FROM OuverturePorte ORDER BY dateOuverture DESC LIMIT 0,1;";
+            PreparedStatement selectOuvertureStatement = this.connection.prepareStatement(query3);
+            ResultSet dateOuverture = selectOuvertureStatement.executeQuery();
+            //System.out.println(dateOuverture);
+            dateOuverture.next();
+            Date derniereDateOuverture = dateOuverture.getDate(1);
+            //System.out.println(derniereDateOuverture);
+            LocalDateTime derniereDate = derniereDateOuverture.toLocalDate().atStartOfDay();
+            LocalDateTime dateActuelle = LocalDateTime.now();
+            float diffDate = ChronoUnit.MINUTES.between(derniereDate, dateActuelle);
+
+            if (diffDate >= TEMPS_ALERTE_OUVERTURE){
+                Seuil seuil = new Seuil("Réfrigérateur", TEMPS_ALERTE_OUVERTURE, "Durée", diffDate, "minutes");
+                listeSeuils.add(seuil);
+                //System.out.println(seuil);
+            }
+
             String query1 = "SELECT DISTINCT nomCategorieProduit, nomTypeMesure, valeur, unite, seuilMin, seuilMax " +
                     "FROM Seuil, TypeMesure, Mesure, Capteur, Produit, CategorieProduit, AssociationCategorie " +
                     "WHERE Seuil.idTypeMesure = TypeMesure.idTypeMesure " +
@@ -188,24 +205,8 @@ public class ConnexionBD {
                 listeSeuils.add(seuil);
                 // System.out.println(seuil.toString());
             }
-            String query3 = "SELECT dateOuverture FROM OuverturePorte ORDER BY dateOuverture DESC LIMIT 0,1;";
-            PreparedStatement selectOuvertureStatement = this.connection.prepareStatement(query3);
-            ResultSet dateOuverture = selectOuvertureStatement.executeQuery();
-            //System.out.println(dateOuverture);
-            dateOuverture.next();
-            Date derniereDateOuverture = dateOuverture.getDate(1);
-            //System.out.println(derniereDateOuverture);
-            LocalDateTime derniereDate = derniereDateOuverture.toLocalDate().atStartOfDay();
-            LocalDateTime dateActuelle = LocalDateTime.now();
-            float diffDate = ChronoUnit.MINUTES.between(derniereDate, dateActuelle);
-
-            if (diffDate >= TEMPS_ALERTE_OUVERTURE){
-                Seuil seuil = new Seuil("Réfrigérateur", TEMPS_ALERTE_OUVERTURE, "Durée", diffDate, "minutes");
-                listeSeuils.add(seuil);
-                //System.out.println(seuil);
-            }
-
             return listeSeuils;
+            
         } catch (SQLException ex) {
             ex.printStackTrace(System.err);
             return listeSeuils;
