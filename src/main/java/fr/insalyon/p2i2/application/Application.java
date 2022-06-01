@@ -58,7 +58,7 @@ public class Application extends JPanel implements ActionListener {
     public static final int compoInset = 12;
     public static final Color backgroundColor = Color.decode("#f2f2f2");
     public static final Color blockColor = Color.decode("#ffffff");
-    public static final Color borderColor = Color.decode("#d6d6d6");
+    public static final Color borderColor = Color.decode("#d0d0d0");
     public static final Color graphColor = Color.decode("#222222");
     public static final int scrollCompoSize = 480;
 

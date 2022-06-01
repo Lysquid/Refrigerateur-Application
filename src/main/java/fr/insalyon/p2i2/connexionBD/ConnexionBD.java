@@ -122,19 +122,23 @@ public class ConnexionBD {
             String query3 = "SELECT porteOuverte, dateOuverture FROM OuverturePorte ORDER BY dateOuverture DESC LIMIT 0,1;";
             PreparedStatement selectOuvertureStatement = this.connection.prepareStatement(query3);
             ResultSet dateOuverture = selectOuvertureStatement.executeQuery();
-            dateOuverture.next();
-            Date derniereDateOuverture = dateOuverture.getDate("dateOuverture");
-            Boolean porteOuverte = dateOuverture.getBoolean("porteOuverte");
-            LocalDateTime derniereDate = derniereDateOuverture.toLocalDate().atStartOfDay();
-            LocalDateTime dateActuelle = LocalDateTime.now();
-            float diffDate = ChronoUnit.MINUTES.between(derniereDate, dateActuelle);
+            if (dateOuverture.next()) {
 
-            if ((porteOuverte == true) && (diffDate >= TEMPS_ALERTE_OUVERTURE)) {
-                Seuil seuil = new Seuil("réfrigérateur", TEMPS_ALERTE_OUVERTURE, "durée", diffDate, "minutes");
-                listeSeuils.add(seuil);
+                Date derniereDateOuverture = dateOuverture.getDate("dateOuverture");
+                Boolean porteOuverte = dateOuverture.getBoolean("porteOuverte");
+                LocalDateTime derniereDate = derniereDateOuverture.toLocalDate().atStartOfDay();
+                LocalDateTime dateActuelle = LocalDateTime.now();
+                float diffDate = ChronoUnit.MINUTES.between(derniereDate, dateActuelle);
+
+                if ((porteOuverte == true) && (diffDate >= TEMPS_ALERTE_OUVERTURE)) {
+                    Seuil seuil = new Seuil("réfrigérateur", TEMPS_ALERTE_OUVERTURE, "durée", diffDate, "minutes");
+                    listeSeuils.add(seuil);
+                }
+
             }
 
-            String query1 = "SELECT DISTINCT nomCategorieProduit, nomTypeMesure, valeur, unite, seuilMin, seuilMax " +
+            String query1 = "SELECT DISTINCT nomCategorieProduit, nomTypeMesure, valeur, unite, seuilMin, seuilMax "
+                    +
                     "FROM Seuil, TypeMesure, Mesure, Capteur, Produit, CategorieProduit, AssociationCategorie " +
                     "WHERE Seuil.idTypeMesure = TypeMesure.idTypeMesure " +
                     "AND Capteur.idTypeMesure = TypeMesure.idTypeMesure " +
