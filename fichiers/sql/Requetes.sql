@@ -2,7 +2,7 @@
 
 SELECT dateOuverture, porteOuverte
 FROM OuverturePorte
-ORDER BY dateOuverture DESC
+ORDER BY idOuverture DESC
 LIMIT 0,1;
 
 --Récupération des seuils correspondat au type du produit (? = Type du produit que l'on cherche)
