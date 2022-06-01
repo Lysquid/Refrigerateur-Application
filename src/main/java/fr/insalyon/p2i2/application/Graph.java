@@ -176,6 +176,9 @@ public class Graph extends Compo {
                 listeWithOutNan.add(val);
             }
         }
+        if (listeWithOutNan.isEmpty()) {
+            return Double.NaN;
+        }
         if (max) {
             return Collections.max(listeWithOutNan);
         } else {
