@@ -104,21 +104,22 @@ public class Graph extends Compo {
         while (true) {
             if (etendue < 5) {
                 break;
-            } else if (etendue < 10) {
+            }
+            roundDigits -= 1;
+            if (etendue < 10) {
                 inc *= 2;
                 break;
             } else if (etendue < 20) {
                 inc *= 5;
                 break;
             }
-            roundDigits -= 1;
             inc *= 10;
             etendue /= 10;
         }
 
         DecimalFormat df = new DecimalFormat("#.###");
 
-        double val = round(valMin, roundDigits) - inc * 10;
+        double val = round(valMin, roundDigits) - inc * 5;
         while (val <= valMax + inc) {
             pointA = conversion(0, val);
             if (pointA.y > MARGIN_TOP && pointA.y < getHeight() - MARGIN_BOTTOM) {
@@ -152,7 +153,7 @@ public class Graph extends Compo {
     }
 
     private static double round(double val, int nbDigits) {
-        double puissance = Math.pow(10, nbDigits - 1);
+        double puissance = Math.pow(10, nbDigits);
         return Math.round(val * puissance) / puissance;
     }
 

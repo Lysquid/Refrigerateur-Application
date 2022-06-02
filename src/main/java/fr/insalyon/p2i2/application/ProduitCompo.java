@@ -2,6 +2,7 @@ package fr.insalyon.p2i2.application;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Insets;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,6 +22,7 @@ public class ProduitCompo extends Compo {
     private static final int imageTimeout = 200;
     private JLabel quantite;
     public Produit produit;
+    private int IMAGE_HEIGHT = 120;
 
     public ProduitCompo(Produit produit) {
         JPanel textPanel = new JPanel() {
@@ -42,12 +44,15 @@ public class ProduitCompo extends Compo {
             con.setConnectTimeout(imageTimeout);
             con.setReadTimeout(imageTimeout);
             InputStream in = con.getInputStream();
-            JLabel image = new JLabel(new ImageIcon(ImageIO.read(in)));
+            ImageIcon imageIcon = new ImageIcon(ImageIO.read(in));
+            Image image = imageIcon.getImage();
+            Image scaledImage = image.getScaledInstance(image.getWidth(null) * IMAGE_HEIGHT / image.getHeight(null),
+                    IMAGE_HEIGHT, Image.SCALE_SMOOTH);
+            JLabel imageLabel = new JLabel(new ImageIcon(scaledImage));
             in.close();
-            image.setLocation(100, 0);
-            image.setAlignmentX(Component.RIGHT_ALIGNMENT);
-            image.setAlignmentY(Component.TOP_ALIGNMENT);
-            add(image);
+            imageLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+            imageLabel.setAlignmentY(Component.TOP_ALIGNMENT);
+            add(imageLabel);
         } catch (IOException e) {
         }
 
