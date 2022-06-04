@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.Dimension;
 import java.awt.Image;
 
-
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
@@ -16,7 +15,7 @@ public class Window extends JFrame {
     public Window() {
         lookAndFeel();
         setTitle("Albert le frigidaire");
-        Image icon = Toolkit.getDefaultToolkit().getImage("src\\main\\java\\fr\\insalyon\\p2i2\\flocon.png"); 
+        Image icon = Toolkit.getDefaultToolkit().getImage("./fichiers/img/flocon.png");
         setIconImage(icon);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setMinimumSize(new Dimension(800, 450));
