@@ -15,8 +15,7 @@ public class Window extends JFrame {
     public Window() {
         lookAndFeel();
         setTitle("Albert le frigidaire");
-        Image icon = Toolkit.getDefaultToolkit().getImage("./fichiers/img/flocon.png");
-        setIconImage(icon);
+        setIconImage(Toolkit.getDefaultToolkit().getImage("./fichiers/img/flocon.png"));
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setMinimumSize(new Dimension(800, 450));
         setDefaultCloseOperation(EXIT_ON_CLOSE);
