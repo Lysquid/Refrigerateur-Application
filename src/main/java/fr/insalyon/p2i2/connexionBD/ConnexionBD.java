@@ -10,12 +10,14 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import fr.insalyon.p2i2.application.Timing;
+
 public class ConnexionBD {
 
     // À adapter à votre BD
     private final String serveurBD = "fimi-bd-srv1.insa-lyon.fr";
     private final String portBD = "3306";
-    private final String nomBD = "G221_A_BD1";
+    private final String nomBD = "G221_A_BD2";
     private final String loginBD = "G221_A";
     private final String motdepasseBD = "G221_A";
     private HashMap<Integer, Integer> mesuresPrec;
@@ -53,11 +55,13 @@ public class ConnexionBD {
 
     public double getNouvelleMesure(int idCapteur) {
         try {
-
-            String query = "SELECT valeur, idMesure FROM Mesure, Capteur WHERE Capteur.idCapteur = Mesure.idCapteur AND Capteur.idCapteur = ? ORDER BY Mesure.dateMesure DESC LIMIT 0,1";
+            String query = "SELECT valeur, idMesure FROM Mesure WHERE idCapteur = ? AND idMesure = (SELECT MAX(idMesure) FROM Mesure WHERE idCapteur = ?)";
             PreparedStatement selectMesureStatement = this.connection.prepareStatement(query);
             selectMesureStatement.setInt(1, idCapteur);
+            selectMesureStatement.setInt(2, idCapteur);
+            // Timing.start();
             ResultSet donnee = selectMesureStatement.executeQuery();
+            // Timing.stop();
             if (donnee.next()) {
                 int idMesure = donnee.getInt("idMesure");
                 double mesure;
@@ -152,10 +156,7 @@ public class ConnexionBD {
 
             PreparedStatement selectCategorieProduitStatement = this.connection.prepareStatement(query1);
 
-            // long time1 = System.currentTimeMillis();
             ResultSet CategoriesProduits = selectCategorieProduitStatement.executeQuery();
-            // long time2 = System.currentTimeMillis();
-            // System.out.print(time2 - time1);
 
             while (CategoriesProduits.next()) {
 
