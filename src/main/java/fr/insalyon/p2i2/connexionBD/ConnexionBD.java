@@ -8,9 +8,6 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.HashMap;
-
-import fr.insalyon.p2i2.application.Timing;
 
 public class ConnexionBD {
 
@@ -20,15 +17,12 @@ public class ConnexionBD {
     private final String nomBD = "G221_A_BD2";
     private final String loginBD = "G221_A";
     private final String motdepasseBD = "G221_A";
-    private HashMap<Integer, Integer> mesuresPrec;
 
     private Connection connection;
 
     private final int TEMPS_ALERTE_OUVERTURE = 1; // en minute
 
     public ConnexionBD() {
-
-        mesuresPrec = new HashMap<>();
 
         try {
             String urlJDBC = "jdbc:mysql://" + this.serveurBD + ":" + this.portBD + "/" + this.nomBD;
@@ -53,31 +47,16 @@ public class ConnexionBD {
 
     }
 
-    public double getNouvelleMesure(int idCapteur) {
+    public ResultSet getNouvelleMesures() {
         try {
-            String query = "SELECT valeur, idMesure FROM Mesure WHERE idCapteur = ? AND idMesure = (SELECT MAX(idMesure) FROM Mesure WHERE idCapteur = ?)";
+            String query = "SELECT idCapteur, idMesure, valeur FROM Mesure "
+                    + "WHERE idMesure IN (SELECT MAX(idMesure) FROM Mesure GROUP BY idCapteur)";
             PreparedStatement selectMesureStatement = this.connection.prepareStatement(query);
-            selectMesureStatement.setInt(1, idCapteur);
-            selectMesureStatement.setInt(2, idCapteur);
-            // Timing.start();
-            ResultSet donnee = selectMesureStatement.executeQuery();
-            // Timing.stop();
-            if (donnee.next()) {
-                int idMesure = donnee.getInt("idMesure");
-                double mesure;
-                if (idMesure != mesuresPrec.getOrDefault(idCapteur, -1)) {
-                    mesure = donnee.getDouble("valeur");
-                } else {
-                    mesure = Double.NaN;
-                }
-                mesuresPrec.put(idCapteur, idMesure);
-                return mesure;
-            } else {
-                return Double.NaN;
-            }
+            return selectMesureStatement.executeQuery();
+
         } catch (SQLException ex) {
             ex.printStackTrace(System.err);
-            return Double.NaN;
+            return null;
         }
     }
 

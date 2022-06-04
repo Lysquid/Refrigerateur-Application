@@ -1,8 +1,7 @@
 package fr.insalyon.p2i2.application;
 
-import java.awt.*;
 import java.awt.Dimension;
-import java.awt.Image;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;

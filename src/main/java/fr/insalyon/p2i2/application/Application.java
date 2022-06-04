@@ -175,10 +175,10 @@ public class Application extends JPanel implements ActionListener {
             // Timing.stop(1);
         }
         if (e.getSource() == timerInfo) {
-            // Timing.start(21);
             // Maj monitoring
+            Timing.start(21);
             mesures.maj(connexion);
-            // Timing.stop(21);
+            Timing.stop(21);
             // Timing.start(22);
             temperature.maj(mesures.get(1));
             humidite.maj(mesures.get(2));
