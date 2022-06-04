@@ -176,9 +176,9 @@ public class Application extends JPanel implements ActionListener {
         }
         if (e.getSource() == timerInfo) {
             // Maj monitoring
-            Timing.start(21);
+            // Timing.start(21);
             mesures.maj(connexion);
-            Timing.stop(21);
+            // Timing.stop(21);
             // Timing.start(22);
             temperature.maj(mesures.get(1));
             humidite.maj(mesures.get(2));
