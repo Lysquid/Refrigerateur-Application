@@ -1,6 +1,7 @@
 package fr.insalyon.p2i2.application;
 
 import java.awt.Dimension;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -13,6 +14,7 @@ public class Window extends JFrame {
     public Window() {
         lookAndFeel();
         setTitle("Albert le frigidaire");
+        setIconImage(Toolkit.getDefaultToolkit().getImage("./fichiers/img/flocon.png"));
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setMinimumSize(new Dimension(800, 450));
         setDefaultCloseOperation(EXIT_ON_CLOSE);

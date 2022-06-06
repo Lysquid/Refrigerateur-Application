@@ -163,6 +163,7 @@ public class Application extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == boutonAjout) {
+            // Timing.start(1);
             connexion.majQuantite(modeAjout);
             if (modeAjout) {
                 modeAjout = false;
@@ -171,11 +172,14 @@ public class Application extends JPanel implements ActionListener {
                 modeAjout = true;
                 boutonAjout.setText("Mode ajout");
             }
+            // Timing.stop(1);
         }
-
         if (e.getSource() == timerInfo) {
             // Maj monitoring
+            // Timing.start(21);
             mesures.maj(connexion);
+            // Timing.stop(21);
+            // Timing.start(22);
             temperature.maj(mesures.get(1));
             humidite.maj(mesures.get(2));
             ouvert.maj(connexion.getOuverture() ? "oui" : "non");
@@ -188,10 +192,14 @@ public class Application extends JPanel implements ActionListener {
             graphHumi.maj(mesures.get(2), mesures.getAJour(2));
             int idCapteur = capteursGaz.get(comboBoxGraphs.getSelectedItem());
             graphGaz.maj(mesures.get(idCapteur), mesures.getAJour(idCapteur));
+            // Timing.stop(22);
 
+            // Timing.start(23);
             // Maj quantités dans la BD
             connexion.majQuantite(modeAjout);
+            // Timing.stop(23);
 
+            // Timing.start(24);
             // Maj produits
             ArrayList<Produit> nouveauxProduits = connexion.getProduits();
             for (Produit produit : nouveauxProduits) {
@@ -221,16 +229,22 @@ public class Application extends JPanel implements ActionListener {
             for (ProduitCompo produitCompo : listeProduitsCompo) {
                 gridStock.add(produitCompo);
             }
-        } else if (e.getSource() == timerLent) {
+            // Timing.stop(24);
+        }
+        if (e.getSource() == timerLent) {
+            // Timing.start(3);
             // Maj alertes
             gridAlerts.removeAll();
             ArrayList<Seuil> seuils = connexion.getSeuils();
             for (Seuil seuil : seuils) {
                 gridAlerts.add(new Alerte(seuil));
             }
+            // Timing.stop(3);
         }
         if (e.getSource() == comboBoxGraphs) {
+            // Timing.start(4);
             graphGaz.init();
+            // Timing.stop(4);
         }
     }
 

@@ -8,25 +8,21 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class ConnexionBD {
 
     // À adapter à votre BD
     private final String serveurBD = "fimi-bd-srv1.insa-lyon.fr";
     private final String portBD = "3306";
-    private final String nomBD = "G221_A_BD1";
+    private final String nomBD = "G221_A_BD2";
     private final String loginBD = "G221_A";
     private final String motdepasseBD = "G221_A";
-    private HashMap<Integer, Integer> mesuresPrec;
 
     private Connection connection;
 
     private final int TEMPS_ALERTE_OUVERTURE = 1; // en minute
 
     public ConnexionBD() {
-
-        mesuresPrec = new HashMap<>();
 
         try {
             String urlJDBC = "jdbc:mysql://" + this.serveurBD + ":" + this.portBD + "/" + this.nomBD;
@@ -51,29 +47,16 @@ public class ConnexionBD {
 
     }
 
-    public double getNouvelleMesure(int idCapteur) {
+    public ResultSet getNouvelleMesures() {
         try {
-
-            String query = "SELECT valeur, idMesure FROM Mesure, Capteur WHERE Capteur.idCapteur = Mesure.idCapteur AND Capteur.idCapteur = ? ORDER BY Mesure.dateMesure DESC LIMIT 0,1";
+            String query = "SELECT idCapteur, idMesure, valeur FROM Mesure "
+                    + "WHERE idMesure IN (SELECT MAX(idMesure) FROM Mesure GROUP BY idCapteur)";
             PreparedStatement selectMesureStatement = this.connection.prepareStatement(query);
-            selectMesureStatement.setInt(1, idCapteur);
-            ResultSet donnee = selectMesureStatement.executeQuery();
-            if (donnee.next()) {
-                int idMesure = donnee.getInt("idMesure");
-                double mesure;
-                if (idMesure != mesuresPrec.getOrDefault(idCapteur, -1)) {
-                    mesure = donnee.getDouble("valeur");
-                } else {
-                    mesure = Double.NaN;
-                }
-                mesuresPrec.put(idCapteur, idMesure);
-                return mesure;
-            } else {
-                return Double.NaN;
-            }
+            return selectMesureStatement.executeQuery();
+
         } catch (SQLException ex) {
             ex.printStackTrace(System.err);
-            return Double.NaN;
+            return null;
         }
     }
 
@@ -152,10 +135,7 @@ public class ConnexionBD {
 
             PreparedStatement selectCategorieProduitStatement = this.connection.prepareStatement(query1);
 
-            // long time1 = System.currentTimeMillis();
             ResultSet CategoriesProduits = selectCategorieProduitStatement.executeQuery();
-            // long time2 = System.currentTimeMillis();
-            // System.out.print(time2 - time1);
 
             while (CategoriesProduits.next()) {
 
