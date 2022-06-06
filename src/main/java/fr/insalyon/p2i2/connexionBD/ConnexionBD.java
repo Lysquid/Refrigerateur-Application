@@ -144,8 +144,8 @@ public class ConnexionBD {
                     "AND Mesure.idCapteur = Capteur.idCapteur " +
                     "AND Seuil.idCategorieProduit = CategorieProduit.idCategorieProduit " +
                     "AND CategorieProduit.idCategorieProduit = AssociationCategorie.idCategorieProduit " +
-                    "AND Mesure.dateMesure IN (SELECT MAX(dateMesure) FROM Mesure, Capteur WHERE Capteur.idCapteur = Mesure.idCapteur GROUP BY nomCapteur) "
-                    +
+                    "AND Mesure.dateMesure IN (SELECT MAX(dateMesure) FROM Mesure, Capteur WHERE Capteur.idCapteur = Mesure.idCapteur GROUP BY nomCapteur) " +
+                    "AND Produit.quantite != 0" +
                     "AND (Capteur.idCapteur = 1 OR Capteur.idCapteur = 2) " +
                     "AND (seuilMax < valeur OR seuilMin > valeur) " +
                     "ORDER BY nomCategorieProduit;";
@@ -165,6 +165,7 @@ public class ConnexionBD {
                         "FROM Produit, AssociationCategorie, CategorieProduit " +
                         "WHERE Produit.codeBarre = AssociationCategorie.codeBarre " +
                         "AND AssociationCategorie.idCategorieProduit = CategorieProduit.idCategorieProduit " +
+                        "AND Produit.quantite != 0" +
                         "AND nomCategorieProduit = ?;";
 
                 PreparedStatement selectProduitsStatement = this.connection.prepareStatement(query2);
