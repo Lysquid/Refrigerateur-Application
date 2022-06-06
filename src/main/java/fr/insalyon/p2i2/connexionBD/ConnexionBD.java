@@ -165,7 +165,6 @@ public class ConnexionBD {
                         CategoriesProduits.getFloat("seuilMax"),
                         CategoriesProduits.getFloat("valeur"),
                         CategoriesProduits.getString("unite"));
-
                 listeSeuils.add(seuil);
             }
             return listeSeuils;
