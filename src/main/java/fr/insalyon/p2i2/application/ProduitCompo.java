@@ -19,7 +19,7 @@ import fr.insalyon.p2i2.connexionBD.Produit;
 
 public class ProduitCompo extends Compo {
 
-    private static final int imageTimeout = 200;
+    private static final int imageTimeout = 300;
     private JLabel quantite;
     public Produit produit;
     private int IMAGE_HEIGHT = 120;
