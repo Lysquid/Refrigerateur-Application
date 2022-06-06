@@ -129,9 +129,9 @@ public class ConnexionBD {
                     "AND CategorieProduit.idCategorieProduit = AssociationCategorie.idCategorieProduit " +
                     "AND Produit.codeBarre = AssociationCategorie.codeBarre " +
                     "AND Mesure.dateMesure IN (SELECT MAX(dateMesure) FROM Mesure, Capteur WHERE Capteur.idCapteur = Mesure.idCapteur GROUP BY nomCapteur) " +
-                    "AND Produit.quantite != 0 " +
                     "AND (Capteur.idCapteur = 1 OR Capteur.idCapteur = 2) " +
                     "AND (seuilMax < valeur OR seuilMin > valeur) " +
+                    "AND Produit.quantite != 0 " +
                     "ORDER BY nomCategorieProduit;";
 
             PreparedStatement selectCategorieProduitStatement = this.connection.prepareStatement(query1);
